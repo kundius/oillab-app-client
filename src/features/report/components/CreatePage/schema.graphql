@@ -1,0 +1,11 @@
+mutation ReportCreatePage($input: ReportCreateInput!) {
+  reportCreate(input: $input) {
+    success
+    error {
+      message
+    }
+    record {
+      id
+    }
+  }
+}

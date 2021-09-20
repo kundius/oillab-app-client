@@ -1,0 +1,21 @@
+fragment UsersListPageItem on User {
+  id
+  name
+  email
+  createdAt
+  lastActivityAt
+}
+
+query UsersListPageUserPaginate(
+  $sort: [UserSort!]
+  $filter: UserFilter
+) {
+  userPaginate(
+    sort: $sort
+    filter: $filter
+  ) {
+    items {
+      ...UsersListPageItem
+    }
+  }
+}

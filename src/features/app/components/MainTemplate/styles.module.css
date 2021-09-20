@@ -1,0 +1,39 @@
+.layout {
+  /* background: #f5f8fa; */
+  /* background: #f8f8f8; */
+  background: #f7f7f7;
+  min-height: 100vh;
+}
+
+.main {
+  padding-right: 24px;
+  padding-left: 24px;
+}
+
+.header {
+  padding-top: 32px;
+  padding-bottom: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #241f31;
+  color: #deddda;
+}
+
+.headline {
+  padding-top: 32px;
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content {
+
+}
+
+.footer {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 24px;
+}

@@ -1,0 +1,42 @@
+fragment ReportListPageItem on Report {
+  id
+  stateNumber
+  totalMileage
+  lubricantMileage
+  samplingNodes
+  note
+  lubricant
+  sampledAt
+  expressLaboratoryResult {
+    id
+    name
+    url
+  }
+  laboratoryResult {
+    id
+    name
+    url
+  }
+  client {
+    id
+    name
+  }
+  vehicle {
+    id
+    model
+  }
+}
+
+query ReportListPageReportPaginate(
+  $sort: [ReportSort!]
+  $filter: ReportFilter
+) {
+  reportPaginate(
+    sort: $sort
+    filter: $filter
+  ) {
+    items {
+      ...ReportListPageItem
+    }
+  }
+}

@@ -1,0 +1,8 @@
+mutation UsersDeletePopover($id: String!) {
+  userDelete(id: $id) {
+    success
+    error {
+      message
+    }
+  }
+}

@@ -1,0 +1,285 @@
+.app-table {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.app-table-rtl {
+  direction: rtl;
+}
+
+.app-table table {
+  width: 100%;
+  border-spacing: 0px;
+}
+
+.app-table th,
+.app-table td {
+  position: relative;
+  box-sizing: border-box;
+  padding: 0;
+  padding: 8px 12px;
+  white-space: normal;
+  word-break: break-word;
+  border-top: 0;
+  border-left: 0;
+  transition: box-shadow 0.3s;
+  text-align: left;
+  color: #1f2937;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.app-table-rtl.app-table th,
+.app-table-rtl.app-table td {
+}
+
+.app-table-cell-fix-left,
+.app-table-cell-fix-right {
+  z-index: 1;
+}
+
+.app-table-cell-fix-right:last-child:not(.app-table-cell-fix-sticky) {
+  border-right-color: transparent;
+}
+
+.app-table-rtl .app-table-cell-fix-right:last-child {
+  border-right-color: red;
+}
+
+.app-table-rtl .app-table-cell-fix-left:last-child {
+  border-left-color: transparent;
+}
+
+.app-table-rtl .app-table-cell-fix-left-first {
+  box-shadow: 1px 0 0 red;
+}
+
+.app-table-cell-fix-left-first::after,
+.app-table-cell-fix-left-last::after {
+  position: absolute;
+  top: 0;
+  right: -1px;
+  bottom: -1px;
+  width: 20px;
+  transform: translateX(100%);
+  transition: box-shadow 0.3s;
+  content: '';
+  pointer-events: none;
+}
+
+.app-table-cell-fix-right-first,
+.app-table-cell-fix-right-last {
+  box-shadow: -1px 0 0 red;
+}
+
+.app-table-rtl .app-table-cell-fix-right-first,
+.app-table-rtl .app-table-cell-fix-right-last {
+  box-shadow: none;
+}
+
+.app-table-cell-fix-right-first::after,
+.app-table-cell-fix-right-last::after {
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -1px;
+  width: 20px;
+  transform: translateX(-100%);
+  transition: box-shadow 0.3s;
+  content: '';
+  pointer-events: none;
+}
+
+.app-table-cell.app-table-cell-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.app-table-cell.app-table-cell-ellipsis.app-table-cell-fix-left-first,
+.app-table-cell.app-table-cell-ellipsis.app-table-cell-fix-left-last,
+.app-table-cell.app-table-cell-ellipsis.app-table-cell-fix-right-first .app-table-cell.app-table-cell-ellipsis.app-table-cell-fix-right-last {
+  overflow: visible;
+}
+
+.app-table-cell.app-table-cell-ellipsis.app-table-cell-fix-left-first .app-table-cell-content,
+.app-table-cell.app-table-cell-ellipsis.app-table-cell-fix-left-last .app-table-cell-content,
+.app-table-cell.app-table-cell-ellipsis.app-table-cell-fix-right-first .app-table-cell.app-table-cell-ellipsis.app-table-cell-fix-right-last .app-table-cell-content {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-table-ping-left .app-table-cell-fix-left-first::after,
+.app-table-ping-left .app-table-cell-fix-left-last::after {
+  box-shadow: inset 10px 0 8px -8px green;
+}
+
+.app-table-ping-right .app-table-cell-fix-right-first::after,
+.app-table-ping-right .app-table-cell-fix-right-last::after {
+  box-shadow: inset -10px 0 8px -8px green;
+}
+
+.app-table-expand-icon-col {
+  width: 60px;
+}
+
+.app-table-row-expand-icon-cell {
+  text-align: center;
+}
+
+.app-table thead td,
+.app-table thead th {
+  background-color: #f3f4f7;
+  color: #1f2937;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 12px 12px;
+}
+
+.app-table thead td:first-child,
+.app-table thead th:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.app-table thead td:last-child,
+.app-table thead th:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.app-table thead .app-table-cell-scrollbar::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 1px;
+  background: #f7f7f7;
+  content: '';
+}
+.app-table-rtl.app-table thead .app-table-cell-scrollbar::after {
+  right: -1px;
+  left: auto;
+}
+
+.app-table-header {
+  border: 1px solid red;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.app-table-placeholder td {
+  text-align: center;
+  font-size: 16px;
+  padding: 24px;
+  color: #5c7080;
+}
+
+.app-table tbody tr td,
+.app-table tbody tr th {
+  border-bottom: 1px solid #e1e6eb;
+}
+
+.app-table tbody tr:last-child td,
+.app-table tbody tr:last-child th {
+  border-bottom: 0;
+}
+
+.app-table-content {
+}
+
+.app-table-fixed-column .app-table-body::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  border-right: 1px solid red;
+  content: '';
+}
+.app-table-expanded-row .app-table-cell {
+  box-shadow: inset 0 8px 8px -8px green;
+}
+.app-table-expanded-row-fixed {
+  box-sizing: border-box;
+  margin: -16px -8px;
+  margin-right: -10px;
+  padding: 16px 8px;
+}
+.app-table-expanded-row-fixed::after {
+  position: absolute;
+  top: 0;
+  right: 1px;
+  bottom: 0;
+  width: 0;
+  border-right: 1px solid red;
+  content: '';
+}
+.app-table-row-expand-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  color: #aaa;
+  line-height: 16px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid currentColor;
+  cursor: pointer;
+}
+.app-table-row-expand-icon.app-table-row-expanded::after {
+  content: '-';
+}
+.app-table-row-expand-icon.app-table-row-collapsed::after {
+  content: '+';
+}
+.app-table-row-expand-icon.app-table-row-spaced {
+  visibility: hidden;
+}
+.app-table-title {
+  padding: 16px 8px;
+  border: 1px solid red;
+  border-bottom: 0;
+}
+.app-table-footer {
+  padding: 16px 8px;
+  border: 1px solid red;
+  border-top: 0;
+}
+.app-table tfoot td {
+  background: #fff;
+}
+.app-table-summary {
+  border-top: 1px solid red;
+  border-left: 1px solid red;
+}
+.app-table-sticky-holder {
+  position: sticky;
+  z-index: 2;
+}
+.app-table-sticky-scroll {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #f3f3f3;
+  opacity: 0.6;
+  transition: transform 0.1s ease-in 0s;
+}
+.app-table-sticky-scroll:hover {
+  transform: scaleY(1.2);
+  transform-origin: center bottom;
+}
+.app-table-sticky-scroll-bar {
+  height: 8px;
+  background-color: #bbb;
+  border-radius: 4px;
+}
+.app-table-sticky-scroll-bar:hover {
+  background-color: #999;
+}
+.app-table-sticky-scroll-bar-active {
+  background-color: #999;
+}

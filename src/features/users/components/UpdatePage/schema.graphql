@@ -1,0 +1,26 @@
+fragment UsersUpdatePageFragment on User {
+  id
+  name
+  email
+}
+
+query UsersUpdatePageQuery($id: String!) {
+  user(id: $id) {
+    ...UsersUpdatePageFragment
+  }
+}
+
+mutation UsersUpdatePageMutation($id: String!, $input: UserUpdateInput!) {
+  userUpdate(
+    id: $id
+    input: $input
+  ) {
+    success
+    error {
+      message
+    }
+    record {
+      ...UsersUpdatePageFragment
+    }
+  }
+}

@@ -1,0 +1,279 @@
+.app-pagination {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+.app-pagination ul,
+.app-pagination ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.app-pagination::after {
+  display: block;
+  clear: both;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  content: ' ';
+}
+.app-pagination-total-text {
+  display: inline-block;
+  height: 28px;
+  margin-right: 8px;
+  line-height: 26px;
+  vertical-align: middle;
+}
+.app-pagination-item {
+  display: inline-block;
+  min-width: 28px;
+  height: 28px;
+  margin-right: 8px;
+  font-family: Arial;
+  line-height: 26px;
+  text-align: center;
+  vertical-align: middle;
+  list-style: none;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  outline: 0;
+  cursor: pointer;
+  user-select: none;
+}
+.app-pagination-item a {
+  display: block;
+  padding: 0 6px;
+  color: rgba(0, 0, 0, 0.85);
+  transition: none;
+}
+.app-pagination-item a:hover {
+  text-decoration: none;
+}
+.app-pagination-item:focus,
+.app-pagination-item:hover {
+  border-color: #1890ff;
+  transition: all 0.3s;
+}
+.app-pagination-item:focus a,
+.app-pagination-item:hover a {
+  color: #1890ff;
+}
+.app-pagination-item-active {
+  font-weight: 500;
+  background: #fff;
+  border-color: #1890ff;
+}
+.app-pagination-item-active a {
+  color: #1890ff;
+}
+.app-pagination-item-active:focus,
+.app-pagination-item-active:hover {
+  border-color: #40a9ff;
+}
+.app-pagination-item-active:focus a,
+.app-pagination-item-active:hover a {
+  color: #40a9ff;
+}
+.app-pagination-jump-prev,
+.app-pagination-jump-next {
+  outline: 0;
+}
+.app-pagination-jump-prev button,
+.app-pagination-jump-next button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #666;
+}
+.app-pagination-jump-prev button:after,
+.app-pagination-jump-next button:after {
+  display: block;
+  content: '•••';
+}
+.app-pagination-prev,
+.app-pagination-jump-prev,
+.app-pagination-jump-next {
+  margin-right: 8px;
+}
+.app-pagination-prev,
+.app-pagination-next,
+.app-pagination-jump-prev,
+.app-pagination-jump-next {
+  display: inline-block;
+  min-width: 28px;
+  height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+  font-family: Arial;
+  line-height: 28px;
+  text-align: center;
+  vertical-align: middle;
+  list-style: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.app-pagination-prev,
+.app-pagination-next {
+  outline: 0;
+}
+.app-pagination-prev button,
+.app-pagination-next button {
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  user-select: none;
+}
+.app-pagination-prev:hover button,
+.app-pagination-next:hover button {
+  border-color: #40a9ff;
+}
+.app-pagination-prev .app-pagination-item-link,
+.app-pagination-next .app-pagination-item-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 12px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  outline: none;
+  transition: all 0.3s;
+}
+.app-pagination-prev:focus .app-pagination-item-link,
+.app-pagination-next:focus .app-pagination-item-link,
+.app-pagination-prev:hover .app-pagination-item-link,
+.app-pagination-next:hover .app-pagination-item-link {
+  color: #1890ff;
+  border-color: #1890ff;
+}
+.app-pagination-prev button:after {
+  content: '‹';
+  display: block;
+}
+.app-pagination-next button:after {
+  content: '›';
+  display: block;
+}
+.app-pagination-disabled,
+.app-pagination-disabled:hover,
+.app-pagination-disabled:focus {
+  cursor: not-allowed;
+}
+.app-pagination-disabled .app-pagination-item-link,
+.app-pagination-disabled:hover .app-pagination-item-link,
+.app-pagination-disabled:focus .app-pagination-item-link {
+  color: rgba(0, 0, 0, 0.25);
+  border-color: #d9d9d9;
+  cursor: not-allowed;
+}
+.app-pagination-slash {
+  margin: 0 10px 0 5px;
+}
+.app-pagination-options {
+  display: inline-block;
+  margin-left: 16px;
+  vertical-align: middle;
+}
+@media all and (-ms-high-contrast: none) {
+  .app-pagination-options *::-ms-backdrop,
+  .app-pagination-options {
+    vertical-align: top;
+  }
+}
+.app-pagination-options-size-changer.rc-select {
+  display: inline-block;
+  width: auto;
+  margin-right: 8px;
+}
+.app-pagination-options-quick-jumper {
+  display: inline-block;
+  height: 28px;
+  line-height: 28px;
+  vertical-align: top;
+}
+.app-pagination-options-quick-jumper input {
+  width: 50px;
+  margin: 0 8px;
+}
+.app-pagination-simple .app-pagination-prev,
+.app-pagination-simple .app-pagination-next {
+  height: 24px;
+  line-height: 24px;
+  vertical-align: top;
+}
+.app-pagination-simple .app-pagination-prev .app-pagination-item-link,
+.app-pagination-simple .app-pagination-next .app-pagination-item-link {
+  height: 24px;
+  background-color: transparent;
+  border: 0;
+}
+.app-pagination-simple .app-pagination-prev .app-pagination-item-link::after,
+.app-pagination-simple .app-pagination-next .app-pagination-item-link::after {
+  height: 24px;
+  line-height: 24px;
+}
+.app-pagination-simple .app-pagination-simple-pager {
+  display: inline-block;
+  height: 24px;
+  margin-right: 8px;
+}
+.app-pagination-simple .app-pagination-simple-pager input {
+  box-sizing: border-box;
+  height: 100%;
+  margin-right: 8px;
+  padding: 0 6px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.app-pagination-simple .app-pagination-simple-pager input:hover {
+  border-color: #1890ff;
+}
+.app-pagination.app-pagination-disabled {
+  cursor: not-allowed;
+}
+.app-pagination.app-pagination-disabled .app-pagination-item {
+  background: #f5f5f5;
+  border-color: #d9d9d9;
+  cursor: not-allowed;
+}
+.app-pagination.app-pagination-disabled .app-pagination-item a {
+  color: rgba(0, 0, 0, 0.25);
+  background: transparent;
+  border: none;
+  cursor: not-allowed;
+}
+.app-pagination.app-pagination-disabled .app-pagination-item-active {
+  background: #dbdbdb;
+  border-color: transparent;
+}
+.app-pagination.app-pagination-disabled .app-pagination-item-active a {
+  color: #fff;
+}
+.app-pagination.app-pagination-disabled .app-pagination-item-link {
+  color: rgba(0, 0, 0, 0.25);
+  background: #f5f5f5;
+  border-color: #d9d9d9;
+  cursor: not-allowed;
+}
+.app-pagination.app-pagination-disabled .app-pagination-item-link-icon {
+  opacity: 0;
+}
+.app-pagination.app-pagination-disabled .app-pagination-item-ellipsis {
+  opacity: 1;
+}
+@media only screen and (max-width: 992px) {
+  .app-pagination-item-after-jump-prev,
+  .app-pagination-item-before-jump-next {
+    display: none;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .app-pagination-options {
+    display: none;
+  }
+}

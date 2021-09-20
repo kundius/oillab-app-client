@@ -1,0 +1,49 @@
+fragment ReportUpdatePageFragment on Report {
+  id
+  stateNumber
+  totalMileage
+  lubricantMileage
+  samplingNodes
+  note
+  lubricant
+  sampledAt
+  expressLaboratoryResult {
+    id
+    name
+    url
+  }
+  laboratoryResult {
+    id
+    name
+    url
+  }
+  client {
+    id
+    name
+  }
+  vehicle {
+    id
+    model
+  }
+}
+
+query ReportUpdatePageQuery($id: String!) {
+  report(id: $id) {
+    ...ReportUpdatePageFragment
+  }
+}
+
+mutation ReportUpdatePageMutation($id: String!, $input: ReportUpdateInput!) {
+  reportUpdate(
+    id: $id
+    input: $input
+  ) {
+    success
+    error {
+      message
+    }
+    record {
+      ...ReportUpdatePageFragment
+    }
+  }
+}

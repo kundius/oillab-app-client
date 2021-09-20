@@ -1,0 +1,33 @@
+fragment VehicleUpdatePageFragment on Vehicle {
+  id
+  model
+  owner {
+    id
+    name
+  }
+  releaseYear
+  stateNumber
+  engineModel
+  generalOperatingTime
+}
+
+query VehicleUpdatePageQuery($id: String!) {
+  vehicle(id: $id) {
+    ...VehicleUpdatePageFragment
+  }
+}
+
+mutation VehicleUpdatePageMutation($id: String!, $input: VehicleUpdateInput!) {
+  vehicleUpdate(
+    id: $id
+    input: $input
+  ) {
+    success
+    error {
+      message
+    }
+    record {
+      ...VehicleUpdatePageFragment
+    }
+  }
+}

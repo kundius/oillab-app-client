@@ -1,0 +1,13 @@
+mutation UsersCreatePage($input: UserCreateInput!) {
+  userCreate(input: $input) {
+    success
+    error {
+      message
+    }
+    record {
+      id
+      name
+      email
+    }
+  }
+}

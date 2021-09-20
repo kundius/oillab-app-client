@@ -1,0 +1,8 @@
+mutation ReportDeletePopover($id: String!) {
+  reportDelete(id: $id) {
+    success
+    error {
+      message
+    }
+  }
+}

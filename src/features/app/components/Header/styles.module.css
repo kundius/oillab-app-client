@@ -1,0 +1,49 @@
+.wrapper {
+  background: #241f31;
+  color: #deddda;
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.link {
+  line-height: 1;
+  font-size: 16px;
+  padding: 8px 16px;
+  color: currentColor;
+  text-decoration: none;
+  letter-spacing: 0.025em;
+  border-radius: 6px;
+  position: relative;
+}
+
+.link:hover {
+  color: #f5f8fa;
+  text-decoration: none;
+  background: #3d3846;
+}
+
+.linkActive {
+  color: #f5f8fa;
+  background: #3d3846;
+}
+
+.logout {
+  line-height: 1;
+  padding: 10px;
+  color: currentColor;
+  text-decoration: none;
+  border-radius: 6px;
+  position: relative;
+}
+
+.logout:hover {
+  color: #f5f8fa;
+  text-decoration: none;
+  background: #3d3846;
+}

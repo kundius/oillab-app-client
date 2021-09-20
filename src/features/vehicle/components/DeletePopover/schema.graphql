@@ -1,0 +1,8 @@
+mutation VehicleDeletePopover($id: String!) {
+  vehicleDelete(id: $id) {
+    success
+    error {
+      message
+    }
+  }
+}

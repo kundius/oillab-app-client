@@ -1,0 +1,26 @@
+.headline {
+  display: flex;
+  align-items: center;
+  line-height: 32px;
+  letter-spacing: 0.02em;
+}
+
+.headlineLink {
+  font-size: 24px;
+  text-decoration: none;
+  color: #5a5a5a;
+}
+
+.headlineLink:hover {
+  color: #000;
+  text-decoration: none;
+}
+
+.headlineChevron {
+  color: #5a5a5a;
+  margin: 0 12px;
+}
+
+.headlineTitle {
+  font-size: 24px;
+}

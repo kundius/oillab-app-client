@@ -1,0 +1,29 @@
+fragment UsersSelectUserFragment on User {
+  id
+  name
+}
+
+query UsersSelectUserQuery (
+  $search: String
+  $page: Int!
+  $perPage: Int!
+) {
+  userPaginate(
+    filter: {
+      name: {
+        contains: $search
+      }
+    }
+    page: $page
+    perPage: $perPage
+  ) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
+    items {
+      ...UsersSelectUserFragment
+    }
+  }
+}

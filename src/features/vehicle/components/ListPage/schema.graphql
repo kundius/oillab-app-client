@@ -1,0 +1,26 @@
+fragment VehicleListPageItem on Vehicle {
+  id
+  model
+  releaseYear
+  stateNumber
+  engineModel
+  generalOperatingTime
+  owner {
+    id
+    name
+  }
+}
+
+query VehicleListPageVehiclePaginate(
+  $sort: [VehicleSort!]
+  $filter: VehicleFilter
+) {
+  vehiclePaginate(
+    sort: $sort
+    filter: $filter
+  ) {
+    items {
+      ...VehicleListPageItem
+    }
+  }
+}

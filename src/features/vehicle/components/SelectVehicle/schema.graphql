@@ -1,0 +1,27 @@
+fragment VehicleSelectVehicleFragment on Vehicle {
+  id
+  model
+}
+
+query VehicleSelectVehicleQuery (
+  # $search: String
+  $page: Int!
+  $perPage: Int!
+) {
+  vehiclePaginate(
+    # filter: {
+    #   model: $search
+    # }
+    page: $page
+    perPage: $perPage
+  ) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
+    items {
+      ...VehicleSelectVehicleFragment
+    }
+  }
+}
