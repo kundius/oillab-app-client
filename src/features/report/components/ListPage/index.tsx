@@ -7,7 +7,8 @@ import {
   Divider,
   Intent,
   NonIdealState,
-  Spinner
+  Spinner,
+  Icon
 } from '@blueprintjs/core'
 
 import { Table } from '@components/Table'
@@ -19,8 +20,8 @@ import * as schema from './schema.generated'
 import * as types from '@app/types'
 
 export function ListPage() {
-  const [sort, setSort] = useState<types.ReportSort>(
-    types.ReportSort.LubricantAsc
+  const [sort, setSort] = useState<types.ReportSort | undefined>(
+    types.ReportSort.NumberAsc
   )
   const [filter, setFilter] = useState<types.ReportFilter>({})
   const manyQuery = schema.useReportListPageReportPaginateQuery({
@@ -58,6 +59,23 @@ export function ListPage() {
             />
           }
         >
+          <Table.Column
+            title={
+              <Table.Title
+                text="Номер"
+                filter="number"
+                filterValue={filter.number || undefined}
+                onFilterChange={(number) =>
+                  setFilter((prev) => ({ ...prev, number }))
+                }
+                sortAsc={types.ReportSort.NumberAsc}
+                sortDesc={types.ReportSort.NumberDesc}
+                sortValue={sort}
+                onSortChange={setSort}
+              />
+            }
+            dataIndex="number"
+          />
           <Table.Column title="Клиент" dataIndex={['client', 'name']} />
           <Table.Column
             title="Модель техники"
@@ -66,7 +84,7 @@ export function ListPage() {
           <Table.Column
             title={
               <Table.Title
-                text="Государственный номер/парковый номер"
+                text="Гос. номер"
                 filter="string"
                 filterValue={filter.stateNumber || undefined}
                 onFilterChange={(stateNumber) =>
@@ -83,8 +101,8 @@ export function ListPage() {
           <Table.Column
             title={
               <Table.Title
-                text="Дата забора пробы/образца"
-                filter="string"
+                text="Дата пробы"
+                filter="date"
                 filterValue={filter.sampledAt || undefined}
                 onFilterChange={(sampledAt) =>
                   setFilter((prev) => ({ ...prev, sampledAt }))
@@ -96,11 +114,12 @@ export function ListPage() {
               />
             }
             dataIndex="sampledAt"
+            render={(value) => new Date(value).toLocaleDateString()}
           />
           <Table.Column
             title={
               <Table.Title
-                text="Общий пробег агрегата"
+                text="Общий пробег"
                 filter="string"
                 filterValue={filter.totalMileage || undefined}
                 onFilterChange={(totalMileage) =>
@@ -117,7 +136,7 @@ export function ListPage() {
           <Table.Column
             title={
               <Table.Title
-                text="Пробег/наработка на смазочном материале"
+                text="Пробег на смазочном материале"
                 filter="string"
                 filterValue={filter.lubricantMileage || undefined}
                 onFilterChange={(lubricantMileage) =>
@@ -164,6 +183,28 @@ export function ListPage() {
               />
             }
             dataIndex="lubricant"
+          />
+          <Table.Column
+            title="Результат лаборатории"
+            dataIndex="laboratoryResult"
+            render={(value) =>
+              value ? (
+                <a href={value.url} target="_blank">
+                  <Icon icon="cloud-download" />
+                </a>
+              ) : undefined
+            }
+          />
+          <Table.Column
+            title="Экспресс результат лаборатории"
+            dataIndex="expressLaboratoryResult"
+            render={(value) =>
+              value ? (
+                <a href={value.url} target="_blank">
+                  <Icon icon="cloud-download" />
+                </a>
+              ) : undefined
+            }
           />
           <Table.Column title="Примечание" dataIndex="note" />
           <Table.Column

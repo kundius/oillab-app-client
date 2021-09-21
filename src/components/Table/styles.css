@@ -16,10 +16,9 @@
 .app-table td {
   position: relative;
   box-sizing: border-box;
-  padding: 0;
-  padding: 8px 12px;
+  padding: 8px;
   white-space: normal;
-  word-break: break-word;
+  /* word-break: break-word; */
   border-top: 0;
   border-left: 0;
   transition: box-shadow 0.3s;
@@ -135,7 +134,12 @@
   text-transform: uppercase;
   font-weight: 600;
   font-size: 12px;
-  padding: 12px 12px;
+  padding: 0.5rem;
+}
+
+.app-table thead th {
+  position: relative;
+  z-index: 1;
 }
 
 .app-table thead td:first-child,

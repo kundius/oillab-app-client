@@ -13,6 +13,12 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type DateFilter = {
+  eq?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  lt?: Maybe<Scalars['DateTime']>;
+};
+
 export type DefaultError = {
   message: Scalars['String'];
 };
@@ -102,6 +108,12 @@ export type NotFoundError = DefaultError & {
   message: Scalars['String'];
 };
 
+export type NumberFilter = {
+  eq?: Maybe<Scalars['Float']>;
+  gt?: Maybe<Scalars['Float']>;
+  lt?: Maybe<Scalars['Float']>;
+};
+
 export type PageInfo = {
   __typename?: 'PageInfo';
   page: Scalars['Int'];
@@ -112,12 +124,18 @@ export type PageInfo = {
 export type Query = {
   __typename?: 'Query';
   currentUser?: Maybe<User>;
+  file?: Maybe<File>;
   report?: Maybe<Report>;
   reportPaginate: ReportPaginateResponse;
   user?: Maybe<User>;
   userPaginate: UserPaginateResponse;
   vehicle?: Maybe<Vehicle>;
   vehiclePaginate: VehiclePaginateResponse;
+};
+
+
+export type QueryFileArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -169,6 +187,7 @@ export type Report = {
   lubricant: Scalars['String'];
   lubricantMileage: Scalars['String'];
   note?: Maybe<Scalars['String']>;
+  number: Scalars['Float'];
   sampledAt: Scalars['DateTime'];
   samplingNodes: Scalars['String'];
   stateNumber: Scalars['String'];
@@ -179,6 +198,8 @@ export type Report = {
 
 export type ReportCreateInput = {
   client: Scalars['String'];
+  expressLaboratoryResult?: Maybe<Scalars['String']>;
+  laboratoryResult?: Maybe<Scalars['String']>;
   lubricant: Scalars['String'];
   lubricantMileage: Scalars['String'];
   note?: Maybe<Scalars['String']>;
@@ -199,7 +220,8 @@ export type ReportCreateResponse = {
 export type ReportFilter = {
   lubricant?: Maybe<StringFilter>;
   lubricantMileage?: Maybe<StringFilter>;
-  sampledAt?: Maybe<StringFilter>;
+  number?: Maybe<NumberFilter>;
+  sampledAt?: Maybe<DateFilter>;
   samplingNodes?: Maybe<StringFilter>;
   stateNumber?: Maybe<StringFilter>;
   totalMileage?: Maybe<StringFilter>;
@@ -216,6 +238,8 @@ export enum ReportSort {
   LubricantDesc = 'LUBRICANT_DESC',
   LubricantMileageAsc = 'LUBRICANT_MILEAGE_ASC',
   LubricantMileageDesc = 'LUBRICANT_MILEAGE_DESC',
+  NumberAsc = 'NUMBER_ASC',
+  NumberDesc = 'NUMBER_DESC',
   SampledAtAsc = 'SAMPLED_AT_ASC',
   SampledAtDesc = 'SAMPLED_AT_DESC',
   SamplingNodesAsc = 'SAMPLING_NODES_ASC',
@@ -228,6 +252,8 @@ export enum ReportSort {
 
 export type ReportUpdateInput = {
   client?: Maybe<Scalars['String']>;
+  expressLaboratoryResult?: Maybe<Scalars['String']>;
+  laboratoryResult?: Maybe<Scalars['String']>;
   lubricant?: Maybe<Scalars['String']>;
   lubricantMileage?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;

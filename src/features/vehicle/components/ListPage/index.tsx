@@ -19,9 +19,7 @@ import * as schema from './schema.generated'
 import * as types from '@app/types'
 
 export function ListPage() {
-  const [sort, setSort] = useState<types.VehicleSort>(
-    types.VehicleSort.ModelAsc
-  )
+  const [sort, setSort] = useState<types.VehicleSort | undefined>()
   const [filter, setFilter] = useState<types.VehicleFilter>({})
   const manyQuery = schema.useVehicleListPageVehiclePaginateQuery({
     variables: {

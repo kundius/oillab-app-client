@@ -15,6 +15,7 @@ import {
   TimePrecision
 } from '@blueprintjs/datetime'
 
+import { UploadFile, UploadFileValue } from '@components/UploadFile'
 import {
   SelectUser,
   SelectUserValue
@@ -39,6 +40,8 @@ export interface FormFields {
   sampledAt: string
   client: SelectUserValue
   vehicle: SelectVehicleValue
+  laboratoryResult?: UploadFileValue | null
+  expressLaboratoryResult?: UploadFileValue | null
 }
 
 const jsDateFormatter: DateFormatProps = {
@@ -59,13 +62,15 @@ export function CreatePage() {
     formState: { isDirty }
   } = useForm<FormFields>()
 
-  const onSubmit = async ({ client, vehicle, ...input }: FormFields) => {
+  const onSubmit = async ({ client, vehicle, laboratoryResult, expressLaboratoryResult, ...input }: FormFields) => {
     const response = await mutation({
       variables: {
         input: {
           ...input,
           client: client.value,
-          vehicle: vehicle.value
+          vehicle: vehicle.value,
+          laboratoryResult: laboratoryResult === null ? laboratoryResult : laboratoryResult?.id,
+          expressLaboratoryResult: expressLaboratoryResult === null ? expressLaboratoryResult : expressLaboratoryResult?.id
         }
       }
     })
@@ -316,7 +321,11 @@ export function CreatePage() {
                   <DateInput
                     {...jsDateFormatter}
                     disabled={mutationState.loading}
-                    className="w-full bp4-large"
+                    className="w-full"
+                    inputProps={{
+                      large: true,
+                      fill: true
+                    }}
                     value={value ? new Date(value) : undefined}
                     onChange={onChange}
                     popoverProps={{ position: Position.BOTTOM }}
@@ -423,6 +432,42 @@ export function CreatePage() {
                       />
                     )}
                   </div>
+                )}
+              />
+            </div>
+            <div className="w-1/4" />
+          </div>
+          <div className="flex gap-8 items-center">
+            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+              Экспресс результат лаборатории:
+            </div>
+            <div className="w-2/4 flex justify-start">
+              <Controller
+                name="expressLaboratoryResult"
+                control={control}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <UploadFile {...field} />
+                )}
+              />
+            </div>
+            <div className="w-1/4" />
+          </div>
+          <div className="flex gap-8 items-center">
+            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+              Результат лаборатории:
+            </div>
+            <div className="w-2/4 flex justify-start">
+              <Controller
+                name="laboratoryResult"
+                control={control}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <UploadFile {...field} />
                 )}
               />
             </div>

@@ -1,5 +1,6 @@
 fragment ReportListPageItem on Report {
   id
+  number
   stateNumber
   totalMileage
   lubricantMileage

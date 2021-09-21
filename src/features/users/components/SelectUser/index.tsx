@@ -48,22 +48,20 @@ export function SelectUser ({ value, onChange }: SelectUserProps) {
 
   return (
     <>
-      <div className="inline-flex space-x-2">
-        <ButtonGroup>
+      <ButtonGroup>
+        <Button
+          icon="new-person"
+          onClick={handleOpen}
+        >
+          {value ? value.label : 'Выбрать пользователя'}
+        </Button>
+        {value && (
           <Button
-            icon="new-person"
-            onClick={handleOpen}
-          >
-            {value ? value.label : 'Выбрать пользователя'}
-          </Button>
-          {value && (
-            <Button
-              icon="cross"
-              onClick={() => onChange?.(undefined)}
-            />
-          )}
-        </ButtonGroup>
-      </div>
+            icon="cross"
+            onClick={() => onChange?.(undefined)}
+          />
+        )}
+      </ButtonGroup>
       <Dialog
         isOpen={isOpen}
         icon="new-person"

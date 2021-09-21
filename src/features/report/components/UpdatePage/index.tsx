@@ -20,6 +20,7 @@ import {
   TimePrecision
 } from '@blueprintjs/datetime'
 
+import { UploadFile, UploadFileValue } from '@components/UploadFile'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { AppToaster } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
@@ -44,6 +45,8 @@ export interface FormFields {
   sampledAt: string
   client: SelectUserValue
   vehicle: SelectVehicleValue
+  laboratoryResult?: UploadFileValue | null
+  expressLaboratoryResult?: UploadFileValue | null
 }
 
 export interface UpdatePageProps {
@@ -91,18 +94,28 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
             label: initialReport.vehicle.model,
             value: initialReport.vehicle.id
           }
-        : undefined
+        : undefined,
+      expressLaboratoryResult: initialReport.expressLaboratoryResult,
+      laboratoryResult: initialReport.laboratoryResult
     }
   })
 
-  const onSubmit = async ({ client, vehicle, ...input }: FormFields) => {
+  const onSubmit = async ({
+    client,
+    vehicle,
+    laboratoryResult,
+    expressLaboratoryResult,
+    ...input
+  }: FormFields) => {
     const response = await mutation({
       variables: {
         id: initialReport.id,
         input: {
           ...input,
           client: client.value,
-          vehicle: vehicle.value
+          vehicle: vehicle.value,
+          laboratoryResult: laboratoryResult === null ? laboratoryResult : laboratoryResult?.id,
+          expressLaboratoryResult: expressLaboratoryResult === null ? expressLaboratoryResult : expressLaboratoryResult?.id
         }
       }
     })
@@ -126,7 +139,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
     }
   }
 
-  const pageTitle = query.data?.report?.stateNumber || initialReport.stateNumber
+  const pageTitle = `${query.data?.report?.number || initialReport.number}`
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -354,7 +367,11 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                   <DateInput
                     {...jsDateFormatter}
                     disabled={mutationState.loading}
-                    className="w-full bp4-large"
+                    className="w-full"
+                    inputProps={{
+                      large: true,
+                      fill: true
+                    }}
                     value={value ? new Date(value) : undefined}
                     onChange={onChange}
                     popoverProps={{ position: Position.BOTTOM }}
@@ -462,6 +479,38 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                     )}
                   </div>
                 )}
+              />
+            </div>
+            <div className="w-1/4" />
+          </div>
+          <div className="flex gap-8 items-center">
+            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+              Экспресс результат лаборатории:
+            </div>
+            <div className="w-2/4 flex justify-start">
+              <Controller
+                name="expressLaboratoryResult"
+                control={control}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => <UploadFile {...field} />}
+              />
+            </div>
+            <div className="w-1/4" />
+          </div>
+          <div className="flex gap-8 items-center">
+            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+              Результат лаборатории:
+            </div>
+            <div className="w-2/4 flex justify-start">
+              <Controller
+                name="laboratoryResult"
+                control={control}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => <UploadFile {...field} />}
               />
             </div>
             <div className="w-1/4" />

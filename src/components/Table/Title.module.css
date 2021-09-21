@@ -1,0 +1,67 @@
+.labelWithSort {
+  cursor: pointer;
+}
+
+.labelWithSort::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+}
+
+.labelWithSort:hover::before {
+  background-color: rgb(232, 235, 240);
+}
+
+.sortAsc {
+  padding: 2px;
+}
+
+.sortAsc::before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #BFCCD6;
+}
+
+.sortAscActive::before {
+  border-bottom-color: #5c7080;
+}
+
+.sortDesc {
+  padding: 2px;
+}
+
+.sortDesc::before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #BFCCD6;
+}
+
+.sortDescActive::before {
+  border-top-color: #5c7080;
+}
+
+:global(.bp4-button.bp4-small).filterButton {
+  min-height: 20px;
+  min-width: 20px;
+}
+
+:global(.bp4-button.bp4-small).filterButton svg {
+  width: 14px;
+  height: 14px;
+}
+
+.rangeInput :global(.bp4-input-group) {
+  width: 8rem;
+}

@@ -12,15 +12,26 @@ import {
   Classes,
   FormGroup,
   InputGroup,
-  Tooltip
+  Tooltip,
+  NumericInput
 } from '@blueprintjs/core'
+import classNames from 'classnames'
+import {
+  DateInput,
+  DateFormatProps,
+  TimePrecision,
+  DateRangeInput,
+  DateRange
+} from '@blueprintjs/datetime'
+
+import * as styles from './Title.module.css'
 
 interface TitleBase<SortType, FilterType> {
   text: string
   sortAsc?: SortType
   sortDesc?: SortType
   sortValue?: SortType
-  onSortChange?: (value: SortType) => void
+  onSortChange?: (value?: SortType) => void
   filterValue?: FilterType
   onFilterChange?: (value?: FilterType) => void
 }
@@ -35,14 +46,25 @@ interface TitleWithFilterString<SortType>
   filter: 'string'
 }
 
+interface TitleWithFilterDate<SortType> extends TitleBase<SortType, DateValue> {
+  filter: 'date'
+}
+
 export type TitleProps<SortType> =
   | TitleWithFilterNumber<SortType>
   | TitleWithFilterString<SortType>
+  | TitleWithFilterDate<SortType>
 
 export interface NumberValue {
   lt?: number | null
   gt?: number | null
   eq?: number | null
+}
+
+export interface DateValue {
+  lt?: Date | null
+  gt?: Date | null
+  eq?: Date | null
 }
 
 export interface StringValue {
@@ -57,6 +79,11 @@ interface FilterProps<ValueType> {
   onChange?: (value?: ValueType) => void
 }
 
+const jsDateFormatter: DateFormatProps = {
+  formatDate: (date) => date.toLocaleDateString(),
+  parseDate: (str) => new Date(str)
+}
+
 const FilterString = ({
   isOpened,
   setIsOpened,
@@ -64,7 +91,7 @@ const FilterString = ({
   value
 }: FilterProps<StringValue>) => {
   const [exact, setExact] = useState(!!value?.eq)
-  const [text, setText] = useState((value?.eq || value?.contains) || undefined)
+  const [text, setText] = useState(value?.eq || value?.contains || undefined)
 
   const handleToggleExact = () => {
     setExact((prev) => !prev)
@@ -110,15 +137,110 @@ const FilterString = ({
   )
 }
 
-const FilterNumber = (props: FilterProps<NumberValue>) => {
+const FilterDate = ({
+  isOpened,
+  setIsOpened,
+  onChange,
+  value
+}: FilterProps<DateValue>) => {
+  const [eq, setEq] = useState(value?.eq || undefined)
+  const [gt, setGt] = useState(value?.gt || undefined)
+  const [lt, setLt] = useState(value?.lt || undefined)
+
+  const handleReset = () => {
+    setEq(undefined)
+    setGt(undefined)
+    setLt(undefined)
+    onChange?.(undefined)
+    setIsOpened(false)
+  }
+
+  const handleSubmit = () => {
+    onChange?.({
+      eq,
+      gt,
+      lt
+    })
+    setIsOpened(false)
+  }
+
+  const handleRangeChange = (selectedRange: DateRange) => {
+    setGt(selectedRange[0] || undefined)
+    setLt(selectedRange[1] || undefined)
+  }
+
   return (
     <div>
-      <FormGroup>
-        <InputGroup id="text-input" placeholder="Введите число" />
-      </FormGroup>
+      <div className="flex flex-col">
+        <DateRangeInput
+          {...jsDateFormatter}
+          onChange={handleRangeChange}
+          value={[gt || null, lt || null]}
+          highlightCurrentDay
+          className={`${styles.rangeInput} mb-4`}
+          shortcuts={false}
+          endInputProps={{
+            placeholder: 'Конечная дата'
+          }}
+          startInputProps={{
+            placeholder: 'Начальная дата'
+          }}
+        />
+        <DateInput
+          {...jsDateFormatter}
+          className="w-64 mb-4"
+          value={value?.eq}
+          onChange={setEq}
+          placeholder="Точная дата"
+        />
+      </div>
       <div className="flex justify-between">
-        <Button text="Очистить" />
-        <Button intent="primary" text="Поиск" />
+        <Button text="Очистить" onClick={handleReset} />
+        <Button intent="primary" text="Поиск" onClick={handleSubmit} />
+      </div>
+    </div>
+  )
+}
+
+const FilterNumber = ({
+  isOpened,
+  setIsOpened,
+  onChange,
+  value
+}: FilterProps<NumberValue>) => {
+  const [eq, setEq] = useState(value?.eq || undefined)
+  const [gt, setGt] = useState(value?.gt || undefined)
+  const [lt, setLt] = useState(value?.lt || undefined)
+
+  const handleReset = () => {
+    setEq(undefined)
+    setGt(undefined)
+    setLt(undefined)
+    onChange?.(undefined)
+    setIsOpened(false)
+  }
+
+  const handleSubmit = () => {
+    onChange?.({
+      eq,
+      gt,
+      lt
+    })
+    setIsOpened(false)
+  }
+
+  return (
+    <div>
+      <div className="flex flex-col mb-4">
+        <div className="flex gap-4 mb-4">
+          <NumericInput onValueChange={setGt} value={gt} fill />
+          <NumericInput onValueChange={setLt} value={lt} fill />
+        </div>
+        <NumericInput onValueChange={setEq} value={eq} fill />
+      </div>
+      <div className="flex justify-between">
+        <Button text="Очистить" onClick={handleReset} />
+        <Button intent="primary" text="Поиск" onClick={handleSubmit} />
       </div>
     </div>
   )
@@ -154,42 +276,71 @@ export function Title<SortType>({
         />
       )
     }
+    if (props.filter === 'date') {
+      return (
+        <FilterDate
+          isOpened={isFilterOpened}
+          setIsOpened={setIsFilterOpened}
+          value={props.filterValue}
+          onChange={props.onFilterChange}
+        />
+      )
+    }
     throw 'unimplemented'
   }
+
+  const handleSortToggle = () => {
+    if (sortAsc === sortValue) {
+      onSortChange?.(sortDesc)
+    } else if (sortDesc === sortValue) {
+      onSortChange?.(undefined)
+    } else {
+      onSortChange?.(sortAsc)
+    }
+  }
+
   return (
-    <div className="flex items-center">
-      {text}
-      <ButtonGroup minimal className="ml-2 -mt-2 -mb-2">
-        {props.filter && (
-          <Popover
-            isOpen={isFilterOpened}
-            placement="bottom"
-            interactionKind="click"
-            popoverClassName={Classes.POPOVER_CONTENT_SIZING}
-            onInteraction={setIsFilterOpened}
-            content={getFilterContent()}
-          >
-            <Button icon="filter" small active={!!props.filterValue} />
-          </Popover>
-        )}
-        {(sortDesc || sortAsc) && props.filter && <Divider />}
-        {sortDesc && (
-          <Button
-            icon="arrow-down"
-            small
-            active={sortDesc === sortValue}
-            onClick={() => onSortChange?.(sortDesc)}
+    <div className="flex items-center gap-1">
+      <div
+        className={classNames({
+          [styles.labelWithSort]: sortDesc || sortAsc
+        })}
+        onClick={handleSortToggle}
+      >
+        <div className="relative z-30">{text}</div>
+      </div>
+      {(sortDesc || sortAsc) && (
+        <div className="flex flex-col relative z-30 pointer-events-none">
+          <div
+            className={classNames(styles.sortAsc, {
+              [styles.sortAscActive]: sortAsc === sortValue
+            })}
           />
-        )}
-        {sortAsc && (
-          <Button
-            icon="arrow-up"
-            small
-            active={sortAsc === sortValue}
-            onClick={() => onSortChange?.(sortAsc)}
+          <div
+            className={classNames(styles.sortDesc, {
+              [styles.sortDescActive]: sortDesc === sortValue
+            })}
           />
-        )}
-      </ButtonGroup>
+        </div>
+      )}
+      {props.filter && (
+        <Popover
+          isOpen={isFilterOpened}
+          placement="bottom"
+          interactionKind="click"
+          popoverClassName={Classes.POPOVER_CONTENT_SIZING}
+          onInteraction={setIsFilterOpened}
+          content={getFilterContent()}
+        >
+          <Button
+            icon="filter"
+            small
+            active={!!props.filterValue}
+            className={`${styles.filterButton} relative z-30`}
+            minimal
+          />
+        </Popover>
+      )}
     </div>
   )
 }

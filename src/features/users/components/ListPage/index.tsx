@@ -19,7 +19,7 @@ import * as schema from './schema.generated'
 import * as types from '@app/types'
 
 export function ListPage() {
-  const [sort, setSort] = useState<types.UserSort>(types.UserSort.NameAsc)
+  const [sort, setSort] = useState<types.UserSort | undefined>()
   const [filter, setFilter] = useState<types.UserFilter>({})
   const manyQuery = schema.useUsersListPageUserPaginateQuery({
     variables: {
