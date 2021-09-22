@@ -1,6 +1,6 @@
 query AuthWithPageGuard {
   currentUser {
     id
-    __typename
+    role
   }
 }

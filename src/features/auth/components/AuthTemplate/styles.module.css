@@ -4,7 +4,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fbfbfb;
+  background: #241f31;
+  color: #deddda;
   overflow: auto;
 }
 

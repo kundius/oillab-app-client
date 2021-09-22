@@ -18,7 +18,7 @@ export type VehicleUpdatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type VehicleUpdatePageMutation = { __typename?: 'Mutation', vehicleUpdate: { __typename?: 'VehicleUpdateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string }>, record?: Types.Maybe<{ __typename?: 'Vehicle', id: string, model: string, releaseYear: string, stateNumber: string, engineModel: string, generalOperatingTime: string, owner: { __typename?: 'User', id: string, name: string } }> } };
+export type VehicleUpdatePageMutation = { __typename?: 'Mutation', vehicleUpdate: { __typename?: 'VehicleUpdateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'Vehicle', id: string, model: string, releaseYear: string, stateNumber: string, engineModel: string, generalOperatingTime: string, owner: { __typename?: 'User', id: string, name: string } }> } };
 
 export const VehicleUpdatePageFragmentDoc = gql`
     fragment VehicleUpdatePageFragment on Vehicle {

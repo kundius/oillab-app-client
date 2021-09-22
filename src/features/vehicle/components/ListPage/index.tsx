@@ -142,7 +142,19 @@ export function ListPage() {
             }
             dataIndex="generalOperatingTime"
           />
-          <Table.Column title="Владелец" dataIndex={['owner', 'name']} />
+          <Table.Column
+            title={
+              <Table.Title
+                text="Владелец"
+                filter="string"
+                filterValue={filter.ownerName || undefined}
+                onFilterChange={(ownerName) =>
+                  setFilter((prev) => ({ ...prev, ownerName }))
+                }
+              />
+            }
+            dataIndex={['owner', 'name']}
+          />
           <Table.Column
             title="Действия"
             align="center"

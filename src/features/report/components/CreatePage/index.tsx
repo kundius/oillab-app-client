@@ -38,8 +38,8 @@ export interface FormFields {
   note: string
   lubricant: string
   sampledAt: string
-  client: SelectUserValue
-  vehicle: SelectVehicleValue
+  client?: SelectUserValue | null
+  vehicle?: SelectVehicleValue | null
   laboratoryResult?: UploadFileValue | null
   expressLaboratoryResult?: UploadFileValue | null
 }
@@ -54,23 +54,37 @@ export function CreatePage() {
   const apollo = useApolloClient()
   const router = useRouter()
   const [mutation, mutationState] = schema.useReportCreatePageMutation()
+  const query = schema.useReportCreatePageQuery()
 
   const {
     handleSubmit,
     control,
     reset,
+    watch,
     formState: { isDirty }
   } = useForm<FormFields>()
 
-  const onSubmit = async ({ client, vehicle, laboratoryResult, expressLaboratoryResult, ...input }: FormFields) => {
+  const watchClient = watch('client')
+
+  const onSubmit = async ({
+    client,
+    vehicle,
+    laboratoryResult,
+    expressLaboratoryResult,
+    ...input
+  }: FormFields) => {
     const response = await mutation({
       variables: {
         input: {
           ...input,
-          client: client.value,
-          vehicle: vehicle.value,
-          laboratoryResult: laboratoryResult === null ? laboratoryResult : laboratoryResult?.id,
-          expressLaboratoryResult: expressLaboratoryResult === null ? expressLaboratoryResult : expressLaboratoryResult?.id
+          client: client?.value,
+          vehicle: vehicle?.value,
+          laboratoryResult:
+            laboratoryResult === null ? laboratoryResult : laboratoryResult?.id,
+          expressLaboratoryResult:
+            expressLaboratoryResult === null
+              ? expressLaboratoryResult
+              : expressLaboratoryResult?.id
         }
       }
     })
@@ -379,100 +393,78 @@ export function CreatePage() {
             </div>
             <div className="w-1/4" />
           </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
-              Клиент:
+          {query.data?.currentUser?.role === 'Administrator' && (
+            <div className="flex gap-8 items-center">
+              <div className="w-1/4 flex justify-end text-base leading-none text-right">
+                Клиент:
+              </div>
+              <div className="w-2/4 flex justify-start">
+                <Controller
+                  name="client"
+                  control={control}
+                  render={({
+                    field: { ref, ...field },
+                    fieldState: { error }
+                  }) => <SelectUser {...field} />}
+                />
+              </div>
+              <div className="w-1/4" />
             </div>
-            <div className="w-2/4 flex justify-start">
-              <Controller
-                name="client"
-                control={control}
-                rules={{
-                  required: true
-                }}
-                render={({
-                  field: { ref, ...field },
-                  fieldState: { error }
-                }) => (
-                  <div className="inline-flex space-x-2">
-                    <SelectUser {...field} />
-                    {!!error && (
-                      <ErrorIcon
-                        message="Укажите клиента"
-                        loading={mutationState.loading}
-                      />
-                    )}
-                  </div>
-                )}
-              />
+          )}
+          {watchClient && (
+            <div className="flex gap-8 items-center">
+              <div className="w-1/4 flex justify-end text-base leading-none text-right">
+                Техника:
+              </div>
+              <div className="w-2/4 flex justify-start">
+                <Controller
+                  name="vehicle"
+                  control={control}
+                  render={({
+                    field: { ref, ...field },
+                    fieldState: { error }
+                  }) => <SelectVehicle ownerId={watchClient.value} {...field} />}
+                />
+              </div>
+              <div className="w-1/4" />
             </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
-              Техника:
+          )}
+          {query.data?.currentUser?.role === 'Administrator' && (
+            <div className="flex gap-8 items-center">
+              <div className="w-1/4 flex justify-end text-base leading-none text-right">
+                Экспресс результат лаборатории:
+              </div>
+              <div className="w-2/4 flex justify-start">
+                <Controller
+                  name="expressLaboratoryResult"
+                  control={control}
+                  render={({
+                    field: { ref, ...field },
+                    fieldState: { error }
+                  }) => <UploadFile {...field} />}
+                />
+              </div>
+              <div className="w-1/4" />
             </div>
-            <div className="w-2/4 flex justify-start">
-              <Controller
-                name="vehicle"
-                control={control}
-                rules={{
-                  required: true
-                }}
-                render={({
-                  field: { ref, ...field },
-                  fieldState: { error }
-                }) => (
-                  <div className="inline-flex space-x-2">
-                    <SelectVehicle {...field} />
-                    {!!error && (
-                      <ErrorIcon
-                        message="Укажите технику"
-                        loading={mutationState.loading}
-                      />
-                    )}
-                  </div>
-                )}
-              />
+          )}
+          {query.data?.currentUser?.role === 'Administrator' && (
+            <div className="flex gap-8 items-center">
+              <div className="w-1/4 flex justify-end text-base leading-none text-right">
+                Результат лаборатории:
+              </div>
+              <div className="w-2/4 flex justify-start">
+                <Controller
+                  name="laboratoryResult"
+                  control={control}
+                  render={({
+                    field: { ref, ...field },
+                    fieldState: { error }
+                  }) => <UploadFile {...field} />}
+                />
+              </div>
+              <div className="w-1/4" />
             </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
-              Экспресс результат лаборатории:
-            </div>
-            <div className="w-2/4 flex justify-start">
-              <Controller
-                name="expressLaboratoryResult"
-                control={control}
-                render={({
-                  field: { ref, ...field },
-                  fieldState: { error }
-                }) => (
-                  <UploadFile {...field} />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
-              Результат лаборатории:
-            </div>
-            <div className="w-2/4 flex justify-start">
-              <Controller
-                name="laboratoryResult"
-                control={control}
-                render={({
-                  field: { ref, ...field },
-                  fieldState: { error }
-                }) => (
-                  <UploadFile {...field} />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
+          )}
         </div>
       </MainTemplate>
     </form>

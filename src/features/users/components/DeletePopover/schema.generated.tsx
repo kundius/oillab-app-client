@@ -8,7 +8,7 @@ export type UsersDeletePopoverMutationVariables = Types.Exact<{
 }>;
 
 
-export type UsersDeletePopoverMutation = { __typename?: 'Mutation', userDelete: { __typename?: 'DefaultMutationResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string }> } };
+export type UsersDeletePopoverMutation = { __typename?: 'Mutation', userDelete: { __typename?: 'DefaultMutationResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }> } };
 
 
 export const UsersDeletePopoverDocument = gql`

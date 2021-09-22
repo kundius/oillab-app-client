@@ -8,6 +8,7 @@ export type VehicleSelectVehicleFragment = { __typename?: 'Vehicle', id: string,
 export type VehicleSelectVehicleQueryVariables = Types.Exact<{
   page: Types.Scalars['Int'];
   perPage: Types.Scalars['Int'];
+  filter?: Types.Maybe<Types.VehicleFilter>;
 }>;
 
 
@@ -20,8 +21,8 @@ export const VehicleSelectVehicleFragmentDoc = gql`
 }
     `;
 export const VehicleSelectVehicleQueryDocument = gql`
-    query VehicleSelectVehicleQuery($page: Int!, $perPage: Int!) {
-  vehiclePaginate(page: $page, perPage: $perPage) {
+    query VehicleSelectVehicleQuery($page: Int!, $perPage: Int!, $filter: VehicleFilter) {
+  vehiclePaginate(filter: $filter, page: $page, perPage: $perPage) {
     pageInfo {
       total
       page
@@ -48,6 +49,7 @@ export const VehicleSelectVehicleQueryDocument = gql`
  *   variables: {
  *      page: // value for 'page'
  *      perPage: // value for 'perPage'
+ *      filter: // value for 'filter'
  *   },
  * });
  */

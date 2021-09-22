@@ -11,8 +11,8 @@ export interface SelectUserValue {
 }
 
 export interface SelectUserProps {
-  value?: SelectUserValue
-  onChange?: (v?: SelectUserValue) => void
+  value?: SelectUserValue | null
+  onChange?: (v?: SelectUserValue | null) => void
 }
 
 export function SelectUser ({ value, onChange }: SelectUserProps) {
@@ -58,7 +58,7 @@ export function SelectUser ({ value, onChange }: SelectUserProps) {
         {value && (
           <Button
             icon="cross"
-            onClick={() => onChange?.(undefined)}
+            onClick={() => onChange?.(null)}
           />
         )}
       </ButtonGroup>

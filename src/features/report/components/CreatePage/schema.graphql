@@ -1,4 +1,11 @@
-mutation ReportCreatePage($input: ReportCreateInput!) {
+query ReportCreatePageQuery {
+  currentUser {
+    id
+    role
+  }
+}
+
+mutation ReportCreatePageMutation($input: ReportCreateInput!) {
   reportCreate(input: $input) {
     success
     error {

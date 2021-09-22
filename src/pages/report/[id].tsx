@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next/types/custom'
 import { createApolloClient } from '@app/lib/apolloClient'
 import { UpdatePage, UpdatePageProps } from '@app/features/report/components/UpdatePage'
 import { ReportUpdatePageQuery, ReportUpdatePageQueryVariables, ReportUpdatePageQueryDocument } from '@app/features/report/components/UpdatePage/schema.generated'
+import { withPageGuard } from '@app/features/auth/hocs/withPageGuard'
 
 export const getServerSideProps: GetServerSideProps<UpdatePageProps> = async (context) => {
   const apolloClient = createApolloClient({
@@ -36,4 +37,6 @@ export const getServerSideProps: GetServerSideProps<UpdatePageProps> = async (co
   }
 }
 
-export default UpdatePage
+export default withPageGuard({
+  denyForGuest: true
+})(UpdatePage)

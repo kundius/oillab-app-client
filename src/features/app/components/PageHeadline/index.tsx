@@ -17,7 +17,7 @@ export const PageHeadline = ({
   const nodes = items.map(item => {
     if (item.href) {
       return (
-        <Link href={item.href} passHref key={item.href}>
+        <Link href={item.href} passHref>
           <a className={styles.headlineLink}>
             {item.title}
           </a>
@@ -29,10 +29,10 @@ export const PageHeadline = ({
   return (
     <div className={styles.headline}>
       {nodes.reduce((result, item, index, array) => {
-        result.push(item)
+        result.push(<div key={`item-${index}`}>{item}</div>)
         if (index !== array.length - 1) {
           result.push((
-            <span className={styles.headlineChevron}>
+            <span className={styles.headlineChevron} key={`chevron-${index}`}>
               <Icon icon="chevron-right" />
             </span>
           ))

@@ -2,5 +2,6 @@ query AppHeaderCurrentUser {
   currentUser {
     id
     name
+    role
   }
 }

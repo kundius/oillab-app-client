@@ -3,14 +3,14 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions =  {}
-export type ReportUpdatePageFragment = { __typename?: 'Report', id: string, number: number, stateNumber: string, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: string, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: string, name: string, url: string }>, client: { __typename?: 'User', id: string, name: string }, vehicle: { __typename?: 'Vehicle', id: string, model: string } };
+export type ReportUpdatePageFragment = { __typename?: 'Report', id: string, number: number, stateNumber: string, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: string, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: string, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: string, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: string, model: string }> };
 
 export type ReportUpdatePageQueryVariables = Types.Exact<{
   id: Types.Scalars['String'];
 }>;
 
 
-export type ReportUpdatePageQuery = { __typename?: 'Query', report?: Types.Maybe<{ __typename?: 'Report', id: string, number: number, stateNumber: string, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: string, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: string, name: string, url: string }>, client: { __typename?: 'User', id: string, name: string }, vehicle: { __typename?: 'Vehicle', id: string, model: string } }> };
+export type ReportUpdatePageQuery = { __typename?: 'Query', report?: Types.Maybe<{ __typename?: 'Report', id: string, number: number, stateNumber: string, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: string, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: string, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: string, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: string, model: string }> }>, currentUser?: Types.Maybe<{ __typename?: 'User', id: string, role: Types.UserRole }> };
 
 export type ReportUpdatePageMutationVariables = Types.Exact<{
   id: Types.Scalars['String'];
@@ -18,7 +18,7 @@ export type ReportUpdatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type ReportUpdatePageMutation = { __typename?: 'Mutation', reportUpdate: { __typename?: 'ReportUpdateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string }>, record?: Types.Maybe<{ __typename?: 'Report', id: string, number: number, stateNumber: string, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: string, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: string, name: string, url: string }>, client: { __typename?: 'User', id: string, name: string }, vehicle: { __typename?: 'Vehicle', id: string, model: string } }> } };
+export type ReportUpdatePageMutation = { __typename?: 'Mutation', reportUpdate: { __typename?: 'ReportUpdateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'Report', id: string, number: number, stateNumber: string, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: string, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: string, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: string, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: string, model: string }> }> } };
 
 export const ReportUpdatePageFragmentDoc = gql`
     fragment ReportUpdatePageFragment on Report {
@@ -55,6 +55,10 @@ export const ReportUpdatePageQueryDocument = gql`
     query ReportUpdatePageQuery($id: String!) {
   report(id: $id) {
     ...ReportUpdatePageFragment
+  }
+  currentUser {
+    id
+    role
   }
 }
     ${ReportUpdatePageFragmentDoc}`;

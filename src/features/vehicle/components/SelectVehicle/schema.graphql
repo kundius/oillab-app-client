@@ -4,14 +4,12 @@ fragment VehicleSelectVehicleFragment on Vehicle {
 }
 
 query VehicleSelectVehicleQuery (
-  # $search: String
   $page: Int!
   $perPage: Int!
+  $filter: VehicleFilter
 ) {
   vehiclePaginate(
-    # filter: {
-    #   model: $search
-    # }
+    filter: $filter
     page: $page
     perPage: $perPage
   ) {

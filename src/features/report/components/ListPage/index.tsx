@@ -76,9 +76,30 @@ export function ListPage() {
             }
             dataIndex="number"
           />
-          <Table.Column title="Клиент" dataIndex={['client', 'name']} />
           <Table.Column
-            title="Модель техники"
+            title={
+              <Table.Title
+                text="Клиент"
+                filter="string"
+                filterValue={filter.clientName || undefined}
+                onFilterChange={(clientName) =>
+                  setFilter((prev) => ({ ...prev, clientName }))
+                }
+              />
+            }
+            dataIndex={['client', 'name']}
+          />
+          <Table.Column
+            title={
+              <Table.Title
+                text="Модель техники"
+                filter="string"
+                filterValue={filter.vehicleModel || undefined}
+                onFilterChange={(vehicleModel) =>
+                  setFilter((prev) => ({ ...prev, vehicleModel }))
+                }
+              />
+            }
             dataIndex={['vehicle', 'model']}
           />
           <Table.Column

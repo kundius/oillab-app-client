@@ -42,11 +42,17 @@ export type File = {
   user?: Maybe<User>;
 };
 
+export type IdFilter = {
+  eq?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Scalars['String']>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   reportCreate: ReportCreateResponse;
   reportDelete: DefaultMutationResponse;
   reportUpdate: ReportUpdateResponse;
+  signIn: SignInResponse;
   userCreate: UserCreateResponse;
   userDelete: DefaultMutationResponse;
   userUpdate: UserUpdateResponse;
@@ -69,6 +75,11 @@ export type MutationReportDeleteArgs = {
 export type MutationReportUpdateArgs = {
   id: Scalars['String'];
   input: ReportUpdateInput;
+};
+
+
+export type MutationSignInArgs = {
+  input: SignInInput;
 };
 
 
@@ -119,6 +130,11 @@ export type PageInfo = {
   page: Scalars['Int'];
   perPage: Scalars['Int'];
   total: Scalars['Int'];
+};
+
+export type PermissionDeniedError = DefaultError & {
+  __typename?: 'PermissionDeniedError';
+  message: Scalars['String'];
 };
 
 export type Query = {
@@ -179,7 +195,7 @@ export type QueryVehiclePaginateArgs = {
 
 export type Report = {
   __typename?: 'Report';
-  client: User;
+  client?: Maybe<User>;
   createdAt: Scalars['DateTime'];
   expressLaboratoryResult?: Maybe<File>;
   id: Scalars['String'];
@@ -193,11 +209,11 @@ export type Report = {
   stateNumber: Scalars['String'];
   totalMileage: Scalars['String'];
   updatedAt: Scalars['DateTime'];
-  vehicle: Vehicle;
+  vehicle?: Maybe<Vehicle>;
 };
 
 export type ReportCreateInput = {
-  client: Scalars['String'];
+  client?: Maybe<Scalars['String']>;
   expressLaboratoryResult?: Maybe<Scalars['String']>;
   laboratoryResult?: Maybe<Scalars['String']>;
   lubricant: Scalars['String'];
@@ -207,7 +223,7 @@ export type ReportCreateInput = {
   samplingNodes: Scalars['String'];
   stateNumber: Scalars['String'];
   totalMileage: Scalars['String'];
-  vehicle: Scalars['String'];
+  vehicle?: Maybe<Scalars['String']>;
 };
 
 export type ReportCreateResponse = {
@@ -218,6 +234,7 @@ export type ReportCreateResponse = {
 };
 
 export type ReportFilter = {
+  clientName?: Maybe<StringFilter>;
   lubricant?: Maybe<StringFilter>;
   lubricantMileage?: Maybe<StringFilter>;
   number?: Maybe<NumberFilter>;
@@ -269,6 +286,19 @@ export type ReportUpdateResponse = {
   error?: Maybe<DefaultError>;
   record?: Maybe<Report>;
   success: Scalars['Boolean'];
+};
+
+export type SignInInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type SignInResponse = {
+  __typename?: 'SignInResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<User>;
+  success: Scalars['Boolean'];
+  token?: Maybe<Scalars['String']>;
 };
 
 export type StringFilter = {
@@ -343,6 +373,12 @@ export type UserUpdateResponse = {
   success: Scalars['Boolean'];
 };
 
+export type ValidationError = DefaultError & {
+  __typename?: 'ValidationError';
+  field: Scalars['String'];
+  message: Scalars['String'];
+};
+
 export type Vehicle = {
   __typename?: 'Vehicle';
   createdAt: Scalars['DateTime'];
@@ -377,6 +413,8 @@ export type VehicleFilter = {
   engineModel?: Maybe<StringFilter>;
   generalOperatingTime?: Maybe<StringFilter>;
   model?: Maybe<StringFilter>;
+  ownerId?: Maybe<IdFilter>;
+  ownerName?: Maybe<StringFilter>;
   releaseYear?: Maybe<StringFilter>;
   stateNumber?: Maybe<StringFilter>;
 };

@@ -11,11 +11,12 @@ export interface SelectVehicleValue {
 }
 
 export interface SelectVehicleProps {
-  value?: SelectVehicleValue
-  onChange?: (v?: SelectVehicleValue) => void
+  ownerId?: string
+  value?: SelectVehicleValue | null
+  onChange?: (v?: SelectVehicleValue | null) => void
 }
 
-export function SelectVehicle ({ value, onChange }: SelectVehicleProps) {
+export function SelectVehicle ({ ownerId, value, onChange }: SelectVehicleProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
@@ -25,7 +26,14 @@ export function SelectVehicle ({ value, onChange }: SelectVehicleProps) {
     variables: {
       page,
       perPage,
-      // search
+      filter: {
+        ownerId: {
+          eq: ownerId || undefined
+        },
+        model: {
+          contains: search || undefined
+        }
+      }
     },
     notifyOnNetworkStatusChange: true
   })
@@ -59,7 +67,7 @@ export function SelectVehicle ({ value, onChange }: SelectVehicleProps) {
           {value && (
             <Button
               icon="cross"
-              onClick={() => onChange?.(undefined)}
+              onClick={() => onChange?.(null)}
             />
           )}
         </ButtonGroup>

@@ -302,7 +302,7 @@ export function Title<SortType>({
   return (
     <div className="flex items-center gap-1">
       <div
-        className={classNames({
+        className={classNames('mr-auto', {
           [styles.labelWithSort]: sortDesc || sortAsc
         })}
         onClick={handleSortToggle}

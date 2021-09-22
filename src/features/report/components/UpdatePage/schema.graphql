@@ -32,6 +32,10 @@ query ReportUpdatePageQuery($id: String!) {
   report(id: $id) {
     ...ReportUpdatePageFragment
   }
+  currentUser {
+    id
+    role
+  }
 }
 
 mutation ReportUpdatePageMutation($id: String!, $input: ReportUpdateInput!) {

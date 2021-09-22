@@ -6,7 +6,7 @@ const defaultOptions =  {}
 export type AppHeaderCurrentUserQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type AppHeaderCurrentUserQuery = { __typename?: 'Query', currentUser?: Types.Maybe<{ __typename?: 'User', id: string, name: string }> };
+export type AppHeaderCurrentUserQuery = { __typename?: 'Query', currentUser?: Types.Maybe<{ __typename?: 'User', id: string, name: string, role: Types.UserRole }> };
 
 
 export const AppHeaderCurrentUserDocument = gql`
@@ -14,6 +14,7 @@ export const AppHeaderCurrentUserDocument = gql`
   currentUser {
     id
     name
+    role
   }
 }
     `;

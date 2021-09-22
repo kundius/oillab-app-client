@@ -1,0 +1,15 @@
+mutation AuthSignInPage ($input: SignInInput!) {
+  signIn(input: $input) {
+    success
+    token
+    record {
+      id
+    }
+    error {
+      message
+      ... on ValidationError {
+        field
+      }
+    }
+  }
+}
