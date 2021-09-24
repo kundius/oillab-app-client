@@ -233,10 +233,25 @@ const FilterNumber = ({
     <div>
       <div className="flex flex-col mb-4">
         <div className="flex gap-4 mb-4">
-          <NumericInput onValueChange={setGt} value={gt} fill />
-          <NumericInput onValueChange={setLt} value={lt} fill />
+          <NumericInput
+            onValueChange={setGt}
+            value={gt}
+            fill
+            placeholder="От"
+          />
+          <NumericInput
+            onValueChange={setLt}
+            value={lt}
+            fill
+            placeholder="До"
+          />
         </div>
-        <NumericInput onValueChange={setEq} value={eq} fill />
+        <NumericInput
+          onValueChange={setEq}
+          value={eq}
+          fill
+          placeholder="Равно"
+        />
       </div>
       <div className="flex justify-between">
         <Button text="Очистить" onClick={handleReset} />
