@@ -48,6 +48,9 @@ export function ListPage() {
         <Table<schema.UsersListPageItemFragment>
           data={items}
           rowKey={(record) => record.id}
+          scroll={{
+            x: 1400
+          }}
           emptyText={
             <NonIdealState
               title={
