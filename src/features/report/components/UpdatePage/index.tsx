@@ -161,7 +161,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
           style={{ width: 800 }}
         >
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Общий пробег агрегата:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -176,7 +176,6 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={
@@ -197,7 +196,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
             <div className="w-1/4" />
           </div>
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Пробег/наработка на смазочном материале:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -212,7 +211,6 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={
@@ -233,7 +231,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
             <div className="w-1/4" />
           </div>
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Гос номер:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -248,7 +246,6 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={
@@ -269,7 +266,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
             <div className="w-1/4" />
           </div>
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Узел пробоотбора:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -284,7 +281,6 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={
@@ -305,7 +301,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
             <div className="w-1/4" />
           </div>
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Смазочный материал:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -320,7 +316,6 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={
@@ -341,7 +336,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
             <div className="w-1/4" />
           </div>
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Дата забора пробы/образца:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -357,12 +352,8 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                 }) => (
                   <DateInput
                     {...jsDateFormatter}
-                    disabled={mutationState.loading}
                     className="w-full"
-                    inputProps={{
-                      large: true,
-                      fill: true
-                    }}
+                    disabled={mutationState.loading}
                     value={value ? new Date(value) : undefined}
                     onChange={onChange}
                     popoverProps={{ position: Position.BOTTOM }}
@@ -381,7 +372,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
             <div className="w-1/4" />
           </div>
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Примечание:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -396,7 +387,6 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={
@@ -418,7 +408,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
           </div>
           {query.data?.currentUser?.role === 'Administrator' && (
             <div className="flex gap-8 items-center">
-              <div className="w-1/4 flex justify-end text-base leading-none text-right">
+              <div className="w-1/4 flex justify-end leading-none text-right">
                 Клиент:
               </div>
               <div className="w-2/4 flex justify-start">
@@ -436,7 +426,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
           )}
           {watchClient && (
             <div className="flex gap-8 items-center">
-              <div className="w-1/4 flex justify-end text-base leading-none text-right">
+              <div className="w-1/4 flex justify-end leading-none text-right">
                 Техника:
               </div>
               <div className="w-2/4 flex justify-start">
@@ -456,7 +446,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
           )}
           {query.data?.currentUser?.role === 'Administrator' && (
             <div className="flex gap-8 items-center">
-              <div className="w-1/4 flex justify-end text-base leading-none text-right">
+              <div className="w-1/4 flex justify-end leading-none text-right">
                 Экспресс результат лаборатории:
               </div>
               <div className="w-2/4 flex justify-start">
@@ -474,7 +464,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
           )}
           {query.data?.currentUser?.role === 'Administrator' && (
             <div className="flex gap-8 items-center">
-              <div className="w-1/4 flex justify-end text-base leading-none text-right">
+              <div className="w-1/4 flex justify-end leading-none text-right">
                 Результат лаборатории:
               </div>
               <div className="w-2/4 flex justify-start">

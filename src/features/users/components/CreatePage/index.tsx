@@ -98,7 +98,7 @@ export function CreatePage () {
           style={{ width: 800 }}
         >
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base">
+            <div className="w-1/4 flex justify-end">
               Имя:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -113,7 +113,6 @@ export function CreatePage () {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={!!error ? renderError(error.message) : undefined}
@@ -127,7 +126,7 @@ export function CreatePage () {
             <div className="w-1/4" />
           </div>
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base">
+            <div className="w-1/4 flex justify-end">
               E-mail:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -142,7 +141,6 @@ export function CreatePage () {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={!!error ? renderError(error.message) : undefined}
@@ -156,7 +154,7 @@ export function CreatePage () {
             <div className="w-1/4" />
           </div>
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base">
+            <div className="w-1/4 flex justify-end">
               Пароль:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -171,7 +169,6 @@ export function CreatePage () {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={!!error ? renderError(error.message) : undefined}

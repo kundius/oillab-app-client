@@ -130,7 +130,7 @@ export function UpdatePage({ initialVehicle }: UpdatePageProps) {
           style={{ width: 800 }}
         >
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Модель:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -145,7 +145,6 @@ export function UpdatePage({ initialVehicle }: UpdatePageProps) {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={
@@ -166,7 +165,7 @@ export function UpdatePage({ initialVehicle }: UpdatePageProps) {
             <div className="w-1/4" />
           </div>
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Год выпуска:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -181,7 +180,6 @@ export function UpdatePage({ initialVehicle }: UpdatePageProps) {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={
@@ -202,7 +200,7 @@ export function UpdatePage({ initialVehicle }: UpdatePageProps) {
             <div className="w-1/4" />
           </div>
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Гос номер:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -217,7 +215,6 @@ export function UpdatePage({ initialVehicle }: UpdatePageProps) {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={
@@ -238,7 +235,7 @@ export function UpdatePage({ initialVehicle }: UpdatePageProps) {
             <div className="w-1/4" />
           </div>
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Модель двигателя:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -253,7 +250,6 @@ export function UpdatePage({ initialVehicle }: UpdatePageProps) {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={
@@ -274,7 +270,7 @@ export function UpdatePage({ initialVehicle }: UpdatePageProps) {
             <div className="w-1/4" />
           </div>
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Общая наработка техники:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -289,7 +285,6 @@ export function UpdatePage({ initialVehicle }: UpdatePageProps) {
                   fieldState: { error }
                 }) => (
                   <InputGroup
-                    large
                     className="w-full"
                     disabled={mutationState.loading}
                     rightElement={
@@ -310,7 +305,7 @@ export function UpdatePage({ initialVehicle }: UpdatePageProps) {
             <div className="w-1/4" />
           </div>
           <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end text-base leading-none text-right">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Владелец техники:
             </div>
             <div className="w-2/4 flex justify-start">
