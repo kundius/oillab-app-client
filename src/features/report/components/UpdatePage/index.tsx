@@ -24,7 +24,7 @@ export interface FormFields {
   totalMileage: string
   lubricantMileage: string
   samplingNodes: string
-  note: string
+  note?: string
   lubricant: string
   sampledAt: string
   client?: SelectUserValue | null
@@ -379,9 +379,6 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
               <Controller
                 name="note"
                 control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
                 render={({
                   field: { ref, value, ...field },
                   fieldState: { error }

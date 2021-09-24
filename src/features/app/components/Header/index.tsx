@@ -22,7 +22,7 @@ export const Header = () => {
             <a className="flex items-center hover:no-underline hover:text-current">
               <Icon icon="database" size={40} />
               <span className="flex flex-col ml-2">
-                <span className="font-bold text-xl leading-6">ООО "РТК"</span>
+                <span className="font-bold text-xl leading-6">ООО "ОЙЛ-ЛАБ"</span>
                 <span className="italic opacity-80 tracking-wider">
                   База данных
                 </span>
