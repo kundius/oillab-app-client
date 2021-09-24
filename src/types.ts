@@ -242,6 +242,7 @@ export type ReportFilter = {
   samplingNodes?: Maybe<StringFilter>;
   stateNumber?: Maybe<StringFilter>;
   totalMileage?: Maybe<StringFilter>;
+  vehicleModel?: Maybe<StringFilter>;
 };
 
 export type ReportPaginateResponse = {
