@@ -25,7 +25,6 @@ export interface FormFields {
   releaseYear: string
   stateNumber: string
   engineModel: string
-  generalOperatingTime: string
   owner: SelectUserValue
 }
 
@@ -101,6 +100,41 @@ export function CreatePage() {
         >
           <div className="flex gap-8 items-center">
             <div className="w-1/4 flex justify-end leading-none text-right">
+              Гос номер:
+            </div>
+            <div className="w-2/4 flex justify-start">
+              <Controller
+                name="stateNumber"
+                control={control}
+                rules={{
+                  required: 'Значение обязательно'
+                }}
+                render={({
+                  field: { ref, value, ...field },
+                  fieldState: { error }
+                }) => (
+                  <InputGroup
+                    className="w-full"
+                    disabled={mutationState.loading}
+                    rightElement={
+                      !!error ? (
+                        <ErrorIcon
+                          message={error.message}
+                          loading={mutationState.loading}
+                        />
+                      ) : undefined
+                    }
+                    inputRef={ref}
+                    value={value || undefined}
+                    {...field}
+                  />
+                )}
+              />
+            </div>
+            <div className="w-1/4" />
+          </div>
+          <div className="flex gap-8 items-center">
+            <div className="w-1/4 flex justify-end leading-none text-right">
               Модель:
             </div>
             <div className="w-2/4 flex justify-start">
@@ -171,81 +205,11 @@ export function CreatePage() {
           </div>
           <div className="flex gap-8 items-center">
             <div className="w-1/4 flex justify-end leading-none text-right">
-              Гос номер:
-            </div>
-            <div className="w-2/4 flex justify-start">
-              <Controller
-                name="stateNumber"
-                control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
               Модель двигателя:
             </div>
             <div className="w-2/4 flex justify-start">
               <Controller
                 name="engineModel"
-                control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Общая наработка техники:
-            </div>
-            <div className="w-2/4 flex justify-start">
-              <Controller
-                name="generalOperatingTime"
                 control={control}
                 rules={{
                   required: 'Значение обязательно'

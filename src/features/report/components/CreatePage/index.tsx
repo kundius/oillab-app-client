@@ -25,6 +25,7 @@ import {
   SelectVehicleValue
 } from '@features/vehicle/components/SelectVehicle'
 import { MainTemplate } from '@features/app/components/MainTemplate'
+import { DetailsForForm } from '@features/vehicle/components/DetailsForForm'
 import { AppToaster } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 
@@ -65,6 +66,7 @@ export function CreatePage() {
   } = useForm<FormFields>()
 
   const watchClient = watch('client')
+  const watchVehicle = watch('vehicle')
 
   const onSubmit = async ({
     client,
@@ -137,11 +139,48 @@ export function CreatePage() {
           className="space-y-8 max-w-full ml-auto mr-auto"
           style={{ width: 800 }}
         >
+          {query.data?.currentUser?.role === 'Administrator' && (
+            <div className="flex gap-8 items-center">
+              <div className="w-1/4 flex justify-end leading-none text-right">
+                Владелец техники:
+              </div>
+              <div className="w-2/4">
+                <Controller
+                  name="client"
+                  control={control}
+                  render={({
+                    field: { ref, ...field },
+                    fieldState: { error }
+                  }) => <SelectUser {...field} />}
+                />
+              </div>
+              <div className="w-1/4" />
+            </div>
+          )}
+          {watchClient && (
+            <div className="flex gap-8 items-center">
+              <div className="w-1/4 flex justify-end leading-none text-right">
+                Техника:
+              </div>
+              <div className="w-2/4">
+                <Controller
+                  name="vehicle"
+                  control={control}
+                  render={({
+                    field: { ref, ...field },
+                    fieldState: { error }
+                  }) => <SelectVehicle ownerId={watchClient.value} {...field} />}
+                />
+              </div>
+              <div className="w-1/4" />
+            </div>
+          )}
+          {watchVehicle && <DetailsForForm id={watchVehicle.value} />}
           <div className="flex gap-8 items-center">
             <div className="w-1/4 flex justify-end leading-none text-right">
               Общий пробег агрегата:
             </div>
-            <div className="w-2/4 flex justify-start">
+            <div className="w-2/4">
               <Controller
                 name="totalMileage"
                 control={control}
@@ -176,7 +215,7 @@ export function CreatePage() {
             <div className="w-1/4 flex justify-end leading-none text-right">
               Пробег/наработка на смазочном материале:
             </div>
-            <div className="w-2/4 flex justify-start">
+            <div className="w-2/4">
               <Controller
                 name="lubricantMileage"
                 control={control}
@@ -209,44 +248,9 @@ export function CreatePage() {
           </div>
           <div className="flex gap-8 items-center">
             <div className="w-1/4 flex justify-end leading-none text-right">
-              Гос номер:
-            </div>
-            <div className="w-2/4 flex justify-start">
-              <Controller
-                name="stateNumber"
-                control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
               Узел пробоотбора:
             </div>
-            <div className="w-2/4 flex justify-start">
+            <div className="w-2/4">
               <Controller
                 name="samplingNodes"
                 control={control}
@@ -281,7 +285,7 @@ export function CreatePage() {
             <div className="w-1/4 flex justify-end leading-none text-right">
               Смазочный материал:
             </div>
-            <div className="w-2/4 flex justify-start">
+            <div className="w-2/4">
               <Controller
                 name="lubricant"
                 control={control}
@@ -316,7 +320,7 @@ export function CreatePage() {
             <div className="w-1/4 flex justify-end leading-none text-right">
               Дата забора пробы/образца:
             </div>
-            <div className="w-2/4 flex justify-start">
+            <div className="w-2/4">
               <Controller
                 name="sampledAt"
                 control={control}
@@ -352,7 +356,7 @@ export function CreatePage() {
             <div className="w-1/4 flex justify-end leading-none text-right">
               Примечание:
             </div>
-            <div className="w-2/4 flex justify-start">
+            <div className="w-2/4">
               <Controller
                 name="note"
                 control={control}
@@ -383,45 +387,9 @@ export function CreatePage() {
           {query.data?.currentUser?.role === 'Administrator' && (
             <div className="flex gap-8 items-center">
               <div className="w-1/4 flex justify-end leading-none text-right">
-                Клиент:
-              </div>
-              <div className="w-2/4 flex justify-start">
-                <Controller
-                  name="client"
-                  control={control}
-                  render={({
-                    field: { ref, ...field },
-                    fieldState: { error }
-                  }) => <SelectUser {...field} />}
-                />
-              </div>
-              <div className="w-1/4" />
-            </div>
-          )}
-          {watchClient && (
-            <div className="flex gap-8 items-center">
-              <div className="w-1/4 flex justify-end leading-none text-right">
-                Техника:
-              </div>
-              <div className="w-2/4 flex justify-start">
-                <Controller
-                  name="vehicle"
-                  control={control}
-                  render={({
-                    field: { ref, ...field },
-                    fieldState: { error }
-                  }) => <SelectVehicle ownerId={watchClient.value} {...field} />}
-                />
-              </div>
-              <div className="w-1/4" />
-            </div>
-          )}
-          {query.data?.currentUser?.role === 'Administrator' && (
-            <div className="flex gap-8 items-center">
-              <div className="w-1/4 flex justify-end leading-none text-right">
                 Экспресс результат лаборатории:
               </div>
-              <div className="w-2/4 flex justify-start">
+              <div className="w-2/4">
                 <Controller
                   name="expressLaboratoryResult"
                   control={control}
@@ -439,7 +407,7 @@ export function CreatePage() {
               <div className="w-1/4 flex justify-end leading-none text-right">
                 Результат лаборатории:
               </div>
-              <div className="w-2/4 flex justify-start">
+              <div className="w-2/4">
                 <Controller
                   name="laboratoryResult"
                   control={control}

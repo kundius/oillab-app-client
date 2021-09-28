@@ -3,14 +3,14 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions =  {}
-export type VehicleUpdatePageFragment = { __typename?: 'Vehicle', id: string, model: string, releaseYear: string, stateNumber: string, engineModel: string, generalOperatingTime: string, owner: { __typename?: 'User', id: string, name: string } };
+export type VehicleUpdatePageFragment = { __typename?: 'Vehicle', id: string, model: string, releaseYear: string, stateNumber: string, engineModel: string, owner: { __typename?: 'User', id: string, name: string } };
 
 export type VehicleUpdatePageQueryVariables = Types.Exact<{
   id: Types.Scalars['String'];
 }>;
 
 
-export type VehicleUpdatePageQuery = { __typename?: 'Query', vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: string, model: string, releaseYear: string, stateNumber: string, engineModel: string, generalOperatingTime: string, owner: { __typename?: 'User', id: string, name: string } }> };
+export type VehicleUpdatePageQuery = { __typename?: 'Query', vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: string, model: string, releaseYear: string, stateNumber: string, engineModel: string, owner: { __typename?: 'User', id: string, name: string } }> };
 
 export type VehicleUpdatePageMutationVariables = Types.Exact<{
   id: Types.Scalars['String'];
@@ -18,7 +18,7 @@ export type VehicleUpdatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type VehicleUpdatePageMutation = { __typename?: 'Mutation', vehicleUpdate: { __typename?: 'VehicleUpdateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'Vehicle', id: string, model: string, releaseYear: string, stateNumber: string, engineModel: string, generalOperatingTime: string, owner: { __typename?: 'User', id: string, name: string } }> } };
+export type VehicleUpdatePageMutation = { __typename?: 'Mutation', vehicleUpdate: { __typename?: 'VehicleUpdateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'Vehicle', id: string, model: string, releaseYear: string, stateNumber: string, engineModel: string, owner: { __typename?: 'User', id: string, name: string } }> } };
 
 export const VehicleUpdatePageFragmentDoc = gql`
     fragment VehicleUpdatePageFragment on Vehicle {
@@ -31,7 +31,6 @@ export const VehicleUpdatePageFragmentDoc = gql`
   releaseYear
   stateNumber
   engineModel
-  generalOperatingTime
 }
     `;
 export const VehicleUpdatePageQueryDocument = gql`

@@ -8,7 +8,6 @@ fragment VehicleUpdatePageFragment on Vehicle {
   releaseYear
   stateNumber
   engineModel
-  generalOperatingTime
 }
 
 query VehicleUpdatePageQuery($id: String!) {

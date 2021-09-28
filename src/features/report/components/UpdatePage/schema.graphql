@@ -1,7 +1,6 @@
 fragment ReportUpdatePageFragment on Report {
   id
   number
-  stateNumber
   totalMileage
   lubricantMileage
   samplingNodes
@@ -25,6 +24,9 @@ fragment ReportUpdatePageFragment on Report {
   vehicle {
     id
     model
+    stateNumber
+    releaseYear
+    engineModel
   }
 }
 

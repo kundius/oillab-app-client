@@ -6,6 +6,7 @@ import { DateInput, DateFormatProps } from '@blueprintjs/datetime'
 
 import { UploadFile, UploadFileValue } from '@components/UploadFile'
 import { MainTemplate } from '@features/app/components/MainTemplate'
+import { DetailsForForm } from '@features/vehicle/components/DetailsForForm'
 import { AppToaster } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import {
@@ -63,7 +64,6 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
     defaultValues: {
       totalMileage: initialReport.totalMileage || undefined,
       lubricantMileage: initialReport.lubricantMileage || undefined,
-      stateNumber: initialReport.stateNumber || undefined,
       samplingNodes: initialReport.samplingNodes || undefined,
       note: initialReport.note || undefined,
       lubricant: initialReport.lubricant || undefined,
@@ -86,6 +86,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
   })
 
   const watchClient = watch('client')
+  const watchVehicle = watch('vehicle')
 
   const onSubmit = async ({
     client,
@@ -160,6 +161,43 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
           className="space-y-8 max-w-full ml-auto mr-auto"
           style={{ width: 800 }}
         >
+          {query.data?.currentUser?.role === 'Administrator' && (
+            <div className="flex gap-8 items-center">
+              <div className="w-1/4 flex justify-end leading-none text-right">
+                Владелец техники:
+              </div>
+              <div className="w-2/4 flex justify-start">
+                <Controller
+                  name="client"
+                  control={control}
+                  render={({
+                    field: { ref, ...field },
+                    fieldState: { error }
+                  }) => <SelectUser {...field} />}
+                />
+              </div>
+              <div className="w-1/4" />
+            </div>
+          )}
+          {watchClient && (
+            <div className="flex gap-8 items-center">
+              <div className="w-1/4 flex justify-end leading-none text-right">
+                Техника:
+              </div>
+              <div className="w-2/4 flex justify-start">
+                <Controller
+                  name="vehicle"
+                  control={control}
+                  render={({
+                    field: { ref, ...field },
+                    fieldState: { error }
+                  }) => <SelectVehicle ownerId={watchClient.value} {...field} />}
+                />
+              </div>
+              <div className="w-1/4" />
+            </div>
+          )}
+          {watchVehicle && <DetailsForForm id={watchVehicle.value} />}
           <div className="flex gap-8 items-center">
             <div className="w-1/4 flex justify-end leading-none text-right">
               Общий пробег агрегата:
@@ -202,41 +240,6 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
             <div className="w-2/4 flex justify-start">
               <Controller
                 name="lubricantMileage"
-                control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Гос номер:
-            </div>
-            <div className="w-2/4 flex justify-start">
-              <Controller
-                name="stateNumber"
                 control={control}
                 rules={{
                   required: 'Значение обязательно'
@@ -352,8 +355,8 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                 }) => (
                   <DateInput
                     {...jsDateFormatter}
-                    className="w-full"
                     disabled={mutationState.loading}
+                    className="w-full"
                     value={value ? new Date(value) : undefined}
                     onChange={onChange}
                     popoverProps={{ position: Position.BOTTOM }}
@@ -403,44 +406,6 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
             </div>
             <div className="w-1/4" />
           </div>
-          {query.data?.currentUser?.role === 'Administrator' && (
-            <div className="flex gap-8 items-center">
-              <div className="w-1/4 flex justify-end leading-none text-right">
-                Клиент:
-              </div>
-              <div className="w-2/4 flex justify-start">
-                <Controller
-                  name="client"
-                  control={control}
-                  render={({
-                    field: { ref, ...field },
-                    fieldState: { error }
-                  }) => <SelectUser {...field} />}
-                />
-              </div>
-              <div className="w-1/4" />
-            </div>
-          )}
-          {watchClient && (
-            <div className="flex gap-8 items-center">
-              <div className="w-1/4 flex justify-end leading-none text-right">
-                Техника:
-              </div>
-              <div className="w-2/4 flex justify-start">
-                <Controller
-                  name="vehicle"
-                  control={control}
-                  render={({
-                    field: { ref, ...field },
-                    fieldState: { error }
-                  }) => (
-                    <SelectVehicle ownerId={watchClient.value} {...field} />
-                  )}
-                />
-              </div>
-              <div className="w-1/4" />
-            </div>
-          )}
           {query.data?.currentUser?.role === 'Administrator' && (
             <div className="flex gap-8 items-center">
               <div className="w-1/4 flex justify-end leading-none text-right">

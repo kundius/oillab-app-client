@@ -131,23 +131,6 @@ export function ListPage() {
           <Table.Column
             title={
               <Table.Title
-                text="Обшее время эксплуатации"
-                filter="string"
-                filterValue={filter.generalOperatingTime || undefined}
-                onFilterChange={(generalOperatingTime) =>
-                  setFilter((prev) => ({ ...prev, generalOperatingTime }))
-                }
-                sortAsc={types.VehicleSort.GeneralOperatingTimeAsc}
-                sortDesc={types.VehicleSort.GeneralOperatingTimeDesc}
-                sortValue={sort}
-                onSortChange={setSort}
-              />
-            }
-            dataIndex="generalOperatingTime"
-          />
-          <Table.Column
-            title={
-              <Table.Title
                 text="Владелец"
                 filter="string"
                 filterValue={filter.ownerName || undefined}

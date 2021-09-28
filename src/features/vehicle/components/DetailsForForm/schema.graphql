@@ -1,0 +1,13 @@
+fragment VehicleDetailsForFormFragment on Vehicle {
+  id
+  model
+  releaseYear
+  stateNumber
+  engineModel
+}
+
+query VehicleDetailsForFormQuery($id: String!) {
+  vehicle(id: $id) {
+    ...VehicleDetailsForFormFragment
+  }
+}

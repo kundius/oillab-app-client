@@ -4,7 +4,6 @@ fragment VehicleListPageItem on Vehicle {
   releaseYear
   stateNumber
   engineModel
-  generalOperatingTime
   owner {
     id
     name

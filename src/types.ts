@@ -206,7 +206,6 @@ export type Report = {
   number: Scalars['Float'];
   sampledAt: Scalars['DateTime'];
   samplingNodes: Scalars['String'];
-  stateNumber: Scalars['String'];
   totalMileage: Scalars['String'];
   updatedAt: Scalars['DateTime'];
   vehicle?: Maybe<Vehicle>;
@@ -221,7 +220,6 @@ export type ReportCreateInput = {
   note?: Maybe<Scalars['String']>;
   sampledAt: Scalars['DateTime'];
   samplingNodes: Scalars['String'];
-  stateNumber: Scalars['String'];
   totalMileage: Scalars['String'];
   vehicle?: Maybe<Scalars['String']>;
 };
@@ -240,9 +238,11 @@ export type ReportFilter = {
   number?: Maybe<NumberFilter>;
   sampledAt?: Maybe<DateFilter>;
   samplingNodes?: Maybe<StringFilter>;
-  stateNumber?: Maybe<StringFilter>;
   totalMileage?: Maybe<StringFilter>;
+  vehicleEngineModel?: Maybe<StringFilter>;
   vehicleModel?: Maybe<StringFilter>;
+  vehicleReleaseYear?: Maybe<StringFilter>;
+  vehicleStateNumber?: Maybe<StringFilter>;
 };
 
 export type ReportPaginateResponse = {
@@ -277,7 +277,6 @@ export type ReportUpdateInput = {
   note?: Maybe<Scalars['String']>;
   sampledAt?: Maybe<Scalars['DateTime']>;
   samplingNodes?: Maybe<Scalars['String']>;
-  stateNumber?: Maybe<Scalars['String']>;
   totalMileage?: Maybe<Scalars['String']>;
   vehicle?: Maybe<Scalars['String']>;
 };
@@ -384,7 +383,6 @@ export type Vehicle = {
   __typename?: 'Vehicle';
   createdAt: Scalars['DateTime'];
   engineModel: Scalars['String'];
-  generalOperatingTime: Scalars['String'];
   id: Scalars['String'];
   model: Scalars['String'];
   owner: User;
@@ -396,7 +394,6 @@ export type Vehicle = {
 
 export type VehicleCreateInput = {
   engineModel: Scalars['String'];
-  generalOperatingTime: Scalars['String'];
   model: Scalars['String'];
   owner: Scalars['String'];
   releaseYear: Scalars['String'];
@@ -412,7 +409,6 @@ export type VehicleCreateResponse = {
 
 export type VehicleFilter = {
   engineModel?: Maybe<StringFilter>;
-  generalOperatingTime?: Maybe<StringFilter>;
   model?: Maybe<StringFilter>;
   ownerId?: Maybe<IdFilter>;
   ownerName?: Maybe<StringFilter>;
@@ -441,7 +437,6 @@ export enum VehicleSort {
 
 export type VehicleUpdateInput = {
   engineModel?: Maybe<Scalars['String']>;
-  generalOperatingTime?: Maybe<Scalars['String']>;
   model?: Maybe<Scalars['String']>;
   owner?: Maybe<Scalars['String']>;
   releaseYear?: Maybe<Scalars['String']>;

@@ -41,6 +41,7 @@ export const MainTemplate = ({
           </div>
         </Container>
       </div>
+      <div className="h-16" />
     </div>
   )
 }

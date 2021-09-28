@@ -82,7 +82,7 @@ export function ListPage() {
           <Table.Column
             title={
               <Table.Title
-                text="Клиент"
+                text="Владелец техники"
                 filter="string"
                 filterValue={filter.clientName || undefined}
                 onFilterChange={(clientName) =>
@@ -95,7 +95,7 @@ export function ListPage() {
           <Table.Column
             title={
               <Table.Title
-                text="Модель техники"
+                text="Модель"
                 filter="string"
                 filterValue={filter.vehicleModel || undefined}
                 onFilterChange={(vehicleModel) =>
@@ -110,35 +110,13 @@ export function ListPage() {
               <Table.Title
                 text="Гос. номер"
                 filter="string"
-                filterValue={filter.stateNumber || undefined}
-                onFilterChange={(stateNumber) =>
-                  setFilter((prev) => ({ ...prev, stateNumber }))
+                filterValue={filter.vehicleStateNumber || undefined}
+                onFilterChange={(vehicleStateNumber) =>
+                  setFilter((prev) => ({ ...prev, vehicleStateNumber }))
                 }
-                sortAsc={types.ReportSort.StateNumberAsc}
-                sortDesc={types.ReportSort.StateNumberDesc}
-                sortValue={sort}
-                onSortChange={setSort}
               />
             }
-            dataIndex="stateNumber"
-          />
-          <Table.Column
-            title={
-              <Table.Title
-                text="Дата пробы"
-                filter="date"
-                filterValue={filter.sampledAt || undefined}
-                onFilterChange={(sampledAt) =>
-                  setFilter((prev) => ({ ...prev, sampledAt }))
-                }
-                sortAsc={types.ReportSort.SampledAtAsc}
-                sortDesc={types.ReportSort.SampledAtDesc}
-                sortValue={sort}
-                onSortChange={setSort}
-              />
-            }
-            dataIndex="sampledAt"
-            render={(value) => new Date(value).toLocaleDateString()}
+            dataIndex={['vehicle', 'stateNumber']}
           />
           <Table.Column
             title={
@@ -209,6 +187,25 @@ export function ListPage() {
             dataIndex="lubricant"
           />
           <Table.Column
+            title={
+              <Table.Title
+                text="Дата пробы"
+                filter="date"
+                filterValue={filter.sampledAt || undefined}
+                onFilterChange={(sampledAt) =>
+                  setFilter((prev) => ({ ...prev, sampledAt }))
+                }
+                sortAsc={types.ReportSort.SampledAtAsc}
+                sortDesc={types.ReportSort.SampledAtDesc}
+                sortValue={sort}
+                onSortChange={setSort}
+              />
+            }
+            dataIndex="sampledAt"
+            render={(value) => new Date(value).toLocaleDateString()}
+          />
+          <Table.Column title="Примечание" dataIndex="note" />
+          <Table.Column
             title="Результат лаборатории"
             dataIndex="laboratoryResult"
             render={(value) =>
@@ -230,7 +227,6 @@ export function ListPage() {
               ) : undefined
             }
           />
-          <Table.Column title="Примечание" dataIndex="note" />
           <Table.Column
             title="Действия"
             align="center"
