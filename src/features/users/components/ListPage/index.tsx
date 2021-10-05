@@ -40,7 +40,7 @@ export function ListPage() {
       ]}
       extra={
         <Link href="/users/create" passHref>
-          <AnchorButton icon="add">Добавить пользователя</AnchorButton>
+          <AnchorButton icon="add" intent="primary">Добавить пользователя</AnchorButton>
         </Link>
       }
     >

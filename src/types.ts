@@ -51,6 +51,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   reportCreate: ReportCreateResponse;
   reportDelete: DefaultMutationResponse;
+  reportGeneratePdf: ReportGeneratePdfResponse;
   reportUpdate: ReportUpdateResponse;
   signIn: SignInResponse;
   userCreate: UserCreateResponse;
@@ -69,6 +70,12 @@ export type MutationReportCreateArgs = {
 
 export type MutationReportDeleteArgs = {
   id: Scalars['String'];
+};
+
+
+export type MutationReportGeneratePdfArgs = {
+  filter?: Maybe<ReportFilter>;
+  sort?: Maybe<Array<ReportSort>>;
 };
 
 
@@ -243,6 +250,13 @@ export type ReportFilter = {
   vehicleModel?: Maybe<StringFilter>;
   vehicleReleaseYear?: Maybe<StringFilter>;
   vehicleStateNumber?: Maybe<StringFilter>;
+};
+
+export type ReportGeneratePdfResponse = {
+  __typename?: 'ReportGeneratePdfResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<File>;
+  success: Scalars['Boolean'];
 };
 
 export type ReportPaginateResponse = {

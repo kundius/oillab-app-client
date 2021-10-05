@@ -13,18 +13,15 @@ import {
   InputGroup
 } from '@blueprintjs/core'
 import { DateFormatProps, DateInput } from '@blueprintjs/datetime'
-import qs from 'qs'
 
 import { Table } from '@components/Table'
 import { Wall } from '@components/Wall'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DeletePopover } from '@features/report/components/DeletePopover'
-import getRuntimeConfig from '@app/utils/getRuntimeConfig'
+import { AppToaster } from '@components/AppToaster'
 
 import * as schema from './schema.generated'
 import * as types from '@app/types'
-
-const { publicRuntimeConfig } = getRuntimeConfig()
 
 const jsDateFormatter: DateFormatProps = {
   formatDate: (date) => date.toLocaleDateString(),
@@ -36,6 +33,8 @@ export function ListPage() {
     types.ReportSort.NumberAsc
   )
   const [filter, setFilter] = useState<types.ReportFilter>({})
+  const [generatePdf, generatePdfState] =
+    schema.useReportListPageReportGeneratePdfMutation()
   const manyQuery = schema.useReportListPageReportPaginateQuery({
     variables: {
       sort,
@@ -45,9 +44,24 @@ export function ListPage() {
   })
   const items = manyQuery?.data?.reportPaginate?.items || []
 
-  const getPdfLink = () => {
-    console.log(qs.stringify({ filter, sort }))
-    return `${publicRuntimeConfig.API_URL}/report/pdf?${qs.stringify({ filter, sort })}`
+  const handleGeneratePdf = async () => {
+    const response = await generatePdf({
+      variables: {
+        filter,
+        sort
+      }
+    })
+
+    if (response.data?.reportGeneratePdf.record) {
+      window.open(response.data.reportGeneratePdf.record.url)
+    }
+
+    if (response.data?.reportGeneratePdf.error) {
+      AppToaster.show({
+        message: response.data.reportGeneratePdf.error.message,
+        intent: Intent.DANGER
+      })
+    }
   }
 
   return (
@@ -60,12 +74,18 @@ export function ListPage() {
       ]}
       extra={
         <div className="flex">
-          <Link href={getPdfLink()} passHref>
-            <AnchorButton target="_blank">Печатать</AnchorButton>
-          </Link>
+          <Button
+            onClick={handleGeneratePdf}
+            disabled={generatePdfState.loading}
+            loading={generatePdfState.loading}
+          >
+            Печатать
+          </Button>
           <div className="mx-2" />
           <Link href="/report/create" passHref>
-            <AnchorButton icon="add">Добавить отчет</AnchorButton>
+            <AnchorButton icon="add" intent="primary">
+              Добавить отчет
+            </AnchorButton>
           </Link>
         </div>
       }

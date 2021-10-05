@@ -40,7 +40,7 @@ export function ListPage() {
       ]}
       extra={
         <Link href="/vehicle/create" passHref>
-          <AnchorButton icon="add">Добавить технику</AnchorButton>
+          <AnchorButton icon="add" intent="primary">Добавить технику</AnchorButton>
         </Link>
       }
     >

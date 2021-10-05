@@ -43,3 +43,22 @@ query ReportListPageReportPaginate(
     }
   }
 }
+
+mutation ReportListPageReportGeneratePdf(
+  $sort: [ReportSort!]
+  $filter: ReportFilter
+) {
+  reportGeneratePdf(
+    sort: $sort
+    filter: $filter
+  ) {
+    success
+    error {
+      message
+    }
+    record {
+      id
+      url
+    }
+  }
+}
