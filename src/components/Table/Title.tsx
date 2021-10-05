@@ -38,16 +38,16 @@ interface TitleBase<SortType, FilterType> {
 
 interface TitleWithFilterNumber<SortType>
   extends TitleBase<SortType, NumberValue> {
-  filter: 'number'
+  filter?: 'number'
 }
 
 interface TitleWithFilterString<SortType>
   extends TitleBase<SortType, StringValue> {
-  filter: 'string'
+  filter?: 'string'
 }
 
 interface TitleWithFilterDate<SortType> extends TitleBase<SortType, DateValue> {
-  filter: 'date'
+  filter?: 'date'
 }
 
 export type TitleProps<SortType> =

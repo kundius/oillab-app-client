@@ -8,16 +8,28 @@ import {
   Intent,
   NonIdealState,
   Spinner,
-  Icon
+  Icon,
+  NumericInput,
+  InputGroup
 } from '@blueprintjs/core'
+import { DateFormatProps, DateInput } from '@blueprintjs/datetime'
+import qs from 'qs'
 
 import { Table } from '@components/Table'
 import { Wall } from '@components/Wall'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DeletePopover } from '@features/report/components/DeletePopover'
+import getRuntimeConfig from '@app/utils/getRuntimeConfig'
 
 import * as schema from './schema.generated'
 import * as types from '@app/types'
+
+const { publicRuntimeConfig } = getRuntimeConfig()
+
+const jsDateFormatter: DateFormatProps = {
+  formatDate: (date) => date.toLocaleDateString(),
+  parseDate: (str) => new Date(str)
+}
 
 export function ListPage() {
   const [sort, setSort] = useState<types.ReportSort | undefined>(
@@ -32,6 +44,12 @@ export function ListPage() {
     notifyOnNetworkStatusChange: true
   })
   const items = manyQuery?.data?.reportPaginate?.items || []
+
+  const getPdfLink = () => {
+    console.log(qs.stringify({ filter, sort }))
+    return `${publicRuntimeConfig.API_URL}/report/pdf?${qs.stringify({ filter, sort })}`
+  }
+
   return (
     <MainTemplate
       title="Отчеты"
@@ -41,13 +59,20 @@ export function ListPage() {
         }
       ]}
       extra={
-        <Link href="/report/create" passHref>
-          <AnchorButton icon="add">Добавить отчет</AnchorButton>
-        </Link>
+        <div className="flex">
+          <Link href={getPdfLink()} passHref>
+            <AnchorButton target="_blank">Печатать</AnchorButton>
+          </Link>
+          <div className="mx-2" />
+          <Link href="/report/create" passHref>
+            <AnchorButton icon="add">Добавить отчет</AnchorButton>
+          </Link>
+        </div>
       }
     >
       <Wall>
         <Table<schema.ReportListPageItemFragment>
+          sticky
           data={items}
           rowKey={(record) => record.id}
           scroll={{
@@ -61,16 +86,146 @@ export function ListPage() {
               icon={manyQuery.loading ? <Spinner /> : 'warning-sign'}
             />
           }
+          summary={() => (
+            <Table.Summary fixed="top">
+              <Table.Summary.Row>
+                <Table.Summary.Cell index={0}>
+                  <InputGroup
+                    value={
+                      filter.number?.eq ? String(filter.number?.eq) : undefined
+                    }
+                    onChange={(e) =>
+                      setFilter((prev) => ({
+                        ...prev,
+                        number: {
+                          eq: Number(e.target.value)
+                        }
+                      }))
+                    }
+                    fill
+                  />
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={1}>
+                  <InputGroup
+                    value={filter.clientName?.contains || undefined}
+                    onChange={(e) =>
+                      setFilter((prev) => ({
+                        ...prev,
+                        clientName: {
+                          contains: e.target.value
+                        }
+                      }))
+                    }
+                    fill
+                  />
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={2}>
+                  <InputGroup
+                    value={filter.vehicleModel?.contains || undefined}
+                    onChange={(e) =>
+                      setFilter((prev) => ({
+                        ...prev,
+                        vehicleModel: {
+                          contains: e.target.value
+                        }
+                      }))
+                    }
+                    fill
+                  />
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={3}>
+                  <InputGroup
+                    value={filter.vehicleStateNumber?.contains || undefined}
+                    onChange={(e) =>
+                      setFilter((prev) => ({
+                        ...prev,
+                        vehicleStateNumber: {
+                          contains: e.target.value
+                        }
+                      }))
+                    }
+                    fill
+                  />
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={4}>
+                  <InputGroup
+                    value={filter.totalMileage?.contains || undefined}
+                    onChange={(e) =>
+                      setFilter((prev) => ({
+                        ...prev,
+                        totalMileage: {
+                          contains: e.target.value
+                        }
+                      }))
+                    }
+                    fill
+                  />
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={5}>
+                  <InputGroup
+                    value={filter.lubricantMileage?.contains || undefined}
+                    onChange={(e) =>
+                      setFilter((prev) => ({
+                        ...prev,
+                        lubricantMileage: {
+                          contains: e.target.value
+                        }
+                      }))
+                    }
+                    fill
+                  />
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={6}>
+                  <InputGroup
+                    value={filter.samplingNodes?.contains || undefined}
+                    onChange={(e) =>
+                      setFilter((prev) => ({
+                        ...prev,
+                        samplingNodes: {
+                          contains: e.target.value
+                        }
+                      }))
+                    }
+                    fill
+                  />
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={7}>
+                  <InputGroup
+                    value={filter.lubricant?.contains || undefined}
+                    onChange={(e) =>
+                      setFilter((prev) => ({
+                        ...prev,
+                        lubricant: {
+                          contains: e.target.value
+                        }
+                      }))
+                    }
+                    fill
+                  />
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={8}>
+                  <DateInput
+                    {...jsDateFormatter}
+                    value={filter.sampledAt?.eq || undefined}
+                    onChange={(value) =>
+                      setFilter((prev) => ({
+                        ...prev,
+                        sampledAt: {
+                          eq: value
+                        }
+                      }))
+                    }
+                  />
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={9} colSpan={4} />
+              </Table.Summary.Row>
+            </Table.Summary>
+          )}
         >
           <Table.Column
             title={
               <Table.Title
                 text="Номер"
-                filter="number"
-                filterValue={filter.number || undefined}
-                onFilterChange={(number) =>
-                  setFilter((prev) => ({ ...prev, number }))
-                }
                 sortAsc={types.ReportSort.NumberAsc}
                 sortDesc={types.ReportSort.NumberDesc}
                 sortValue={sort}
@@ -80,53 +235,21 @@ export function ListPage() {
             dataIndex="number"
           />
           <Table.Column
-            title={
-              <Table.Title
-                text="Владелец техники"
-                filter="string"
-                filterValue={filter.clientName || undefined}
-                onFilterChange={(clientName) =>
-                  setFilter((prev) => ({ ...prev, clientName }))
-                }
-              />
-            }
+            title={<Table.Title text="Владелец техники" />}
             dataIndex={['client', 'name']}
           />
           <Table.Column
-            title={
-              <Table.Title
-                text="Модель"
-                filter="string"
-                filterValue={filter.vehicleModel || undefined}
-                onFilterChange={(vehicleModel) =>
-                  setFilter((prev) => ({ ...prev, vehicleModel }))
-                }
-              />
-            }
+            title={<Table.Title text="Модель" />}
             dataIndex={['vehicle', 'model']}
           />
           <Table.Column
-            title={
-              <Table.Title
-                text="Гос. номер"
-                filter="string"
-                filterValue={filter.vehicleStateNumber || undefined}
-                onFilterChange={(vehicleStateNumber) =>
-                  setFilter((prev) => ({ ...prev, vehicleStateNumber }))
-                }
-              />
-            }
+            title={<Table.Title text="Гос. номер" />}
             dataIndex={['vehicle', 'stateNumber']}
           />
           <Table.Column
             title={
               <Table.Title
                 text="Общий пробег"
-                filter="string"
-                filterValue={filter.totalMileage || undefined}
-                onFilterChange={(totalMileage) =>
-                  setFilter((prev) => ({ ...prev, totalMileage }))
-                }
                 sortAsc={types.ReportSort.TotalMileageAsc}
                 sortDesc={types.ReportSort.TotalMileageDesc}
                 sortValue={sort}
@@ -139,11 +262,6 @@ export function ListPage() {
             title={
               <Table.Title
                 text="Пробег на смазочном материале"
-                filter="string"
-                filterValue={filter.lubricantMileage || undefined}
-                onFilterChange={(lubricantMileage) =>
-                  setFilter((prev) => ({ ...prev, lubricantMileage }))
-                }
                 sortAsc={types.ReportSort.LubricantMileageAsc}
                 sortDesc={types.ReportSort.LubricantMileageDesc}
                 sortValue={sort}
@@ -156,11 +274,6 @@ export function ListPage() {
             title={
               <Table.Title
                 text="Узел пробоотбора"
-                filter="string"
-                filterValue={filter.samplingNodes || undefined}
-                onFilterChange={(samplingNodes) =>
-                  setFilter((prev) => ({ ...prev, samplingNodes }))
-                }
                 sortAsc={types.ReportSort.SamplingNodesAsc}
                 sortDesc={types.ReportSort.SamplingNodesDesc}
                 sortValue={sort}
@@ -173,11 +286,6 @@ export function ListPage() {
             title={
               <Table.Title
                 text="Смазочный материал"
-                filter="string"
-                filterValue={filter.lubricant || undefined}
-                onFilterChange={(lubricant) =>
-                  setFilter((prev) => ({ ...prev, lubricant }))
-                }
                 sortAsc={types.ReportSort.LubricantAsc}
                 sortDesc={types.ReportSort.LubricantDesc}
                 sortValue={sort}
@@ -190,11 +298,6 @@ export function ListPage() {
             title={
               <Table.Title
                 text="Дата пробы"
-                filter="date"
-                filterValue={filter.sampledAt || undefined}
-                onFilterChange={(sampledAt) =>
-                  setFilter((prev) => ({ ...prev, sampledAt }))
-                }
                 sortAsc={types.ReportSort.SampledAtAsc}
                 sortDesc={types.ReportSort.SampledAtDesc}
                 sortValue={sort}

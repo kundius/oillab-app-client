@@ -22,7 +22,9 @@ export const Header = () => {
             <a className="flex items-center hover:no-underline hover:text-current">
               <Icon icon="database" size={40} />
               <span className="flex flex-col ml-2">
-                <span className="font-bold text-xl leading-6">ООО "ОЙЛ-ЛАБ"</span>
+                <span className="font-bold text-xl leading-6">
+                  ООО "ОЙЛ-ЛАБ"
+                </span>
                 <span className="italic opacity-80 tracking-wider">
                   База данных
                 </span>
@@ -47,7 +49,8 @@ export const Header = () => {
                   <Link href="/users" passHref>
                     <a
                       className={classNames(styles.link, {
-                        [styles.linkActive]: router.pathname.startsWith('/users')
+                        [styles.linkActive]:
+                          router.pathname.startsWith('/users')
                       })}
                     >
                       Пользователи
@@ -76,7 +79,11 @@ export const Header = () => {
               <div className="text-base tracking-wide mr-2 text-current">
                 {currentUser.name}
               </div>
-              <button className={styles.logout} onClick={() => logout()}>
+              <button
+                className={styles.logout}
+                onClick={() => logout()}
+                type="button"
+              >
                 <Icon icon="log-out" />
               </button>
             </div>

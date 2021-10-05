@@ -168,10 +168,15 @@
   left: auto;
 }
 
+.app-table-body {
+  position: relative;
+  z-index: 1;
+}
+
 .app-table-header {
-  border: 1px solid red;
   border-right: 0;
   border-bottom: 0;
+  border-bottom: 1px solid #e1e6eb;
 }
 
 .app-table-placeholder td {
@@ -200,7 +205,7 @@
   right: 0;
   bottom: 0;
   z-index: 1;
-  border-right: 1px solid red;
+  border-right: 1px solid #e1e6eb;
   content: '';
 }
 .app-table-expanded-row .app-table-cell {
@@ -218,7 +223,7 @@
   right: 1px;
   bottom: 0;
   width: 0;
-  border-right: 1px solid red;
+  border-right: 1px solid #e1e6eb;
   content: '';
 }
 .app-table-row-expand-icon {
@@ -243,24 +248,22 @@
 }
 .app-table-title {
   padding: 16px 8px;
-  border: 1px solid red;
+  border: 1px solid #e1e6eb;
   border-bottom: 0;
 }
 .app-table-footer {
   padding: 16px 8px;
-  border: 1px solid red;
+  border: 1px solid #e1e6eb;
   border-top: 0;
 }
 .app-table tfoot td {
-  background: #fff;
+  background: #fbfbfd;
 }
 .app-table-summary {
-  border-top: 1px solid red;
-  border-left: 1px solid red;
 }
 .app-table-sticky-holder {
   position: sticky;
-  z-index: 2;
+  z-index: 2; 
 }
 .app-table-sticky-scroll {
   position: sticky;

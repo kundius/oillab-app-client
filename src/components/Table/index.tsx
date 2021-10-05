@@ -11,5 +11,6 @@ export function Table<RecordType extends DefaultRecordType> (props: TableProps<R
 }
 
 Table.Column = RcTable.Column
+Table.Summary = RcTable.Summary
 Table.ColumnGroup = RcTable.ColumnGroup
 Table.Title = Title
