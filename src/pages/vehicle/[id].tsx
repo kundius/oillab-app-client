@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps<UpdatePageProps> = async (co
   } = await apolloClient.query<VehicleUpdatePageQuery, VehicleUpdatePageQueryVariables>({
     query: VehicleUpdatePageQueryDocument,
     variables: {
-      id: context.params.id
+      id: parseInt(context.params.id)
     }
   })
 

@@ -7,11 +7,11 @@ import * as schema from './schema.generated'
 
 export interface SelectVehicleValue {
   label: string
-  value: string
+  value: number
 }
 
 export interface SelectVehicleProps {
-  ownerId?: string
+  ownerId?: number
   value?: SelectVehicleValue | null
   onChange?: (v?: SelectVehicleValue | null) => void
 }

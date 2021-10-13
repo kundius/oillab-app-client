@@ -3,7 +3,7 @@ import React from 'react'
 import * as schema from './schema.generated'
 
 export interface DetailsForFormProps {
-  id: string
+  id: number
 }
 
 export function DetailsForForm({ id }: DetailsForFormProps) {

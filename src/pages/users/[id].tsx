@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps<UpdatePageProps> = async (co
   } = await apolloClient.query<UsersUpdatePageQuery, UsersUpdatePageQueryVariables>({
     query: UsersUpdatePageQueryDocument,
     variables: {
-      id: context.params.id
+      id: parseInt(context.params.id)
     }
   })
 

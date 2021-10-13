@@ -43,8 +43,8 @@ export type File = {
 };
 
 export type IdFilter = {
-  eq?: Maybe<Scalars['String']>;
-  in?: Maybe<Array<Scalars['String']>>;
+  eq?: Maybe<Scalars['Float']>;
+  in?: Maybe<Array<Scalars['Int']>>;
 };
 
 export type Mutation = {
@@ -218,16 +218,16 @@ export type Report = {
 };
 
 export type ReportCreateInput = {
-  client?: Maybe<Scalars['Float']>;
-  expressLaboratoryResult?: Maybe<Scalars['String']>;
-  laboratoryResult?: Maybe<Scalars['String']>;
+  client?: Maybe<Scalars['Int']>;
+  expressLaboratoryResult?: Maybe<Scalars['Int']>;
+  laboratoryResult?: Maybe<Scalars['Int']>;
   lubricant: Scalars['String'];
   lubricantMileage: Scalars['String'];
   note?: Maybe<Scalars['String']>;
   sampledAt: Scalars['DateTime'];
   samplingNodes: Scalars['String'];
   totalMileage: Scalars['String'];
-  vehicle?: Maybe<Scalars['Float']>;
+  vehicle?: Maybe<Scalars['Int']>;
 };
 
 export type ReportCreateResponse = {
@@ -282,16 +282,16 @@ export enum ReportSort {
 }
 
 export type ReportUpdateInput = {
-  client?: Maybe<Scalars['Float']>;
-  expressLaboratoryResult?: Maybe<Scalars['String']>;
-  laboratoryResult?: Maybe<Scalars['String']>;
+  client?: Maybe<Scalars['Int']>;
+  expressLaboratoryResult?: Maybe<Scalars['Int']>;
+  laboratoryResult?: Maybe<Scalars['Int']>;
   lubricant?: Maybe<Scalars['String']>;
   lubricantMileage?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
   sampledAt?: Maybe<Scalars['DateTime']>;
   samplingNodes?: Maybe<Scalars['String']>;
   totalMileage?: Maybe<Scalars['String']>;
-  vehicle?: Maybe<Scalars['Float']>;
+  vehicle?: Maybe<Scalars['Int']>;
 };
 
 export type ReportUpdateResponse = {

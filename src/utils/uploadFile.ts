@@ -6,7 +6,7 @@ const { publicRuntimeConfig } = getRuntimeConfig()
 export type UploadedFileResponse = {
   success: true,
   file: {
-    id: string
+    id: number
     url: string
     name: string
   }

@@ -5,7 +5,7 @@ import { uploadFile } from '@app/utils/uploadFile'
 import { AppToaster } from '@components/AppToaster'
 
 export interface UploadFileValue {
-  id: string
+  id: number
   name: string
   url: string
 }

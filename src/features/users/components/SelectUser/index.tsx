@@ -7,7 +7,7 @@ import * as schema from './schema.generated'
 
 export interface SelectUserValue {
   label: string
-  value: string
+  value: number
 }
 
 export interface SelectUserProps {

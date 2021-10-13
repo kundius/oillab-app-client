@@ -131,7 +131,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
     }
   }
 
-  const pageTitle = `${query.data?.report?.number || initialReport.number}`
+  const pageTitle = `${query.data?.report?.id || initialReport.id}`
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

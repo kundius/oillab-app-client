@@ -16,7 +16,7 @@ export type DeletePopoverApi = (params: DeletePopoverApiParams) => React.ReactNo
 export interface DeletePopoverProps {
   children: DeletePopoverApi
   onDelete?: () => void
-  id: string
+  id: number
 }
 
 export function DeletePopover ({

@@ -30,7 +30,7 @@ const jsDateFormatter: DateFormatProps = {
 
 export function ListPage() {
   const [sort, setSort] = useState<types.ReportSort | undefined>(
-    types.ReportSort.NumberAsc
+    types.ReportSort.IdAsc
   )
   const [filter, setFilter] = useState<types.ReportFilter>({})
   const [generatePdf, generatePdfState] =
