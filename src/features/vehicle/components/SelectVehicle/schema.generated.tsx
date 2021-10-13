@@ -3,7 +3,7 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions =  {}
-export type VehicleSelectVehicleFragment = { __typename?: 'Vehicle', id: string, model: string };
+export type VehicleSelectVehicleFragment = { __typename?: 'Vehicle', id: number, model: string, stateNumber: string };
 
 export type VehicleSelectVehicleQueryVariables = Types.Exact<{
   page: Types.Scalars['Int'];
@@ -12,12 +12,13 @@ export type VehicleSelectVehicleQueryVariables = Types.Exact<{
 }>;
 
 
-export type VehicleSelectVehicleQuery = { __typename?: 'Query', vehiclePaginate: { __typename?: 'VehiclePaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Vehicle', id: string, model: string }> } };
+export type VehicleSelectVehicleQuery = { __typename?: 'Query', vehiclePaginate: { __typename?: 'VehiclePaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Vehicle', id: number, model: string, stateNumber: string }> } };
 
 export const VehicleSelectVehicleFragmentDoc = gql`
     fragment VehicleSelectVehicleFragment on Vehicle {
   id
   model
+  stateNumber
 }
     `;
 export const VehicleSelectVehicleQueryDocument = gql`

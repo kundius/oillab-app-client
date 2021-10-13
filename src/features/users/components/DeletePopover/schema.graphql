@@ -1,4 +1,4 @@
-mutation UsersDeletePopover($id: String!) {
+mutation UsersDeletePopover($id: Int!) {
   userDelete(id: $id) {
     success
     error {

@@ -112,12 +112,12 @@ export function ListPage() {
                 <Table.Summary.Cell index={0}>
                   <InputGroup
                     value={
-                      filter.number?.eq ? String(filter.number?.eq) : undefined
+                      filter.id?.eq ? String(filter.id?.eq) : undefined
                     }
                     onChange={(e) =>
                       setFilter((prev) => ({
                         ...prev,
-                        number: {
+                        id: {
                           eq: Number(e.target.value)
                         }
                       }))
@@ -246,13 +246,13 @@ export function ListPage() {
             title={
               <Table.Title
                 text="Номер"
-                sortAsc={types.ReportSort.NumberAsc}
-                sortDesc={types.ReportSort.NumberDesc}
+                sortAsc={types.ReportSort.IdAsc}
+                sortDesc={types.ReportSort.IdDesc}
                 sortValue={sort}
                 onSortChange={setSort}
               />
             }
-            dataIndex="number"
+            dataIndex="id"
           />
           <Table.Column
             title={<Table.Title text="Владелец техники" />}

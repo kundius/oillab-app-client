@@ -3,14 +3,14 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions =  {}
-export type VehicleDetailsForFormFragment = { __typename?: 'Vehicle', id: string, model: string, releaseYear: string, stateNumber: string, engineModel: string };
+export type VehicleDetailsForFormFragment = { __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string };
 
 export type VehicleDetailsForFormQueryVariables = Types.Exact<{
-  id: Types.Scalars['String'];
+  id: Types.Scalars['Int'];
 }>;
 
 
-export type VehicleDetailsForFormQuery = { __typename?: 'Query', vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: string, model: string, releaseYear: string, stateNumber: string, engineModel: string }> };
+export type VehicleDetailsForFormQuery = { __typename?: 'Query', vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string }> };
 
 export const VehicleDetailsForFormFragmentDoc = gql`
     fragment VehicleDetailsForFormFragment on Vehicle {
@@ -22,7 +22,7 @@ export const VehicleDetailsForFormFragmentDoc = gql`
 }
     `;
 export const VehicleDetailsForFormQueryDocument = gql`
-    query VehicleDetailsForFormQuery($id: String!) {
+    query VehicleDetailsForFormQuery($id: Int!) {
   vehicle(id: $id) {
     ...VehicleDetailsForFormFragment
   }

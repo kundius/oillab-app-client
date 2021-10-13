@@ -4,13 +4,13 @@ fragment UsersUpdatePageFragment on User {
   email
 }
 
-query UsersUpdatePageQuery($id: String!) {
+query UsersUpdatePageQuery($id: Int!) {
   user(id: $id) {
     ...UsersUpdatePageFragment
   }
 }
 
-mutation UsersUpdatePageMutation($id: String!, $input: UserUpdateInput!) {
+mutation UsersUpdatePageMutation($id: Int!, $input: UserUpdateInput!) {
   userUpdate(
     id: $id
     input: $input

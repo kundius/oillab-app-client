@@ -91,7 +91,7 @@ export function SelectVehicle ({ ownerId, value, onChange }: SelectVehicleProps)
                 className="flex justify-between items-center font-medium bg-white border rounded p-2"
                 key={record.id}
               >
-                {record.model}
+                {record.model}/{record.stateNumber}
                 <Button
                   small
                   onClick={() => handleSelect(record)}

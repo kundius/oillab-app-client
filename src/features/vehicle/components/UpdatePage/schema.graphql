@@ -10,13 +10,13 @@ fragment VehicleUpdatePageFragment on Vehicle {
   engineModel
 }
 
-query VehicleUpdatePageQuery($id: String!) {
+query VehicleUpdatePageQuery($id: Int!) {
   vehicle(id: $id) {
     ...VehicleUpdatePageFragment
   }
 }
 
-mutation VehicleUpdatePageMutation($id: String!, $input: VehicleUpdateInput!) {
+mutation VehicleUpdatePageMutation($id: Int!, $input: VehicleUpdateInput!) {
   vehicleUpdate(
     id: $id
     input: $input

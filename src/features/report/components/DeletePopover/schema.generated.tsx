@@ -4,7 +4,7 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions =  {}
 export type ReportDeletePopoverMutationVariables = Types.Exact<{
-  id: Types.Scalars['String'];
+  id: Types.Scalars['Int'];
 }>;
 
 
@@ -12,7 +12,7 @@ export type ReportDeletePopoverMutation = { __typename?: 'Mutation', reportDelet
 
 
 export const ReportDeletePopoverDocument = gql`
-    mutation ReportDeletePopover($id: String!) {
+    mutation ReportDeletePopover($id: Int!) {
   reportDelete(id: $id) {
     success
     error {

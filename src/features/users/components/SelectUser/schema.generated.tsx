@@ -3,7 +3,7 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions =  {}
-export type UsersSelectUserFragment = { __typename?: 'User', id: string, name: string };
+export type UsersSelectUserFragment = { __typename?: 'User', id: number, name: string };
 
 export type UsersSelectUserQueryVariables = Types.Exact<{
   search?: Types.Maybe<Types.Scalars['String']>;
@@ -12,7 +12,7 @@ export type UsersSelectUserQueryVariables = Types.Exact<{
 }>;
 
 
-export type UsersSelectUserQuery = { __typename?: 'Query', userPaginate: { __typename?: 'UserPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'User', id: string, name: string }> } };
+export type UsersSelectUserQuery = { __typename?: 'Query', userPaginate: { __typename?: 'UserPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'User', id: number, name: string }> } };
 
 export const UsersSelectUserFragmentDoc = gql`
     fragment UsersSelectUserFragment on User {

@@ -3,22 +3,22 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions =  {}
-export type UsersUpdatePageFragment = { __typename?: 'User', id: string, name: string, email?: Types.Maybe<string> };
+export type UsersUpdatePageFragment = { __typename?: 'User', id: number, name: string, email?: Types.Maybe<string> };
 
 export type UsersUpdatePageQueryVariables = Types.Exact<{
-  id: Types.Scalars['String'];
+  id: Types.Scalars['Int'];
 }>;
 
 
-export type UsersUpdatePageQuery = { __typename?: 'Query', user?: Types.Maybe<{ __typename?: 'User', id: string, name: string, email?: Types.Maybe<string> }> };
+export type UsersUpdatePageQuery = { __typename?: 'Query', user?: Types.Maybe<{ __typename?: 'User', id: number, name: string, email?: Types.Maybe<string> }> };
 
 export type UsersUpdatePageMutationVariables = Types.Exact<{
-  id: Types.Scalars['String'];
+  id: Types.Scalars['Int'];
   input: Types.UserUpdateInput;
 }>;
 
 
-export type UsersUpdatePageMutation = { __typename?: 'Mutation', userUpdate: { __typename?: 'UserUpdateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'User', id: string, name: string, email?: Types.Maybe<string> }> } };
+export type UsersUpdatePageMutation = { __typename?: 'Mutation', userUpdate: { __typename?: 'UserUpdateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'User', id: number, name: string, email?: Types.Maybe<string> }> } };
 
 export const UsersUpdatePageFragmentDoc = gql`
     fragment UsersUpdatePageFragment on User {
@@ -28,7 +28,7 @@ export const UsersUpdatePageFragmentDoc = gql`
 }
     `;
 export const UsersUpdatePageQueryDocument = gql`
-    query UsersUpdatePageQuery($id: String!) {
+    query UsersUpdatePageQuery($id: Int!) {
   user(id: $id) {
     ...UsersUpdatePageFragment
   }
@@ -63,7 +63,7 @@ export type UsersUpdatePageQueryHookResult = ReturnType<typeof useUsersUpdatePag
 export type UsersUpdatePageQueryLazyQueryHookResult = ReturnType<typeof useUsersUpdatePageQueryLazyQuery>;
 export type UsersUpdatePageQueryQueryResult = Apollo.QueryResult<UsersUpdatePageQuery, UsersUpdatePageQueryVariables>;
 export const UsersUpdatePageMutationDocument = gql`
-    mutation UsersUpdatePageMutation($id: String!, $input: UserUpdateInput!) {
+    mutation UsersUpdatePageMutation($id: Int!, $input: UserUpdateInput!) {
   userUpdate(id: $id, input: $input) {
     success
     error {

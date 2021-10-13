@@ -18,7 +18,8 @@
   box-sizing: border-box;
   padding: 8px;
   white-space: normal;
-  /* word-break: break-word; */
+  word-break: break-word;
+  overflow: hidden;
   border-top: 0;
   border-left: 0;
   transition: box-shadow 0.3s;
@@ -26,6 +27,12 @@
   color: #1f2937;
   font-size: 14px;
   line-height: 1.25;
+  border-right: 1px solid #e1e6eb;
+}
+
+.app-table th:last-child,
+.app-table td:last-child {
+  border-right: 0;
 }
 
 .app-table-rtl.app-table th,

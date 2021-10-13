@@ -3,7 +3,7 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions =  {}
-export type UsersListPageItemFragment = { __typename?: 'User', id: string, name: string, email?: Types.Maybe<string>, createdAt: any, lastActivityAt: any };
+export type UsersListPageItemFragment = { __typename?: 'User', id: number, name: string, email?: Types.Maybe<string>, createdAt: any, lastActivityAt: any };
 
 export type UsersListPageUserPaginateQueryVariables = Types.Exact<{
   sort?: Types.Maybe<Array<Types.UserSort> | Types.UserSort>;
@@ -11,7 +11,7 @@ export type UsersListPageUserPaginateQueryVariables = Types.Exact<{
 }>;
 
 
-export type UsersListPageUserPaginateQuery = { __typename?: 'Query', userPaginate: { __typename?: 'UserPaginateResponse', items: Array<{ __typename?: 'User', id: string, name: string, email?: Types.Maybe<string>, createdAt: any, lastActivityAt: any }> } };
+export type UsersListPageUserPaginateQuery = { __typename?: 'Query', userPaginate: { __typename?: 'UserPaginateResponse', items: Array<{ __typename?: 'User', id: number, name: string, email?: Types.Maybe<string>, createdAt: any, lastActivityAt: any }> } };
 
 export const UsersListPageItemFragmentDoc = gql`
     fragment UsersListPageItem on User {

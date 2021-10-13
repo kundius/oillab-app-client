@@ -6,14 +6,14 @@ const defaultOptions =  {}
 export type ReportCreatePageQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type ReportCreatePageQuery = { __typename?: 'Query', currentUser?: Types.Maybe<{ __typename?: 'User', id: string, role: Types.UserRole }> };
+export type ReportCreatePageQuery = { __typename?: 'Query', currentUser?: Types.Maybe<{ __typename?: 'User', id: number, role: Types.UserRole }> };
 
 export type ReportCreatePageMutationVariables = Types.Exact<{
   input: Types.ReportCreateInput;
 }>;
 
 
-export type ReportCreatePageMutation = { __typename?: 'Mutation', reportCreate: { __typename?: 'ReportCreateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'Report', id: string }> } };
+export type ReportCreatePageMutation = { __typename?: 'Mutation', reportCreate: { __typename?: 'ReportCreateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'Report', id: number }> } };
 
 
 export const ReportCreatePageQueryDocument = gql`

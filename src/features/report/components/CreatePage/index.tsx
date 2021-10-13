@@ -48,7 +48,7 @@ export interface FormFields {
 const jsDateFormatter: DateFormatProps = {
   formatDate: (date) => date.toLocaleDateString(),
   parseDate: (str) => new Date(str),
-  placeholder: 'M/D/YYYY'
+  placeholder: 'D/M/YYYY'
 }
 
 export function CreatePage() {

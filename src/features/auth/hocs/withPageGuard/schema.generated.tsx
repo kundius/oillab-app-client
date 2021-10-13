@@ -6,7 +6,7 @@ const defaultOptions =  {}
 export type AuthWithPageGuardQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type AuthWithPageGuardQuery = { __typename?: 'Query', currentUser?: Types.Maybe<{ __typename?: 'User', id: string, role: Types.UserRole }> };
+export type AuthWithPageGuardQuery = { __typename?: 'Query', currentUser?: Types.Maybe<{ __typename?: 'User', id: number, role: Types.UserRole }> };
 
 
 export const AuthWithPageGuardDocument = gql`

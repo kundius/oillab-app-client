@@ -3,7 +3,7 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions =  {}
-export type VehicleListPageItemFragment = { __typename?: 'Vehicle', id: string, model: string, releaseYear: string, stateNumber: string, engineModel: string, owner: { __typename?: 'User', id: string, name: string } };
+export type VehicleListPageItemFragment = { __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string, owner: { __typename?: 'User', id: number, name: string } };
 
 export type VehicleListPageVehiclePaginateQueryVariables = Types.Exact<{
   sort?: Types.Maybe<Array<Types.VehicleSort> | Types.VehicleSort>;
@@ -11,7 +11,7 @@ export type VehicleListPageVehiclePaginateQueryVariables = Types.Exact<{
 }>;
 
 
-export type VehicleListPageVehiclePaginateQuery = { __typename?: 'Query', vehiclePaginate: { __typename?: 'VehiclePaginateResponse', items: Array<{ __typename?: 'Vehicle', id: string, model: string, releaseYear: string, stateNumber: string, engineModel: string, owner: { __typename?: 'User', id: string, name: string } }> } };
+export type VehicleListPageVehiclePaginateQuery = { __typename?: 'Query', vehiclePaginate: { __typename?: 'VehiclePaginateResponse', items: Array<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string, owner: { __typename?: 'User', id: number, name: string } }> } };
 
 export const VehicleListPageItemFragmentDoc = gql`
     fragment VehicleListPageItem on Vehicle {

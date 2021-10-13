@@ -6,7 +6,7 @@ fragment VehicleDetailsForFormFragment on Vehicle {
   engineModel
 }
 
-query VehicleDetailsForFormQuery($id: String!) {
+query VehicleDetailsForFormQuery($id: Int!) {
   vehicle(id: $id) {
     ...VehicleDetailsForFormFragment
   }

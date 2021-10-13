@@ -32,7 +32,7 @@ export type DefaultMutationResponse = {
 export type File = {
   __typename?: 'File';
   createdAt: Scalars['DateTime'];
-  id: Scalars['String'];
+  id: Scalars['Float'];
   name: Scalars['String'];
   path: Scalars['String'];
   size: Scalars['Float'];
@@ -69,7 +69,7 @@ export type MutationReportCreateArgs = {
 
 
 export type MutationReportDeleteArgs = {
-  id: Scalars['String'];
+  id: Scalars['Int'];
 };
 
 
@@ -80,7 +80,7 @@ export type MutationReportGeneratePdfArgs = {
 
 
 export type MutationReportUpdateArgs = {
-  id: Scalars['String'];
+  id: Scalars['Int'];
   input: ReportUpdateInput;
 };
 
@@ -96,12 +96,12 @@ export type MutationUserCreateArgs = {
 
 
 export type MutationUserDeleteArgs = {
-  id: Scalars['String'];
+  id: Scalars['Int'];
 };
 
 
 export type MutationUserUpdateArgs = {
-  id: Scalars['String'];
+  id: Scalars['Int'];
   input: UserUpdateInput;
 };
 
@@ -112,12 +112,12 @@ export type MutationVehicleCreateArgs = {
 
 
 export type MutationVehicleDeleteArgs = {
-  id: Scalars['String'];
+  id: Scalars['Int'];
 };
 
 
 export type MutationVehicleUpdateArgs = {
-  id: Scalars['String'];
+  id: Scalars['Int'];
   input: VehicleUpdateInput;
 };
 
@@ -163,7 +163,7 @@ export type QueryFileArgs = {
 
 
 export type QueryReportArgs = {
-  id: Scalars['String'];
+  id: Scalars['Int'];
 };
 
 
@@ -176,7 +176,7 @@ export type QueryReportPaginateArgs = {
 
 
 export type QueryUserArgs = {
-  id: Scalars['String'];
+  id: Scalars['Int'];
 };
 
 
@@ -189,7 +189,7 @@ export type QueryUserPaginateArgs = {
 
 
 export type QueryVehicleArgs = {
-  id: Scalars['String'];
+  id: Scalars['Int'];
 };
 
 
@@ -205,12 +205,11 @@ export type Report = {
   client?: Maybe<User>;
   createdAt: Scalars['DateTime'];
   expressLaboratoryResult?: Maybe<File>;
-  id: Scalars['String'];
+  id: Scalars['Float'];
   laboratoryResult?: Maybe<File>;
   lubricant: Scalars['String'];
   lubricantMileage: Scalars['String'];
   note?: Maybe<Scalars['String']>;
-  number: Scalars['Float'];
   sampledAt: Scalars['DateTime'];
   samplingNodes: Scalars['String'];
   totalMileage: Scalars['String'];
@@ -219,7 +218,7 @@ export type Report = {
 };
 
 export type ReportCreateInput = {
-  client?: Maybe<Scalars['String']>;
+  client?: Maybe<Scalars['Float']>;
   expressLaboratoryResult?: Maybe<Scalars['String']>;
   laboratoryResult?: Maybe<Scalars['String']>;
   lubricant: Scalars['String'];
@@ -228,7 +227,7 @@ export type ReportCreateInput = {
   sampledAt: Scalars['DateTime'];
   samplingNodes: Scalars['String'];
   totalMileage: Scalars['String'];
-  vehicle?: Maybe<Scalars['String']>;
+  vehicle?: Maybe<Scalars['Float']>;
 };
 
 export type ReportCreateResponse = {
@@ -240,9 +239,9 @@ export type ReportCreateResponse = {
 
 export type ReportFilter = {
   clientName?: Maybe<StringFilter>;
+  id?: Maybe<NumberFilter>;
   lubricant?: Maybe<StringFilter>;
   lubricantMileage?: Maybe<StringFilter>;
-  number?: Maybe<NumberFilter>;
   sampledAt?: Maybe<DateFilter>;
   samplingNodes?: Maybe<StringFilter>;
   totalMileage?: Maybe<StringFilter>;
@@ -266,12 +265,12 @@ export type ReportPaginateResponse = {
 };
 
 export enum ReportSort {
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
   LubricantAsc = 'LUBRICANT_ASC',
   LubricantDesc = 'LUBRICANT_DESC',
   LubricantMileageAsc = 'LUBRICANT_MILEAGE_ASC',
   LubricantMileageDesc = 'LUBRICANT_MILEAGE_DESC',
-  NumberAsc = 'NUMBER_ASC',
-  NumberDesc = 'NUMBER_DESC',
   SampledAtAsc = 'SAMPLED_AT_ASC',
   SampledAtDesc = 'SAMPLED_AT_DESC',
   SamplingNodesAsc = 'SAMPLING_NODES_ASC',
@@ -283,7 +282,7 @@ export enum ReportSort {
 }
 
 export type ReportUpdateInput = {
-  client?: Maybe<Scalars['String']>;
+  client?: Maybe<Scalars['Float']>;
   expressLaboratoryResult?: Maybe<Scalars['String']>;
   laboratoryResult?: Maybe<Scalars['String']>;
   lubricant?: Maybe<Scalars['String']>;
@@ -292,7 +291,7 @@ export type ReportUpdateInput = {
   sampledAt?: Maybe<Scalars['DateTime']>;
   samplingNodes?: Maybe<Scalars['String']>;
   totalMileage?: Maybe<Scalars['String']>;
-  vehicle?: Maybe<Scalars['String']>;
+  vehicle?: Maybe<Scalars['Float']>;
 };
 
 export type ReportUpdateResponse = {
@@ -325,7 +324,7 @@ export type User = {
   createdAt: Scalars['DateTime'];
   email?: Maybe<Scalars['String']>;
   files: Array<Maybe<File>>;
-  id: Scalars['String'];
+  id: Scalars['Float'];
   isActive: Scalars['Boolean'];
   lastActivityAt: Scalars['DateTime'];
   name: Scalars['String'];
@@ -397,7 +396,7 @@ export type Vehicle = {
   __typename?: 'Vehicle';
   createdAt: Scalars['DateTime'];
   engineModel: Scalars['String'];
-  id: Scalars['String'];
+  id: Scalars['Float'];
   model: Scalars['String'];
   owner: User;
   releaseYear: Scalars['String'];
@@ -409,7 +408,7 @@ export type Vehicle = {
 export type VehicleCreateInput = {
   engineModel: Scalars['String'];
   model: Scalars['String'];
-  owner: Scalars['String'];
+  owner: Scalars['Float'];
   releaseYear: Scalars['String'];
   stateNumber: Scalars['String'];
 };
@@ -452,7 +451,7 @@ export enum VehicleSort {
 export type VehicleUpdateInput = {
   engineModel?: Maybe<Scalars['String']>;
   model?: Maybe<Scalars['String']>;
-  owner?: Maybe<Scalars['String']>;
+  owner?: Maybe<Scalars['Float']>;
   releaseYear?: Maybe<Scalars['String']>;
   stateNumber?: Maybe<Scalars['String']>;
 };
