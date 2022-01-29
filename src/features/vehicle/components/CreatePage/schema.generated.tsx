@@ -8,7 +8,7 @@ export type VehicleCreatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type VehicleCreatePageMutation = { __typename?: 'Mutation', vehicleCreate: { __typename?: 'VehicleCreateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'Vehicle', id: number }> } };
+export type VehicleCreatePageMutation = { __typename?: 'Mutation', vehicleCreate: { __typename?: 'VehicleCreateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'VehicleCreateNotAllowedError', message: string }>, record?: Types.Maybe<{ __typename?: 'Vehicle', id: number }> } };
 
 
 export const VehicleCreatePageDocument = gql`
@@ -16,7 +16,9 @@ export const VehicleCreatePageDocument = gql`
   vehicleCreate(input: $input) {
     success
     error {
-      message
+      ... on Error {
+        message
+      }
     }
     record {
       id

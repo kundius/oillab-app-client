@@ -68,7 +68,22 @@ export function createApolloClient (
 ) {
   const cache = new InMemoryCache({
     possibleTypes: {
-      DefaultError: ['NotFoundError', 'PermissionDeniedError', 'RuntimeError', 'ValidationError', 'SignUpValidationError']
+      Error: [
+        'UserCreateNotAllowedError',
+        'UserUpdateNotAllowedError',
+        'UserNotFoundError',
+        'UserDeleteNotAllowedError',
+        'VehicleCreateNotAllowedError',
+        'VehicleUpdateNotAllowedError',
+        'VehicleNotFoundError',
+        'VehicleDeleteNotAllowedError',
+        'ReportCreateNotAllowedError',
+        'ReportUpdateNotAllowedError',
+        'ReportNotFoundError',
+        'ReportDeleteNotAllowedError',
+        'ReportGeneratePdfNotAllowedError',
+        'AuthValidationError'
+      ]
     }
   })
 

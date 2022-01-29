@@ -6,9 +6,12 @@ mutation AuthSignInPage ($input: SignInInput!) {
       id
     }
     error {
-      message
-      ... on ValidationError {
+      ... on Error {
+        message
+      }
+      ... on AuthValidationError {
         field
+        message
       }
     }
   }

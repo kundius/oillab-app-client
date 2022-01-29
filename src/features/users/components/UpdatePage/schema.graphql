@@ -17,7 +17,9 @@ mutation UsersUpdatePageMutation($id: Int!, $input: UserUpdateInput!) {
   ) {
     success
     error {
-      message
+      ... on Error {
+        message
+      }
     }
     record {
       ...UsersUpdatePageFragment

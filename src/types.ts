@@ -13,20 +13,27 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type AuthValidationError = ClientError & Error & {
+  __typename?: 'AuthValidationError';
+  field: Scalars['String'];
+  message: Scalars['String'];
+  type: Scalars['String'];
+};
+
+export type ClientError = {
+  message: Scalars['String'];
+  type: Scalars['String'];
+};
+
 export type DateFilter = {
   eq?: Maybe<Scalars['DateTime']>;
   gt?: Maybe<Scalars['DateTime']>;
   lt?: Maybe<Scalars['DateTime']>;
 };
 
-export type DefaultError = {
+export type Error = {
   message: Scalars['String'];
-};
-
-export type DefaultMutationResponse = {
-  __typename?: 'DefaultMutationResponse';
-  error?: Maybe<DefaultError>;
-  success: Scalars['Boolean'];
+  type: Scalars['String'];
 };
 
 export type File = {
@@ -50,15 +57,15 @@ export type IdFilter = {
 export type Mutation = {
   __typename?: 'Mutation';
   reportCreate: ReportCreateResponse;
-  reportDelete: DefaultMutationResponse;
+  reportDelete: ReportDeleteResponse;
   reportGeneratePdf: ReportGeneratePdfResponse;
   reportUpdate: ReportUpdateResponse;
   signIn: SignInResponse;
   userCreate: UserCreateResponse;
-  userDelete: DefaultMutationResponse;
+  userDelete: UserDeleteResponse;
   userUpdate: UserUpdateResponse;
   vehicleCreate: VehicleCreateResponse;
-  vehicleDelete: DefaultMutationResponse;
+  vehicleDelete: VehicleDeleteResponse;
   vehicleUpdate: VehicleUpdateResponse;
 };
 
@@ -121,9 +128,14 @@ export type MutationVehicleUpdateArgs = {
   input: VehicleUpdateInput;
 };
 
-export type NotFoundError = DefaultError & {
-  __typename?: 'NotFoundError';
+export type NotAllowedError = {
   message: Scalars['String'];
+  type: Scalars['String'];
+};
+
+export type NotFoundError = {
+  message: Scalars['String'];
+  type: Scalars['String'];
 };
 
 export type NumberFilter = {
@@ -137,11 +149,6 @@ export type PageInfo = {
   page: Scalars['Int'];
   perPage: Scalars['Int'];
   total: Scalars['Int'];
-};
-
-export type PermissionDeniedError = DefaultError & {
-  __typename?: 'PermissionDeniedError';
-  message: Scalars['String'];
 };
 
 export type Query = {
@@ -217,6 +224,8 @@ export type Report = {
   vehicle?: Maybe<Vehicle>;
 };
 
+export type ReportCreateError = ReportCreateNotAllowedError;
+
 export type ReportCreateInput = {
   client?: Maybe<Scalars['Int']>;
   expressLaboratoryResult?: Maybe<Scalars['Int']>;
@@ -230,10 +239,30 @@ export type ReportCreateInput = {
   vehicle?: Maybe<Scalars['Int']>;
 };
 
+export type ReportCreateNotAllowedError = Error & NotAllowedError & {
+  __typename?: 'ReportCreateNotAllowedError';
+  message: Scalars['String'];
+  type: Scalars['String'];
+};
+
 export type ReportCreateResponse = {
   __typename?: 'ReportCreateResponse';
-  error?: Maybe<DefaultError>;
+  error?: Maybe<ReportCreateError>;
   record?: Maybe<Report>;
+  success: Scalars['Boolean'];
+};
+
+export type ReportDeleteError = ReportDeleteNotAllowedError | ReportNotFoundError;
+
+export type ReportDeleteNotAllowedError = Error & NotAllowedError & {
+  __typename?: 'ReportDeleteNotAllowedError';
+  message: Scalars['String'];
+  type: Scalars['String'];
+};
+
+export type ReportDeleteResponse = {
+  __typename?: 'ReportDeleteResponse';
+  error?: Maybe<ReportDeleteError>;
   success: Scalars['Boolean'];
 };
 
@@ -251,11 +280,25 @@ export type ReportFilter = {
   vehicleStateNumber?: Maybe<StringFilter>;
 };
 
+export type ReportGeneratePdfError = ReportGeneratePdfNotAllowedError;
+
+export type ReportGeneratePdfNotAllowedError = Error & NotAllowedError & {
+  __typename?: 'ReportGeneratePdfNotAllowedError';
+  message: Scalars['String'];
+  type: Scalars['String'];
+};
+
 export type ReportGeneratePdfResponse = {
   __typename?: 'ReportGeneratePdfResponse';
-  error?: Maybe<DefaultError>;
+  error?: Maybe<ReportGeneratePdfError>;
   record?: Maybe<File>;
   success: Scalars['Boolean'];
+};
+
+export type ReportNotFoundError = Error & NotFoundError & {
+  __typename?: 'ReportNotFoundError';
+  message: Scalars['String'];
+  type: Scalars['String'];
 };
 
 export type ReportPaginateResponse = {
@@ -281,6 +324,8 @@ export enum ReportSort {
   TotalMileageDesc = 'TOTAL_MILEAGE_DESC'
 }
 
+export type ReportUpdateError = ReportNotFoundError | ReportUpdateNotAllowedError;
+
 export type ReportUpdateInput = {
   client?: Maybe<Scalars['Int']>;
   expressLaboratoryResult?: Maybe<Scalars['Int']>;
@@ -294,12 +339,20 @@ export type ReportUpdateInput = {
   vehicle?: Maybe<Scalars['Int']>;
 };
 
+export type ReportUpdateNotAllowedError = Error & NotAllowedError & {
+  __typename?: 'ReportUpdateNotAllowedError';
+  message: Scalars['String'];
+  type: Scalars['String'];
+};
+
 export type ReportUpdateResponse = {
   __typename?: 'ReportUpdateResponse';
-  error?: Maybe<DefaultError>;
+  error?: Maybe<ReportUpdateError>;
   record?: Maybe<Report>;
   success: Scalars['Boolean'];
 };
+
+export type SignInError = AuthValidationError;
 
 export type SignInInput = {
   email: Scalars['String'];
@@ -308,7 +361,7 @@ export type SignInInput = {
 
 export type SignInResponse = {
   __typename?: 'SignInResponse';
-  error?: Maybe<DefaultError>;
+  error?: Maybe<SignInError>;
   record?: Maybe<User>;
   success: Scalars['Boolean'];
   token?: Maybe<Scalars['String']>;
@@ -335,22 +388,50 @@ export type User = {
   vehicles: Array<Vehicle>;
 };
 
+export type UserCreateError = UserCreateNotAllowedError;
+
 export type UserCreateInput = {
   email: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
 };
 
+export type UserCreateNotAllowedError = Error & NotAllowedError & {
+  __typename?: 'UserCreateNotAllowedError';
+  message: Scalars['String'];
+  type: Scalars['String'];
+};
+
 export type UserCreateResponse = {
   __typename?: 'UserCreateResponse';
-  error?: Maybe<DefaultError>;
+  error?: Maybe<UserCreateError>;
   record?: Maybe<User>;
+  success: Scalars['Boolean'];
+};
+
+export type UserDeleteError = UserDeleteNotAllowedError | UserNotFoundError;
+
+export type UserDeleteNotAllowedError = Error & NotAllowedError & {
+  __typename?: 'UserDeleteNotAllowedError';
+  message: Scalars['String'];
+  type: Scalars['String'];
+};
+
+export type UserDeleteResponse = {
+  __typename?: 'UserDeleteResponse';
+  error?: Maybe<UserDeleteError>;
   success: Scalars['Boolean'];
 };
 
 export type UserFilter = {
   email?: Maybe<StringFilter>;
   name?: Maybe<StringFilter>;
+};
+
+export type UserNotFoundError = Error & NotFoundError & {
+  __typename?: 'UserNotFoundError';
+  message: Scalars['String'];
+  type: Scalars['String'];
 };
 
 export type UserPaginateResponse = {
@@ -373,23 +454,25 @@ export enum UserSort {
   NameDesc = 'NAME_DESC'
 }
 
+export type UserUpdateError = UserNotFoundError | UserUpdateNotAllowedError;
+
 export type UserUpdateInput = {
   email?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
 };
 
-export type UserUpdateResponse = {
-  __typename?: 'UserUpdateResponse';
-  error?: Maybe<DefaultError>;
-  record?: Maybe<User>;
-  success: Scalars['Boolean'];
+export type UserUpdateNotAllowedError = Error & NotAllowedError & {
+  __typename?: 'UserUpdateNotAllowedError';
+  message: Scalars['String'];
+  type: Scalars['String'];
 };
 
-export type ValidationError = DefaultError & {
-  __typename?: 'ValidationError';
-  field: Scalars['String'];
-  message: Scalars['String'];
+export type UserUpdateResponse = {
+  __typename?: 'UserUpdateResponse';
+  error?: Maybe<UserUpdateError>;
+  record?: Maybe<User>;
+  success: Scalars['Boolean'];
 };
 
 export type Vehicle = {
@@ -405,6 +488,8 @@ export type Vehicle = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type VehicleCreateError = VehicleCreateNotAllowedError;
+
 export type VehicleCreateInput = {
   engineModel: Scalars['String'];
   model: Scalars['String'];
@@ -413,10 +498,30 @@ export type VehicleCreateInput = {
   stateNumber: Scalars['String'];
 };
 
+export type VehicleCreateNotAllowedError = Error & NotAllowedError & {
+  __typename?: 'VehicleCreateNotAllowedError';
+  message: Scalars['String'];
+  type: Scalars['String'];
+};
+
 export type VehicleCreateResponse = {
   __typename?: 'VehicleCreateResponse';
-  error?: Maybe<DefaultError>;
+  error?: Maybe<VehicleCreateError>;
   record?: Maybe<Vehicle>;
+  success: Scalars['Boolean'];
+};
+
+export type VehicleDeleteError = VehicleDeleteNotAllowedError | VehicleNotFoundError;
+
+export type VehicleDeleteNotAllowedError = Error & NotAllowedError & {
+  __typename?: 'VehicleDeleteNotAllowedError';
+  message: Scalars['String'];
+  type: Scalars['String'];
+};
+
+export type VehicleDeleteResponse = {
+  __typename?: 'VehicleDeleteResponse';
+  error?: Maybe<VehicleDeleteError>;
   success: Scalars['Boolean'];
 };
 
@@ -427,6 +532,12 @@ export type VehicleFilter = {
   ownerName?: Maybe<StringFilter>;
   releaseYear?: Maybe<StringFilter>;
   stateNumber?: Maybe<StringFilter>;
+};
+
+export type VehicleNotFoundError = Error & NotFoundError & {
+  __typename?: 'VehicleNotFoundError';
+  message: Scalars['String'];
+  type: Scalars['String'];
 };
 
 export type VehiclePaginateResponse = {
@@ -448,6 +559,8 @@ export enum VehicleSort {
   StateNumberDesc = 'STATE_NUMBER_DESC'
 }
 
+export type VehicleUpdateError = VehicleNotFoundError | VehicleUpdateNotAllowedError;
+
 export type VehicleUpdateInput = {
   engineModel?: Maybe<Scalars['String']>;
   model?: Maybe<Scalars['String']>;
@@ -456,9 +569,15 @@ export type VehicleUpdateInput = {
   stateNumber?: Maybe<Scalars['String']>;
 };
 
+export type VehicleUpdateNotAllowedError = Error & NotAllowedError & {
+  __typename?: 'VehicleUpdateNotAllowedError';
+  message: Scalars['String'];
+  type: Scalars['String'];
+};
+
 export type VehicleUpdateResponse = {
   __typename?: 'VehicleUpdateResponse';
-  error?: Maybe<DefaultError>;
+  error?: Maybe<VehicleUpdateError>;
   record?: Maybe<Vehicle>;
   success: Scalars['Boolean'];
 };

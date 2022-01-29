@@ -18,7 +18,7 @@ export type ReportUpdatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type ReportUpdatePageMutation = { __typename?: 'Mutation', reportUpdate: { __typename?: 'ReportUpdateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'Report', id: number, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string }> }> } };
+export type ReportUpdatePageMutation = { __typename?: 'Mutation', reportUpdate: { __typename?: 'ReportUpdateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'ReportNotFoundError', message: string } | { __typename?: 'ReportUpdateNotAllowedError', message: string }>, record?: Types.Maybe<{ __typename?: 'Report', id: number, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string }> }> } };
 
 export const ReportUpdatePageFragmentDoc = gql`
     fragment ReportUpdatePageFragment on Report {
@@ -96,7 +96,9 @@ export const ReportUpdatePageMutationDocument = gql`
   reportUpdate(id: $id, input: $input) {
     success
     error {
-      message
+      ... on Error {
+        message
+      }
     }
     record {
       ...ReportUpdatePageFragment

@@ -53,7 +53,9 @@ mutation ReportListPageReportGeneratePdf(
   ) {
     success
     error {
-      message
+      ... on Error {
+        message
+      }
     }
     record {
       id

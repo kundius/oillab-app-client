@@ -9,7 +9,9 @@ mutation ReportCreatePageMutation($input: ReportCreateInput!) {
   reportCreate(input: $input) {
     success
     error {
-      message
+      ... on Error {
+        message
+      }
     }
     record {
       id
