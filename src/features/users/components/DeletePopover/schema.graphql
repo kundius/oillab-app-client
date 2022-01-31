@@ -2,9 +2,7 @@ mutation UsersDeletePopover($id: Int!) {
   userDelete(id: $id) {
     success
     error {
-      ... on Error {
-        message
-      }
+      message
     }
   }
 }

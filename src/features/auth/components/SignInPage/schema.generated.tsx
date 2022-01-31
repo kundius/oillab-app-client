@@ -8,7 +8,7 @@ export type AuthSignInPageMutationVariables = Types.Exact<{
 }>;
 
 
-export type AuthSignInPageMutation = { __typename?: 'Mutation', signIn: { __typename?: 'SignInResponse', success: boolean, token?: Types.Maybe<string>, record?: Types.Maybe<{ __typename?: 'User', id: number }>, error?: Types.Maybe<{ __typename?: 'AuthValidationError', message: string, field: string }> } };
+export type AuthSignInPageMutation = { __typename?: 'Mutation', signIn: { __typename?: 'SignInResponse', success: boolean, token?: Types.Maybe<string>, record?: Types.Maybe<{ __typename?: 'User', id: number }>, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', field: string, message: string }> } };
 
 
 export const AuthSignInPageDocument = gql`
@@ -20,12 +20,9 @@ export const AuthSignInPageDocument = gql`
       id
     }
     error {
-      ... on Error {
-        message
-      }
-      ... on AuthValidationError {
+      message
+      ... on ValidationError {
         field
-        message
       }
     }
   }

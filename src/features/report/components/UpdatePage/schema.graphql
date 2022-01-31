@@ -46,9 +46,7 @@ mutation ReportUpdatePageMutation($id: Int!, $input: ReportUpdateInput!) {
   ) {
     success
     error {
-      ... on Error {
-        message
-      }
+      message
     }
     record {
       ...ReportUpdatePageFragment

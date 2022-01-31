@@ -8,7 +8,7 @@ export type UsersCreatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type UsersCreatePageMutation = { __typename?: 'Mutation', userCreate: { __typename?: 'UserCreateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'UserCreateNotAllowedError', message: string }>, record?: Types.Maybe<{ __typename?: 'User', id: number, name: string, email?: Types.Maybe<string> }> } };
+export type UsersCreatePageMutation = { __typename?: 'Mutation', userCreate: { __typename?: 'UserCreateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'User', id: number, name: string, email?: Types.Maybe<string> }> } };
 
 
 export const UsersCreatePageDocument = gql`
@@ -16,9 +16,7 @@ export const UsersCreatePageDocument = gql`
   userCreate(input: $input) {
     success
     error {
-      ... on Error {
-        message
-      }
+      message
     }
     record {
       id

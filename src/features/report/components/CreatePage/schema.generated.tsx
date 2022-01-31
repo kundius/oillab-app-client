@@ -13,7 +13,7 @@ export type ReportCreatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type ReportCreatePageMutation = { __typename?: 'Mutation', reportCreate: { __typename?: 'ReportCreateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'ReportCreateNotAllowedError', message: string }>, record?: Types.Maybe<{ __typename?: 'Report', id: number }> } };
+export type ReportCreatePageMutation = { __typename?: 'Mutation', reportCreate: { __typename?: 'ReportCreateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'Report', id: number }> } };
 
 
 export const ReportCreatePageQueryDocument = gql`
@@ -56,9 +56,7 @@ export const ReportCreatePageMutationDocument = gql`
   reportCreate(input: $input) {
     success
     error {
-      ... on Error {
-        message
-      }
+      message
     }
     record {
       id

@@ -2,9 +2,7 @@ mutation UsersCreatePage($input: UserCreateInput!) {
   userCreate(input: $input) {
     success
     error {
-      ... on Error {
-        message
-      }
+      message
     }
     record {
       id

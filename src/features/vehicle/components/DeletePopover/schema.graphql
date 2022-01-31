@@ -2,9 +2,7 @@ mutation VehicleDeletePopover($id: Int!) {
   vehicleDelete(id: $id) {
     success
     error {
-      ... on Error {
-        message
-      }
+      message
     }
   }
 }

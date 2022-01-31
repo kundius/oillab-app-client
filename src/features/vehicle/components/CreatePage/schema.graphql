@@ -2,9 +2,7 @@ mutation VehicleCreatePage($input: VehicleCreateInput!) {
   vehicleCreate(input: $input) {
     success
     error {
-      ... on Error {
-        message
-      }
+      message
     }
     record {
       id

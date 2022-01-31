@@ -19,7 +19,7 @@ export type ReportListPageReportGeneratePdfMutationVariables = Types.Exact<{
 }>;
 
 
-export type ReportListPageReportGeneratePdfMutation = { __typename?: 'Mutation', reportGeneratePdf: { __typename?: 'ReportGeneratePdfResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'ReportGeneratePdfNotAllowedError', message: string }>, record?: Types.Maybe<{ __typename?: 'File', id: number, url: string }> } };
+export type ReportListPageReportGeneratePdfMutation = { __typename?: 'Mutation', reportGeneratePdf: { __typename?: 'ReportGeneratePdfResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'File', id: number, url: string }> } };
 
 export const ReportListPageItemFragmentDoc = gql`
     fragment ReportListPageItem on Report {
@@ -96,9 +96,7 @@ export const ReportListPageReportGeneratePdfDocument = gql`
   reportGeneratePdf(sort: $sort, filter: $filter) {
     success
     error {
-      ... on Error {
-        message
-      }
+      message
     }
     record {
       id

@@ -8,7 +8,7 @@ export type VehicleDeletePopoverMutationVariables = Types.Exact<{
 }>;
 
 
-export type VehicleDeletePopoverMutation = { __typename?: 'Mutation', vehicleDelete: { __typename?: 'VehicleDeleteResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'VehicleDeleteNotAllowedError', message: string } | { __typename?: 'VehicleNotFoundError', message: string }> } };
+export type VehicleDeletePopoverMutation = { __typename?: 'Mutation', vehicleDelete: { __typename?: 'DefaultMutationResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'NotFoundError', message: string } | { __typename?: 'PermissionDeniedError', message: string } | { __typename?: 'ValidationError', message: string }> } };
 
 
 export const VehicleDeletePopoverDocument = gql`
@@ -16,9 +16,7 @@ export const VehicleDeletePopoverDocument = gql`
   vehicleDelete(id: $id) {
     success
     error {
-      ... on Error {
-        message
-      }
+      message
     }
   }
 }

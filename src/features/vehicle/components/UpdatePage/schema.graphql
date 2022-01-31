@@ -23,9 +23,7 @@ mutation VehicleUpdatePageMutation($id: Int!, $input: VehicleUpdateInput!) {
   ) {
     success
     error {
-      ... on Error {
-        message
-      }
+      message
     }
     record {
       ...VehicleUpdatePageFragment
