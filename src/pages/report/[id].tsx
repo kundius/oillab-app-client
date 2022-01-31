@@ -38,5 +38,5 @@ export const getServerSideProps: GetServerSideProps<UpdatePageProps> = async (co
 }
 
 export default withPageGuard({
-  denyForGuest: true
+  allowForRole: 'Administrator'
 })(UpdatePage)
