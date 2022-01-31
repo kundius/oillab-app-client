@@ -259,7 +259,7 @@
   border-bottom: 0;
 }
 .app-table-footer {
-  padding: 16px 8px;
+  padding-top: 16px;
   border-top: 1px solid #e1e6eb;
 }
 .app-table tfoot td {
