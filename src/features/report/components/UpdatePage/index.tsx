@@ -131,7 +131,9 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
     }
   }
 
-  const pageTitle = `${query.data?.report?.id || initialReport.id}`
+  const pageTitle = `${
+    query.data?.report?.number || initialReport.number || 'Номер не присвоен'
+  }`
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -191,7 +193,9 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                   render={({
                     field: { ref, ...field },
                     fieldState: { error }
-                  }) => <SelectVehicle ownerId={watchClient.value} {...field} />}
+                  }) => (
+                    <SelectVehicle ownerId={watchClient.value} {...field} />
+                  )}
                 />
               </div>
               <div className="w-1/4" />

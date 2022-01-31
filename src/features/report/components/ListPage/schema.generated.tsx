@@ -3,7 +3,7 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions =  {}
-export type ReportListPageItemFragment = { __typename?: 'Report', id: number, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string }> };
+export type ReportListPageItemFragment = { __typename?: 'Report', id: number, number?: Types.Maybe<number>, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string }> };
 
 export type ReportListPageReportPaginateQueryVariables = Types.Exact<{
   sort?: Types.Maybe<Array<Types.ReportSort> | Types.ReportSort>;
@@ -13,7 +13,7 @@ export type ReportListPageReportPaginateQueryVariables = Types.Exact<{
 }>;
 
 
-export type ReportListPageReportPaginateQuery = { __typename?: 'Query', reportPaginate: { __typename?: 'ReportPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Report', id: number, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string }> }> } };
+export type ReportListPageReportPaginateQuery = { __typename?: 'Query', reportPaginate: { __typename?: 'ReportPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Report', id: number, number?: Types.Maybe<number>, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string }> }> } };
 
 export type ReportListPageReportGeneratePdfMutationVariables = Types.Exact<{
   sort?: Types.Maybe<Array<Types.ReportSort> | Types.ReportSort>;
@@ -26,6 +26,7 @@ export type ReportListPageReportGeneratePdfMutation = { __typename?: 'Mutation',
 export const ReportListPageItemFragmentDoc = gql`
     fragment ReportListPageItem on Report {
   id
+  number
   totalMileage
   lubricantMileage
   samplingNodes

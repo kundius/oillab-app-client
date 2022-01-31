@@ -270,13 +270,13 @@ export function ListPage() {
             title={
               <Table.Title
                 text="Номер"
-                sortAsc={types.ReportSort.IdAsc}
-                sortDesc={types.ReportSort.IdDesc}
+                sortAsc={types.ReportSort.NumberAsc}
+                sortDesc={types.ReportSort.NumberDesc}
                 sortValue={sort}
                 onSortChange={setSort}
               />
             }
-            dataIndex="id"
+            dataIndex="number"
           />
           <Table.Column
             title={<Table.Title text="Владелец техники" />}

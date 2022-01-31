@@ -215,6 +215,7 @@ export type Report = {
   lubricant: Scalars['String'];
   lubricantMileage: Scalars['String'];
   note?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['Int']>;
   sampledAt: Scalars['DateTime'];
   samplingNodes: Scalars['String'];
   totalMileage: Scalars['String'];
@@ -276,6 +277,8 @@ export enum ReportSort {
   LubricantDesc = 'LUBRICANT_DESC',
   LubricantMileageAsc = 'LUBRICANT_MILEAGE_ASC',
   LubricantMileageDesc = 'LUBRICANT_MILEAGE_DESC',
+  NumberAsc = 'NUMBER_ASC',
+  NumberDesc = 'NUMBER_DESC',
   SampledAtAsc = 'SAMPLED_AT_ASC',
   SampledAtDesc = 'SAMPLED_AT_DESC',
   SamplingNodesAsc = 'SAMPLING_NODES_ASC',
