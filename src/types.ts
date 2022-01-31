@@ -13,6 +13,11 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type AuthenticationError = DefaultError & {
+  __typename?: 'AuthenticationError';
+  message: Scalars['String'];
+};
+
 export type DateFilter = {
   eq?: Maybe<Scalars['DateTime']>;
   gt?: Maybe<Scalars['DateTime']>;
@@ -121,6 +126,11 @@ export type MutationVehicleUpdateArgs = {
   input: VehicleUpdateInput;
 };
 
+export type NotAllowedError = DefaultError & {
+  __typename?: 'NotAllowedError';
+  message: Scalars['String'];
+};
+
 export type NotFoundError = DefaultError & {
   __typename?: 'NotFoundError';
   message: Scalars['String'];
@@ -137,11 +147,6 @@ export type PageInfo = {
   page: Scalars['Int'];
   perPage: Scalars['Int'];
   total: Scalars['Int'];
-};
-
-export type PermissionDeniedError = DefaultError & {
-  __typename?: 'PermissionDeniedError';
-  message: Scalars['String'];
 };
 
 export type Query = {

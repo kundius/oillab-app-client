@@ -17,6 +17,7 @@ import { DateFormatProps, DateInput } from '@blueprintjs/datetime'
 import { Table } from '@components/Table'
 import { Pagination } from '@components/Pagination'
 import { Wall } from '@components/Wall'
+import { useHasRole } from '@features/app/hooks/useHasRole'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DeletePopover } from '@features/report/components/DeletePopover'
 import { AppToaster } from '@components/AppToaster'
@@ -35,6 +36,7 @@ export function ListPage() {
   const [sort, setSort] = useState<types.ReportSort | undefined>(
     types.ReportSort.IdAsc
   )
+  const isAdministrator = useHasRole(types.UserRole.Administrator)
   const [filter, setFilter] = useState<types.ReportFilter>({})
   const [generatePdf, generatePdfState] =
     schema.useReportListPageReportGeneratePdfMutation()
@@ -83,7 +85,7 @@ export function ListPage() {
         }
       ]}
       extra={
-        <div className="flex">
+        <div className="flex gap-2">
           <Button
             onClick={handleGeneratePdf}
             disabled={generatePdfState.loading}
@@ -91,12 +93,13 @@ export function ListPage() {
           >
             Печатать
           </Button>
-          <div className="mx-2" />
-          <Link href="/report/create" passHref>
-            <AnchorButton icon="add" intent="primary">
-              Добавить отчет
-            </AnchorButton>
-          </Link>
+          {isAdministrator && (
+            <Link href="/report/create" passHref>
+              <AnchorButton icon="add" intent="primary">
+                Добавить отчет
+              </AnchorButton>
+            </Link>
+          )}
         </div>
       }
     >
@@ -245,7 +248,7 @@ export function ListPage() {
                     }
                   />
                 </Table.Summary.Cell>
-                <Table.Summary.Cell index={9} colSpan={4} />
+                <Table.Summary.Cell index={9} colSpan={isAdministrator ? 4 : 3} />
               </Table.Summary.Row>
             </Table.Summary>
           )}
@@ -371,29 +374,31 @@ export function ListPage() {
               ) : undefined
             }
           />
-          <Table.Column
-            title="Действия"
-            align="center"
-            key="action"
-            render={(record: schema.ReportListPageItemFragment) => (
-              <ButtonGroup minimal>
-                <Link href={`/report/${record.id}`} passHref>
-                  <AnchorButton icon="edit" small />
-                </Link>
-                <Divider />
-                <DeletePopover id={record.id}>
-                  {({ isLoading }) => (
-                    <Button
-                      icon="trash"
-                      small
-                      intent={Intent.DANGER}
-                      loading={isLoading}
-                    />
-                  )}
-                </DeletePopover>
-              </ButtonGroup>
-            )}
-          />
+          {isAdministrator && (
+            <Table.Column
+              title="Действия"
+              align="center"
+              key="action"
+              render={(record: schema.ReportListPageItemFragment) => (
+                <ButtonGroup minimal>
+                  <Link href={`/report/${record.id}`} passHref>
+                    <AnchorButton icon="edit" small />
+                  </Link>
+                  <Divider />
+                  <DeletePopover id={record.id}>
+                    {({ isLoading }) => (
+                      <Button
+                        icon="trash"
+                        small
+                        intent={Intent.DANGER}
+                        loading={isLoading}
+                      />
+                    )}
+                  </DeletePopover>
+                </ButtonGroup>
+              )}
+            />
+          )}
         </Table>
       </Wall>
     </MainTemplate>

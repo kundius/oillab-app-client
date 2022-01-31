@@ -1,0 +1,6 @@
+query AppUseCurrentRole {
+  currentUser {
+    id
+    role
+  }
+}
