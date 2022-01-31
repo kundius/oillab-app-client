@@ -13,11 +13,20 @@ fragment VehicleListPageItem on Vehicle {
 query VehicleListPageVehiclePaginate(
   $sort: [VehicleSort!]
   $filter: VehicleFilter
+  $page: Int
+  $perPage: Int
 ) {
   vehiclePaginate(
     sort: $sort
     filter: $filter
+    page: $page
+    perPage: $perPage
   ) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
     items {
       ...VehicleListPageItem
     }

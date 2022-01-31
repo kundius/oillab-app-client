@@ -8,10 +8,12 @@ export type VehicleListPageItemFragment = { __typename?: 'Vehicle', id: number, 
 export type VehicleListPageVehiclePaginateQueryVariables = Types.Exact<{
   sort?: Types.Maybe<Array<Types.VehicleSort> | Types.VehicleSort>;
   filter?: Types.Maybe<Types.VehicleFilter>;
+  page?: Types.Maybe<Types.Scalars['Int']>;
+  perPage?: Types.Maybe<Types.Scalars['Int']>;
 }>;
 
 
-export type VehicleListPageVehiclePaginateQuery = { __typename?: 'Query', vehiclePaginate: { __typename?: 'VehiclePaginateResponse', items: Array<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string, owner: { __typename?: 'User', id: number, name: string } }> } };
+export type VehicleListPageVehiclePaginateQuery = { __typename?: 'Query', vehiclePaginate: { __typename?: 'VehiclePaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string, owner: { __typename?: 'User', id: number, name: string } }> } };
 
 export const VehicleListPageItemFragmentDoc = gql`
     fragment VehicleListPageItem on Vehicle {
@@ -27,8 +29,13 @@ export const VehicleListPageItemFragmentDoc = gql`
 }
     `;
 export const VehicleListPageVehiclePaginateDocument = gql`
-    query VehicleListPageVehiclePaginate($sort: [VehicleSort!], $filter: VehicleFilter) {
-  vehiclePaginate(sort: $sort, filter: $filter) {
+    query VehicleListPageVehiclePaginate($sort: [VehicleSort!], $filter: VehicleFilter, $page: Int, $perPage: Int) {
+  vehiclePaginate(sort: $sort, filter: $filter, page: $page, perPage: $perPage) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
     items {
       ...VehicleListPageItem
     }
@@ -50,6 +57,8 @@ export const VehicleListPageVehiclePaginateDocument = gql`
  *   variables: {
  *      sort: // value for 'sort'
  *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *      perPage: // value for 'perPage'
  *   },
  * });
  */

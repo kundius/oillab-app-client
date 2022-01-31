@@ -260,8 +260,7 @@
 }
 .app-table-footer {
   padding: 16px 8px;
-  border: 1px solid #e1e6eb;
-  border-top: 0;
+  border-top: 1px solid #e1e6eb;
 }
 .app-table tfoot td {
   background: #fbfbfd;

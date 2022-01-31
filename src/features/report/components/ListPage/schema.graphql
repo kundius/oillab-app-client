@@ -32,11 +32,20 @@ fragment ReportListPageItem on Report {
 query ReportListPageReportPaginate(
   $sort: [ReportSort!]
   $filter: ReportFilter
+  $page: Int
+  $perPage: Int
 ) {
   reportPaginate(
     sort: $sort
     filter: $filter
+    page: $page
+    perPage: $perPage
   ) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
     items {
       ...ReportListPageItem
     }

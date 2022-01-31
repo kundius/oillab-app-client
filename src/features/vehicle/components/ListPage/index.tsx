@@ -11,6 +11,7 @@ import {
 } from '@blueprintjs/core'
 
 import { Table } from '@components/Table'
+import { Pagination } from '@components/Pagination'
 import { Wall } from '@components/Wall'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DeletePopover } from '@features/vehicle/components/DeletePopover'
@@ -19,16 +20,25 @@ import * as schema from './schema.generated'
 import * as types from '@app/types'
 
 export function ListPage() {
+  const [page, setPage] = useState(1)
+  const [perPage, setPerPage] = useState(20)
   const [sort, setSort] = useState<types.VehicleSort | undefined>()
   const [filter, setFilter] = useState<types.VehicleFilter>({})
   const manyQuery = schema.useVehicleListPageVehiclePaginateQuery({
     variables: {
       sort,
-      filter
+      filter,
+      page,
+      perPage
     },
     notifyOnNetworkStatusChange: true
   })
   const items = manyQuery?.data?.vehiclePaginate?.items || []
+  const pageInfo = manyQuery?.data?.vehiclePaginate?.pageInfo || {
+    page,
+    perPage,
+    total: 0
+  }
 
   return (
     <MainTemplate
@@ -40,7 +50,9 @@ export function ListPage() {
       ]}
       extra={
         <Link href="/vehicle/create" passHref>
-          <AnchorButton icon="add" intent="primary">Добавить технику</AnchorButton>
+          <AnchorButton icon="add" intent="primary">
+            Добавить технику
+          </AnchorButton>
         </Link>
       }
     >
@@ -59,6 +71,19 @@ export function ListPage() {
               icon={manyQuery.loading ? <Spinner /> : 'warning-sign'}
             />
           }
+          footer={() => (
+            <div className="flex justify-end">
+              <Pagination
+                onChange={(current, pageSize) => {
+                  setPage(current)
+                  setPerPage(pageSize)
+                }}
+                pageSize={pageInfo.perPage}
+                current={pageInfo.page}
+                total={pageInfo.total}
+              />
+            </div>
+          )}
         >
           <Table.Column
             title={

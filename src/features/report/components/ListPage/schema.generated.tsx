@@ -8,10 +8,12 @@ export type ReportListPageItemFragment = { __typename?: 'Report', id: number, to
 export type ReportListPageReportPaginateQueryVariables = Types.Exact<{
   sort?: Types.Maybe<Array<Types.ReportSort> | Types.ReportSort>;
   filter?: Types.Maybe<Types.ReportFilter>;
+  page?: Types.Maybe<Types.Scalars['Int']>;
+  perPage?: Types.Maybe<Types.Scalars['Int']>;
 }>;
 
 
-export type ReportListPageReportPaginateQuery = { __typename?: 'Query', reportPaginate: { __typename?: 'ReportPaginateResponse', items: Array<{ __typename?: 'Report', id: number, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string }> }> } };
+export type ReportListPageReportPaginateQuery = { __typename?: 'Query', reportPaginate: { __typename?: 'ReportPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Report', id: number, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string }> }> } };
 
 export type ReportListPageReportGeneratePdfMutationVariables = Types.Exact<{
   sort?: Types.Maybe<Array<Types.ReportSort> | Types.ReportSort>;
@@ -54,8 +56,13 @@ export const ReportListPageItemFragmentDoc = gql`
 }
     `;
 export const ReportListPageReportPaginateDocument = gql`
-    query ReportListPageReportPaginate($sort: [ReportSort!], $filter: ReportFilter) {
-  reportPaginate(sort: $sort, filter: $filter) {
+    query ReportListPageReportPaginate($sort: [ReportSort!], $filter: ReportFilter, $page: Int, $perPage: Int) {
+  reportPaginate(sort: $sort, filter: $filter, page: $page, perPage: $perPage) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
     items {
       ...ReportListPageItem
     }
@@ -77,6 +84,8 @@ export const ReportListPageReportPaginateDocument = gql`
  *   variables: {
  *      sort: // value for 'sort'
  *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *      perPage: // value for 'perPage'
  *   },
  * });
  */

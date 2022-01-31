@@ -8,10 +8,12 @@ export type UsersListPageItemFragment = { __typename?: 'User', id: number, name:
 export type UsersListPageUserPaginateQueryVariables = Types.Exact<{
   sort?: Types.Maybe<Array<Types.UserSort> | Types.UserSort>;
   filter?: Types.Maybe<Types.UserFilter>;
+  page?: Types.Maybe<Types.Scalars['Int']>;
+  perPage?: Types.Maybe<Types.Scalars['Int']>;
 }>;
 
 
-export type UsersListPageUserPaginateQuery = { __typename?: 'Query', userPaginate: { __typename?: 'UserPaginateResponse', items: Array<{ __typename?: 'User', id: number, name: string, email?: Types.Maybe<string>, createdAt: any, lastActivityAt: any }> } };
+export type UsersListPageUserPaginateQuery = { __typename?: 'Query', userPaginate: { __typename?: 'UserPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'User', id: number, name: string, email?: Types.Maybe<string>, createdAt: any, lastActivityAt: any }> } };
 
 export const UsersListPageItemFragmentDoc = gql`
     fragment UsersListPageItem on User {
@@ -23,8 +25,13 @@ export const UsersListPageItemFragmentDoc = gql`
 }
     `;
 export const UsersListPageUserPaginateDocument = gql`
-    query UsersListPageUserPaginate($sort: [UserSort!], $filter: UserFilter) {
-  userPaginate(sort: $sort, filter: $filter) {
+    query UsersListPageUserPaginate($sort: [UserSort!], $filter: UserFilter, $page: Int, $perPage: Int) {
+  userPaginate(sort: $sort, filter: $filter, page: $page, perPage: $perPage) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
     items {
       ...UsersListPageItem
     }
@@ -46,6 +53,8 @@ export const UsersListPageUserPaginateDocument = gql`
  *   variables: {
  *      sort: // value for 'sort'
  *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *      perPage: // value for 'perPage'
  *   },
  * });
  */

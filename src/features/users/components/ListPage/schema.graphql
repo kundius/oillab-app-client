@@ -9,11 +9,20 @@ fragment UsersListPageItem on User {
 query UsersListPageUserPaginate(
   $sort: [UserSort!]
   $filter: UserFilter
+  $page: Int
+  $perPage: Int
 ) {
   userPaginate(
     sort: $sort
     filter: $filter
+    page: $page
+    perPage: $perPage
   ) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
     items {
       ...UsersListPageItem
     }

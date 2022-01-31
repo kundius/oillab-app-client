@@ -15,6 +15,7 @@ import {
 import { DateFormatProps, DateInput } from '@blueprintjs/datetime'
 
 import { Table } from '@components/Table'
+import { Pagination } from '@components/Pagination'
 import { Wall } from '@components/Wall'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DeletePopover } from '@features/report/components/DeletePopover'
@@ -29,6 +30,8 @@ const jsDateFormatter: DateFormatProps = {
 }
 
 export function ListPage() {
+  const [page, setPage] = useState(1)
+  const [perPage, setPerPage] = useState(20)
   const [sort, setSort] = useState<types.ReportSort | undefined>(
     types.ReportSort.IdAsc
   )
@@ -38,11 +41,18 @@ export function ListPage() {
   const manyQuery = schema.useReportListPageReportPaginateQuery({
     variables: {
       sort,
-      filter
+      filter,
+      page,
+      perPage
     },
     notifyOnNetworkStatusChange: true
   })
   const items = manyQuery?.data?.reportPaginate?.items || []
+  const pageInfo = manyQuery?.data?.reportPaginate?.pageInfo || {
+    page,
+    perPage,
+    total: 0
+  }
 
   const handleGeneratePdf = async () => {
     const response = await generatePdf({
@@ -111,9 +121,7 @@ export function ListPage() {
               <Table.Summary.Row>
                 <Table.Summary.Cell index={0}>
                   <InputGroup
-                    value={
-                      filter.id?.eq ? String(filter.id?.eq) : undefined
-                    }
+                    value={filter.id?.eq ? String(filter.id?.eq) : undefined}
                     onChange={(e) =>
                       setFilter((prev) => ({
                         ...prev,
@@ -240,6 +248,19 @@ export function ListPage() {
                 <Table.Summary.Cell index={9} colSpan={4} />
               </Table.Summary.Row>
             </Table.Summary>
+          )}
+          footer={() => (
+            <div className='flex justify-end'>
+              <Pagination
+                onChange={(current, pageSize) => {
+                  setPage(current)
+                  setPerPage(pageSize)
+                }}
+                pageSize={pageInfo.perPage}
+                current={pageInfo.page}
+                total={pageInfo.total}
+              />
+            </div>
           )}
         >
           <Table.Column
