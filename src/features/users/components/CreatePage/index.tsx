@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Alert, Button, Classes, Dialog, Icon, InputGroup, Intent, PopperPlacements, Position, Switch, Tooltip } from '@blueprintjs/core'
+import { Alert, Button, Classes, Dialog, Icon, InputGroup, Intent, Position, Switch, Tooltip } from '@blueprintjs/core'
 import { useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 import classNames from 'classnames'
@@ -15,6 +15,7 @@ export interface FormFields {
   name: string
   email: string
   password: string
+  role: string
 }
 
 export function CreatePage () {
@@ -176,6 +177,32 @@ export function CreatePage () {
                     value={value || undefined}
                     {...field}
                   />
+                )}
+              />
+            </div>
+            <div className="w-1/4" />
+          </div>
+          <div className="flex gap-8 items-center">
+            <div className="w-1/4 flex justify-end">
+              Роль:
+            </div>
+            <div className="w-2/4 flex justify-start">
+              <Controller
+                name="role"
+                control={control}
+                render={({
+                  field: { value, ...field },
+                  fieldState: { error }
+                }) => (
+                  <div className="bp4-html-select">
+                    <select {...field}>
+                      <option selected={!value}>Выбрать роль...</option>
+                      <option value="Member" selected={value === 'Member'}>Member</option>
+                      <option value="Administrator" selected={value === 'Administrator'}>Administrator</option>
+                      <option value="Manager" selected={value === 'Manager'}>Manager</option>
+                    </select>
+                    <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
+                  </div>
                 )}
               />
             </div>

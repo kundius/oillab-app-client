@@ -233,6 +233,9 @@
   border-right: 1px solid #e1e6eb;
   content: '';
 }
+.app-table-row-blue {
+  background: rgba(59, 130, 246, 0.5);
+}
 .app-table-row-expand-icon {
   display: inline-block;
   width: 16px;

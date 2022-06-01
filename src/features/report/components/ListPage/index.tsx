@@ -20,6 +20,7 @@ import { Wall } from '@components/Wall'
 import { useHasRole } from '@features/app/hooks/useHasRole'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DeletePopover } from '@features/report/components/DeletePopover'
+import { UpdateApplicationFormModal } from '@features/report/components/UpdateApplicationFormModal'
 import { AppToaster } from '@components/AppToaster'
 
 import * as schema from './schema.generated'
@@ -110,6 +111,12 @@ export function ListPage() {
           rowKey={(record) => record.id}
           scroll={{
             x: 1400
+          }}
+          rowClassName={(record) => {
+            if (!(record.expressLaboratoryResult || record.laboratoryResult)) {
+              return 'app-table-row-blue'
+            }
+            return ''
           }}
           emptyText={
             <NonIdealState
@@ -248,12 +255,15 @@ export function ListPage() {
                     }
                   />
                 </Table.Summary.Cell>
-                <Table.Summary.Cell index={9} colSpan={isAdministrator ? 4 : 3} />
+                <Table.Summary.Cell
+                  index={9}
+                  colSpan={isAdministrator ? 5 : 3}
+                />
               </Table.Summary.Row>
             </Table.Summary>
           )}
           footer={() => (
-            <div className='flex justify-end'>
+            <div className="flex justify-end">
               <Pagination
                 onChange={(current, pageSize) => {
                   setPage(current)
@@ -355,6 +365,8 @@ export function ListPage() {
           <Table.Column
             title="Результат лаборатории"
             dataIndex="laboratoryResult"
+            align="center"
+            width={84}
             render={(value) =>
               value ? (
                 <a href={value.url} target="_blank">
@@ -366,6 +378,8 @@ export function ListPage() {
           <Table.Column
             title="Экспресс результат лаборатории"
             dataIndex="expressLaboratoryResult"
+            align="center"
+            width={84}
             render={(value) =>
               value ? (
                 <a href={value.url} target="_blank">
@@ -375,29 +389,62 @@ export function ListPage() {
             }
           />
           {isAdministrator && (
-            <Table.Column
-              title="Действия"
-              align="center"
-              key="action"
-              render={(record: schema.ReportListPageItemFragment) => (
-                <ButtonGroup minimal>
-                  <Link href={`/report/${record.id}`} passHref>
-                    <AnchorButton icon="edit" small />
-                  </Link>
-                  <Divider />
-                  <DeletePopover id={record.id}>
-                    {({ isLoading }) => (
-                      <Button
-                        icon="trash"
+            <>
+              <Table.Column
+                title="Бланк-заявка"
+                key="applicationForm"
+                align="center"
+                width={84}
+                render={(record: schema.ReportListPageItemFragment) => (
+                  <ButtonGroup minimal>
+                    <Link href={`/report/${record.id}`} passHref>
+                      <AnchorButton
+                        icon="cloud-download"
                         small
-                        intent={Intent.DANGER}
-                        loading={isLoading}
                       />
-                    )}
-                  </DeletePopover>
-                </ButtonGroup>
-              )}
-            />
+                    </Link>
+                    <Divider />
+                    <UpdateApplicationFormModal
+                      id={record.id}
+                      initialData={record.applicationForm || undefined}
+                    >
+                      {({ isLoading, open }) => (
+                        <Button
+                          icon={record.applicationForm ? 'edit' : 'plus'}
+                          small
+                          onClick={open}
+                          loading={isLoading}
+                        />
+                      )}
+                    </UpdateApplicationFormModal>
+                  </ButtonGroup>
+                )}
+              />
+              <Table.Column
+                title="Действия"
+                align="center"
+                key="action"
+                width={84}
+                render={(record: schema.ReportListPageItemFragment) => (
+                  <ButtonGroup minimal>
+                    <Link href={`/report/${record.id}`} passHref>
+                      <AnchorButton icon="edit" small />
+                    </Link>
+                    <Divider />
+                    <DeletePopover id={record.id}>
+                      {({ isLoading }) => (
+                        <Button
+                          icon="trash"
+                          small
+                          intent={Intent.DANGER}
+                          loading={isLoading}
+                        />
+                      )}
+                    </DeletePopover>
+                  </ButtonGroup>
+                )}
+              />
+            </>
           )}
         </Table>
       </Wall>

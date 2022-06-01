@@ -58,6 +58,7 @@ export type Mutation = {
   reportDelete: DefaultMutationResponse;
   reportGeneratePdf: ReportGeneratePdfResponse;
   reportUpdate: ReportUpdateResponse;
+  reportUpdateApplicationForm: ReportUpdateApplicationFormResponse;
   signIn: SignInResponse;
   userCreate: UserCreateResponse;
   userDelete: DefaultMutationResponse;
@@ -87,6 +88,12 @@ export type MutationReportGeneratePdfArgs = {
 export type MutationReportUpdateArgs = {
   id: Scalars['Int'];
   input: ReportUpdateInput;
+};
+
+
+export type MutationReportUpdateApplicationFormArgs = {
+  id: Scalars['Int'];
+  input: ReportUpdateApplicationFormInput;
 };
 
 
@@ -207,6 +214,7 @@ export type QueryVehiclePaginateArgs = {
 
 export type Report = {
   __typename?: 'Report';
+  applicationForm?: Maybe<ReportApplicationForm>;
   client?: Maybe<User>;
   createdAt: Scalars['DateTime'];
   expressLaboratoryResult?: Maybe<File>;
@@ -221,6 +229,35 @@ export type Report = {
   totalMileage: Scalars['String'];
   updatedAt: Scalars['DateTime'];
   vehicle?: Maybe<Vehicle>;
+};
+
+export type ReportApplicationForm = {
+  __typename?: 'ReportApplicationForm';
+  createdAt: Scalars['DateTime'];
+  customerEmail?: Maybe<Scalars['String']>;
+  customerOrganization?: Maybe<Scalars['String']>;
+  customerPerson?: Maybe<Scalars['String']>;
+  customerPhone?: Maybe<Scalars['String']>;
+  id: Scalars['Float'];
+  lubricantBrand?: Maybe<Scalars['String']>;
+  lubricantModel?: Maybe<Scalars['String']>;
+  lubricantState?: Maybe<Scalars['String']>;
+  lubricantViscosity?: Maybe<Scalars['String']>;
+  note?: Maybe<Scalars['String']>;
+  report?: Maybe<Report>;
+  selectionBrand?: Maybe<Scalars['String']>;
+  selectionPlace?: Maybe<Scalars['String']>;
+  selectionType?: Maybe<Scalars['String']>;
+  selectionVolume?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['DateTime'];
+  vehicleEquipmentManufacturer?: Maybe<Scalars['String']>;
+  vehicleEquipmentModel?: Maybe<Scalars['String']>;
+  vehicleLiquidVolume?: Maybe<Scalars['String']>;
+  vehicleRegistrationNumber?: Maybe<Scalars['String']>;
+  vehicleSamplingPoint?: Maybe<Scalars['String']>;
+  vehicleToppingUpLubricant?: Maybe<Scalars['String']>;
+  vehicleTotalOperatingTime?: Maybe<Scalars['String']>;
+  vehicleTotalOperatingTimeLubricant?: Maybe<Scalars['String']>;
 };
 
 export type ReportCreateInput = {
@@ -289,6 +326,37 @@ export enum ReportSort {
   TotalMileageDesc = 'TOTAL_MILEAGE_DESC'
 }
 
+export type ReportUpdateApplicationFormInput = {
+  customerEmail?: Maybe<Scalars['String']>;
+  customerOrganization?: Maybe<Scalars['String']>;
+  customerPerson?: Maybe<Scalars['String']>;
+  customerPhone?: Maybe<Scalars['String']>;
+  lubricantBrand?: Maybe<Scalars['String']>;
+  lubricantModel?: Maybe<Scalars['String']>;
+  lubricantState?: Maybe<Scalars['String']>;
+  lubricantViscosity?: Maybe<Scalars['String']>;
+  note?: Maybe<Scalars['String']>;
+  selectionBrand?: Maybe<Scalars['String']>;
+  selectionPlace?: Maybe<Scalars['String']>;
+  selectionType?: Maybe<Scalars['String']>;
+  selectionVolume?: Maybe<Scalars['String']>;
+  vehicleEquipmentManufacturer?: Maybe<Scalars['String']>;
+  vehicleEquipmentModel?: Maybe<Scalars['String']>;
+  vehicleLiquidVolume?: Maybe<Scalars['String']>;
+  vehicleRegistrationNumber?: Maybe<Scalars['String']>;
+  vehicleSamplingPoint?: Maybe<Scalars['String']>;
+  vehicleToppingUpLubricant?: Maybe<Scalars['String']>;
+  vehicleTotalOperatingTime?: Maybe<Scalars['String']>;
+  vehicleTotalOperatingTimeLubricant?: Maybe<Scalars['String']>;
+};
+
+export type ReportUpdateApplicationFormResponse = {
+  __typename?: 'ReportUpdateApplicationFormResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<Report>;
+  success: Scalars['Boolean'];
+};
+
 export type ReportUpdateInput = {
   client?: Maybe<Scalars['Int']>;
   expressLaboratoryResult?: Maybe<Scalars['Int']>;
@@ -347,6 +415,7 @@ export type UserCreateInput = {
   email: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
+  role: Scalars['String'];
 };
 
 export type UserCreateResponse = {
@@ -369,6 +438,7 @@ export type UserPaginateResponse = {
 
 export enum UserRole {
   Administrator = 'Administrator',
+  Manager = 'Manager',
   Member = 'Member'
 }
 
@@ -385,6 +455,7 @@ export type UserUpdateInput = {
   email?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
+  role?: Maybe<Scalars['String']>;
 };
 
 export type UserUpdateResponse = {

@@ -1,9 +1,10 @@
 import * as Types from '../../../../types';
 
 import { gql } from '@apollo/client';
+import { ReportUpdateApplicationFormModalFragmentDoc } from '../UpdateApplicationFormModal/schema.generated';
 import * as Apollo from '@apollo/client';
 const defaultOptions =  {}
-export type ReportListPageItemFragment = { __typename?: 'Report', id: number, number?: Types.Maybe<number>, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string }> };
+export type ReportListPageItemFragment = { __typename?: 'Report', id: number, number?: Types.Maybe<number>, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string }>, applicationForm?: Types.Maybe<{ __typename?: 'ReportApplicationForm', id: number, customerOrganization?: Types.Maybe<string>, customerPhone?: Types.Maybe<string>, customerPerson?: Types.Maybe<string>, customerEmail?: Types.Maybe<string>, vehicleEquipmentManufacturer?: Types.Maybe<string>, vehicleRegistrationNumber?: Types.Maybe<string>, vehicleEquipmentModel?: Types.Maybe<string>, vehicleTotalOperatingTime?: Types.Maybe<string>, vehicleSamplingPoint?: Types.Maybe<string>, vehicleTotalOperatingTimeLubricant?: Types.Maybe<string>, vehicleLiquidVolume?: Types.Maybe<string>, vehicleToppingUpLubricant?: Types.Maybe<string>, lubricantBrand?: Types.Maybe<string>, lubricantViscosity?: Types.Maybe<string>, lubricantModel?: Types.Maybe<string>, lubricantState?: Types.Maybe<string>, selectionType?: Types.Maybe<string>, selectionVolume?: Types.Maybe<string>, selectionPlace?: Types.Maybe<string>, note?: Types.Maybe<string>, createdAt: any, updatedAt: any }> };
 
 export type ReportListPageReportPaginateQueryVariables = Types.Exact<{
   sort?: Types.Maybe<Array<Types.ReportSort> | Types.ReportSort>;
@@ -13,7 +14,7 @@ export type ReportListPageReportPaginateQueryVariables = Types.Exact<{
 }>;
 
 
-export type ReportListPageReportPaginateQuery = { __typename?: 'Query', reportPaginate: { __typename?: 'ReportPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Report', id: number, number?: Types.Maybe<number>, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string }> }> } };
+export type ReportListPageReportPaginateQuery = { __typename?: 'Query', reportPaginate: { __typename?: 'ReportPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Report', id: number, number?: Types.Maybe<number>, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, expressLaboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, laboratoryResult?: Types.Maybe<{ __typename?: 'File', id: number, name: string, url: string }>, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string }>, applicationForm?: Types.Maybe<{ __typename?: 'ReportApplicationForm', id: number, customerOrganization?: Types.Maybe<string>, customerPhone?: Types.Maybe<string>, customerPerson?: Types.Maybe<string>, customerEmail?: Types.Maybe<string>, vehicleEquipmentManufacturer?: Types.Maybe<string>, vehicleRegistrationNumber?: Types.Maybe<string>, vehicleEquipmentModel?: Types.Maybe<string>, vehicleTotalOperatingTime?: Types.Maybe<string>, vehicleSamplingPoint?: Types.Maybe<string>, vehicleTotalOperatingTimeLubricant?: Types.Maybe<string>, vehicleLiquidVolume?: Types.Maybe<string>, vehicleToppingUpLubricant?: Types.Maybe<string>, lubricantBrand?: Types.Maybe<string>, lubricantViscosity?: Types.Maybe<string>, lubricantModel?: Types.Maybe<string>, lubricantState?: Types.Maybe<string>, selectionType?: Types.Maybe<string>, selectionVolume?: Types.Maybe<string>, selectionPlace?: Types.Maybe<string>, note?: Types.Maybe<string>, createdAt: any, updatedAt: any }> }> } };
 
 export type ReportListPageReportGeneratePdfMutationVariables = Types.Exact<{
   sort?: Types.Maybe<Array<Types.ReportSort> | Types.ReportSort>;
@@ -54,8 +55,11 @@ export const ReportListPageItemFragmentDoc = gql`
     stateNumber
     engineModel
   }
+  applicationForm {
+    ...ReportUpdateApplicationFormModalFragment
+  }
 }
-    `;
+    ${ReportUpdateApplicationFormModalFragmentDoc}`;
 export const ReportListPageReportPaginateDocument = gql`
     query ReportListPageReportPaginate($sort: [ReportSort!], $filter: ReportFilter, $page: Int, $perPage: Int) {
   reportPaginate(sort: $sort, filter: $filter, page: $page, perPage: $perPage) {

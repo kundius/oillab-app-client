@@ -2,6 +2,7 @@ fragment UsersUpdatePageFragment on User {
   id
   name
   email
+  role
 }
 
 query UsersUpdatePageQuery($id: Int!) {
