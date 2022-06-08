@@ -58,6 +58,7 @@ export function UpdateApplicationFormModal({
     formState: { isDirty }
   } = useForm<types.ReportUpdateApplicationFormInput>({
     defaultValues: {
+      productType: initialData?.productType,
       customerOrganization: initialData?.customerOrganization,
       customerPhone: initialData?.customerPhone,
       customerPerson: initialData?.customerPerson,
@@ -75,7 +76,6 @@ export function UpdateApplicationFormModal({
       lubricantViscosity: initialData?.lubricantViscosity,
       lubricantModel: initialData?.lubricantModel,
       lubricantState: initialData?.lubricantState,
-      selectionType: initialData?.selectionType,
       selectionVolume: initialData?.selectionVolume,
       selectionPlace: initialData?.selectionPlace,
       note: initialData?.note
@@ -412,22 +412,24 @@ export function UpdateApplicationFormModal({
               />
             </Field>
           </Fieldset>
-          <Fieldset title="Информация об отборе образца топлива/охлаждающая жидкотсть">
-            <Field label="Вид">
+          <Fieldset title="Информация об отборе образца">
+            <Field label="Тип продукта">
               <Controller
-                name="selectionType"
+                name="productType"
                 control={control}
                 render={({
-                  field: { ref, value, ...field },
+                  field: { value, ...field },
                   fieldState: { error }
                 }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
+                  <div className="bp4-html-select">
+                    <select {...field} disabled={mutationState.loading} defaultValue={value || undefined}>
+                      <option>Выбрать тип продукта...</option>
+                      <option value="Fuel">Топливо</option>
+                      <option value="Oil">Масло</option>
+                      <option value="Coolant">Охлаждающая жидкость</option>
+                    </select>
+                    <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
+                  </div>
                 )}
               />
             </Field>

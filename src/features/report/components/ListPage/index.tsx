@@ -13,6 +13,8 @@ import {
   InputGroup
 } from '@blueprintjs/core'
 import { DateFormatProps, DateInput } from '@blueprintjs/datetime'
+import getRuntimeConfig from '@app/utils/getRuntimeConfig'
+import Cookies from 'universal-cookie'
 
 import { Table } from '@components/Table'
 import { Pagination } from '@components/Pagination'
@@ -25,6 +27,8 @@ import { AppToaster } from '@components/AppToaster'
 
 import * as schema from './schema.generated'
 import * as types from '@app/types'
+
+const { publicRuntimeConfig } = getRuntimeConfig()
 
 const jsDateFormatter: DateFormatProps = {
   formatDate: (date) => date.toLocaleDateString(),
@@ -76,6 +80,9 @@ export function ListPage() {
       })
     }
   }
+
+  const cookies = new Cookies(document.cookie)
+  const token = cookies.get('token')
 
   return (
     <MainTemplate
@@ -397,12 +404,12 @@ export function ListPage() {
                 width={84}
                 render={(record: schema.ReportListPageItemFragment) => (
                   <ButtonGroup minimal>
-                    <Link href={`/report/${record.id}`} passHref>
+                    <a href={`${publicRuntimeConfig.API_URL}/report/${record.id}/applicationform?token=${token}`} target="_blank">
                       <AnchorButton
                         icon="cloud-download"
                         small
                       />
-                    </Link>
+                    </a>
                     <Divider />
                     <UpdateApplicationFormModal
                       id={record.id}
@@ -418,6 +425,21 @@ export function ListPage() {
                       )}
                     </UpdateApplicationFormModal>
                   </ButtonGroup>
+                )}
+              />
+              <Table.Column
+                title="Регистрационная наклейка"
+                key="registrationSticker"
+                align="center"
+                width={84}
+                render={(record: schema.ReportListPageItemFragment) => (
+                  <a href={`${publicRuntimeConfig.API_URL}/report/${record.id}/registrationsticker?token=${token}`} target="_blank">
+                    <AnchorButton
+                      icon="cloud-download"
+                      small
+                      minimal
+                    />
+                  </a>
                 )}
               />
               <Table.Column

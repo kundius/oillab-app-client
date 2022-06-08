@@ -156,6 +156,12 @@ export type PageInfo = {
   total: Scalars['Int'];
 };
 
+export enum ProductType {
+  Coolant = 'Coolant',
+  Fuel = 'Fuel',
+  Oil = 'Oil'
+}
+
 export type Query = {
   __typename?: 'Query';
   currentUser?: Maybe<User>;
@@ -244,10 +250,11 @@ export type ReportApplicationForm = {
   lubricantState?: Maybe<Scalars['String']>;
   lubricantViscosity?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['String']>;
+  productType?: Maybe<ProductType>;
   report?: Maybe<Report>;
   selectionBrand?: Maybe<Scalars['String']>;
   selectionPlace?: Maybe<Scalars['String']>;
-  selectionType?: Maybe<Scalars['String']>;
   selectionVolume?: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
   vehicleEquipmentManufacturer?: Maybe<Scalars['String']>;
@@ -336,9 +343,9 @@ export type ReportUpdateApplicationFormInput = {
   lubricantState?: Maybe<Scalars['String']>;
   lubricantViscosity?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
+  productType?: Maybe<Scalars['String']>;
   selectionBrand?: Maybe<Scalars['String']>;
   selectionPlace?: Maybe<Scalars['String']>;
-  selectionType?: Maybe<Scalars['String']>;
   selectionVolume?: Maybe<Scalars['String']>;
   vehicleEquipmentManufacturer?: Maybe<Scalars['String']>;
   vehicleEquipmentModel?: Maybe<Scalars['String']>;

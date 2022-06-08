@@ -1,5 +1,6 @@
 fragment ReportUpdateApplicationFormModalFragment on ReportApplicationForm {
   id
+  productType
   customerOrganization
   customerPhone
   customerPerson
@@ -16,7 +17,6 @@ fragment ReportUpdateApplicationFormModalFragment on ReportApplicationForm {
   lubricantViscosity
   lubricantModel
   lubricantState
-  selectionType
   selectionVolume
   selectionPlace
   note

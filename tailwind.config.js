@@ -6,7 +6,7 @@ module.exports = {
     './src/features/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
   ],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
     colors: {
       transparent: 'transparent',
@@ -15,7 +15,7 @@ module.exports = {
       white: colors.white,
       green: colors.green,
       gray: {
-        ...colors.blueGray,
+        ...colors.slate,
         100: '#eff4f9',
         200: '#e8ebf0'
       },
