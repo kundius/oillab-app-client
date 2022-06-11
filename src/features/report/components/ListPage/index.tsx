@@ -24,6 +24,7 @@ import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DeletePopover } from '@features/report/components/DeletePopover'
 import { UpdateApplicationFormModal } from '@features/report/components/UpdateApplicationFormModal'
 import { AppToaster } from '@components/AppToaster'
+import { useToken } from '@app/features/app/hooks/useToken'
 
 import * as schema from './schema.generated'
 import * as types from '@app/types'
@@ -36,12 +37,14 @@ const jsDateFormatter: DateFormatProps = {
 }
 
 export function ListPage() {
+  const token = useToken()
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(20)
   const [sort, setSort] = useState<types.ReportSort | undefined>(
     types.ReportSort.IdAsc
   )
   const isAdministrator = useHasRole(types.UserRole.Administrator)
+  const isManager = useHasRole(types.UserRole.Manager)
   const [filter, setFilter] = useState<types.ReportFilter>({})
   const [generatePdf, generatePdfState] =
     schema.useReportListPageReportGeneratePdfMutation()
@@ -80,9 +83,6 @@ export function ListPage() {
       })
     }
   }
-
-  const cookies = new Cookies(document.cookie)
-  const token = cookies.get('token')
 
   return (
     <MainTemplate
@@ -264,7 +264,7 @@ export function ListPage() {
                 </Table.Summary.Cell>
                 <Table.Summary.Cell
                   index={9}
-                  colSpan={isAdministrator ? 5 : 3}
+                  colSpan={isAdministrator ? 6 : isManager ? 4 : 3}
                 />
               </Table.Summary.Row>
             </Table.Summary>
@@ -369,6 +369,28 @@ export function ListPage() {
             render={(value) => new Date(value).toLocaleDateString()}
           />
           <Table.Column title="Примечание" dataIndex="note" />
+          {(isManager || isAdministrator) && (
+            <Table.Column
+              title="Цвет"
+              dataIndex="color"
+              align="center"
+              width={84}
+              render={(value: types.ReportColor) => {
+                if (!value) return null
+                let color = 'bg-gray-300'
+                if (value === types.ReportColor.Yellow) {
+                  color = 'bg-yellow-300'
+                }
+                if (value === types.ReportColor.Red) {
+                  color = 'bg-red-300'
+                }
+                if (value === types.ReportColor.LightGreen) {
+                  color = 'bg-green-300'
+                }
+                return <div className={`inline-block rounded w-12 h-6 ${color}`} />
+              }}
+            />
+          )}
           <Table.Column
             title="Результат лаборатории"
             dataIndex="laboratoryResult"
@@ -404,26 +426,22 @@ export function ListPage() {
                 width={84}
                 render={(record: schema.ReportListPageItemFragment) => (
                   <ButtonGroup minimal>
-                    <a href={`${publicRuntimeConfig.API_URL}/report/${record.id}/applicationform?token=${token}`} target="_blank">
-                      <AnchorButton
-                        icon="cloud-download"
-                        small
-                      />
+                    <a
+                      href={`${publicRuntimeConfig.API_URL}/report/${record.id}/applicationform?token=${token}`}
+                      target="_blank"
+                    >
+                      <AnchorButton icon="cloud-download" small />
                     </a>
                     <Divider />
-                    <UpdateApplicationFormModal
-                      id={record.id}
-                      initialData={record.applicationForm || undefined}
+                    <Link
+                      href={`/report/${record.id}/applicationForm`}
+                      passHref
                     >
-                      {({ isLoading, open }) => (
-                        <Button
-                          icon={record.applicationForm ? 'edit' : 'plus'}
-                          small
-                          onClick={open}
-                          loading={isLoading}
-                        />
-                      )}
-                    </UpdateApplicationFormModal>
+                      <AnchorButton
+                        icon={record.applicationForm ? 'edit' : 'plus'}
+                        small
+                      />
+                    </Link>
                   </ButtonGroup>
                 )}
               />
@@ -433,12 +451,11 @@ export function ListPage() {
                 align="center"
                 width={84}
                 render={(record: schema.ReportListPageItemFragment) => (
-                  <a href={`${publicRuntimeConfig.API_URL}/report/${record.id}/registrationsticker?token=${token}`} target="_blank">
-                    <AnchorButton
-                      icon="cloud-download"
-                      small
-                      minimal
-                    />
+                  <a
+                    href={`${publicRuntimeConfig.API_URL}/report/${record.id}/registrationsticker?token=${token}`}
+                    target="_blank"
+                  >
+                    <AnchorButton icon="cloud-download" small minimal />
                   </a>
                 )}
               />

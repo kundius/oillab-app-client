@@ -10,8 +10,9 @@ import '@blueprintjs/datetime/lib/css/blueprint-datetime.css'
 import '@components/GlobalStyle/globals.css'
 import '@components/Table/styles.css'
 import '@components/Pagination/styles.css'
+import '@blueprintjs/popover2/lib/css/blueprint-popover2.css'
 
-export default function App ({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo({
     initialState: pageProps.initialApolloState
   })

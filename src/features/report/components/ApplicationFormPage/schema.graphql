@@ -1,0 +1,74 @@
+fragment ReportApplicationFormPageFragment on Report {
+  id
+  number
+  totalMileage
+  lubricantMileage
+  samplingNodes
+  note
+  lubricant
+  sampledAt
+  client {
+    id
+    name
+  }
+  vehicle {
+    id
+    model
+    stateNumber
+    releaseYear
+    engineModel
+  }
+  applicationForm {
+    id
+    productType
+    customerOrganization
+    customerPhone
+    customerPerson
+    customerEmail
+    vehicleEquipmentManufacturer
+    vehicleRegistrationNumber
+    vehicleEquipmentModel
+    vehicleTotalOperatingTime
+    vehicleSamplingPoint
+    vehicleTotalOperatingTimeLubricant
+    vehicleLiquidVolume
+    vehicleToppingUpLubricant
+    lubricantBrand
+    lubricantViscosity
+    lubricantModel
+    lubricantState
+    selectionVolume
+    selectionPlace
+    note
+    createdAt
+    updatedAt
+  }
+}
+
+query ReportApplicationFormPageQuery($id: Int!) {
+  report(id: $id) {
+    ...ReportApplicationFormPageFragment
+  }
+  currentUser {
+    id
+    role
+  }
+}
+
+mutation ReportApplicationFormPageMutation(
+  $id: Int!
+  $input: ReportUpdateApplicationFormInput!
+) {
+  reportUpdateApplicationForm(
+    id: $id
+    input: $input
+  ) {
+    success
+    record {
+      ...ReportApplicationFormPageFragment
+    }
+    error {
+      message
+    }
+  }
+}

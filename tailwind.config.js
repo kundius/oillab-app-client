@@ -23,6 +23,8 @@ module.exports = {
         ...colors.blue,
         800: '#0267c2'
       },
+      red: colors.red,
+      yellow: colors.yellow,
     },
     extend: {},
     screens: {

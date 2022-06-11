@@ -5,6 +5,7 @@ fragment ReportListPageItem on Report {
   lubricantMileage
   samplingNodes
   note
+  color
   lubricant
   sampledAt
   expressLaboratoryResult {

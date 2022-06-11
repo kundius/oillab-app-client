@@ -28,8 +28,10 @@ import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DetailsForForm } from '@features/vehicle/components/DetailsForForm'
 import { AppToaster } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
+import { useHasRole } from '@app/features/app/hooks/useHasRole'
 
 import * as schema from './schema.generated'
+import * as types from '@app/types'
 
 export interface FormFields {
   stateNumber: string
@@ -37,6 +39,7 @@ export interface FormFields {
   lubricantMileage: string
   samplingNodes: string
   note?: string
+  color?: string
   lubricant: string
   sampledAt: string
   client?: SelectUserValue | null
@@ -56,6 +59,8 @@ export function CreatePage() {
   const router = useRouter()
   const [mutation, mutationState] = schema.useReportCreatePageMutation()
   const query = schema.useReportCreatePageQuery()
+  const isAdministrator = useHasRole(types.UserRole.Administrator)
+  const isManager = useHasRole(types.UserRole.Manager)
 
   const {
     handleSubmit,
@@ -139,7 +144,7 @@ export function CreatePage() {
           className="space-y-8 max-w-full ml-auto mr-auto"
           style={{ width: 800 }}
         >
-          {query.data?.currentUser?.role === 'Administrator' && (
+          {isAdministrator && (
             <div className="flex gap-8 items-center">
               <div className="w-1/4 flex justify-end leading-none text-right">
                 Владелец техники:
@@ -384,7 +389,39 @@ export function CreatePage() {
             </div>
             <div className="w-1/4" />
           </div>
-          {query.data?.currentUser?.role === 'Administrator' && (
+          {(isManager || isAdministrator) && (
+          <div className="flex gap-8 items-center">
+            <div className="w-1/4 flex justify-end leading-none text-right">
+              Цвет:
+            </div>
+            <div className="w-2/4 flex justify-start">
+              <Controller
+                name="color"
+                control={control}
+                render={({
+                  field: { value, ...field },
+                  fieldState: { error }
+                }) => (
+                  <div className="bp4-html-select">
+                    <select
+                      {...field}
+                      disabled={mutationState.loading}
+                      defaultValue={value || undefined}
+                    >
+                      <option>Выбрать цвет...</option>
+                      <option value="Red">Красный</option>
+                      <option value="Yellow">Желтый</option>
+                      <option value="LightGreen">Светло зеленый</option>
+                    </select>
+                    <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
+                  </div>
+                )}
+              />
+            </div>
+            <div className="w-1/4" />
+          </div>
+          )}
+          {isAdministrator && (
             <div className="flex gap-8 items-center">
               <div className="w-1/4 flex justify-end leading-none text-right">
                 Экспресс результат лаборатории:
@@ -402,7 +439,7 @@ export function CreatePage() {
               <div className="w-1/4" />
             </div>
           )}
-          {query.data?.currentUser?.role === 'Administrator' && (
+          {isAdministrator && (
             <div className="flex gap-8 items-center">
               <div className="w-1/4 flex justify-end leading-none text-right">
                 Результат лаборатории:

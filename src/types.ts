@@ -222,6 +222,7 @@ export type Report = {
   __typename?: 'Report';
   applicationForm?: Maybe<ReportApplicationForm>;
   client?: Maybe<User>;
+  color?: Maybe<ReportColor>;
   createdAt: Scalars['DateTime'];
   expressLaboratoryResult?: Maybe<File>;
   id: Scalars['Float'];
@@ -250,7 +251,6 @@ export type ReportApplicationForm = {
   lubricantState?: Maybe<Scalars['String']>;
   lubricantViscosity?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
-  number?: Maybe<Scalars['String']>;
   productType?: Maybe<ProductType>;
   report?: Maybe<Report>;
   selectionBrand?: Maybe<Scalars['String']>;
@@ -267,8 +267,15 @@ export type ReportApplicationForm = {
   vehicleTotalOperatingTimeLubricant?: Maybe<Scalars['String']>;
 };
 
+export enum ReportColor {
+  LightGreen = 'LightGreen',
+  Red = 'Red',
+  Yellow = 'Yellow'
+}
+
 export type ReportCreateInput = {
   client?: Maybe<Scalars['Int']>;
+  color?: Maybe<Scalars['String']>;
   expressLaboratoryResult?: Maybe<Scalars['Int']>;
   laboratoryResult?: Maybe<Scalars['Int']>;
   lubricant: Scalars['String'];
@@ -289,6 +296,7 @@ export type ReportCreateResponse = {
 
 export type ReportFilter = {
   clientName?: Maybe<StringFilter>;
+  color?: Maybe<StringFilter>;
   id?: Maybe<NumberFilter>;
   lubricant?: Maybe<StringFilter>;
   lubricantMileage?: Maybe<StringFilter>;
@@ -315,6 +323,8 @@ export type ReportPaginateResponse = {
 };
 
 export enum ReportSort {
+  ColorAsc = 'COLOR_ASC',
+  ColorDesc = 'COLOR_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
   LubricantAsc = 'LUBRICANT_ASC',
@@ -366,6 +376,7 @@ export type ReportUpdateApplicationFormResponse = {
 
 export type ReportUpdateInput = {
   client?: Maybe<Scalars['Int']>;
+  color?: Maybe<Scalars['String']>;
   expressLaboratoryResult?: Maybe<Scalars['Int']>;
   laboratoryResult?: Maybe<Scalars['Int']>;
   lubricant?: Maybe<Scalars['String']>;

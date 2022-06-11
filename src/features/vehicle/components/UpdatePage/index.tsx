@@ -7,7 +7,6 @@ import {
   Icon,
   InputGroup,
   Intent,
-  PopperPlacements,
   Position,
   Switch,
   Tooltip
