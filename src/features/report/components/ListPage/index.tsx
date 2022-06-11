@@ -36,6 +36,32 @@ const jsDateFormatter: DateFormatProps = {
   parseDate: (str) => new Date(str)
 }
 
+const renderColor = (value: types.ReportColor) => {
+  if (!value) return null
+  let color = 'bg-gray-300'
+  if (value === types.ReportColor.Yellow) {
+    color = 'bg-yellow-300'
+  }
+  if (value === types.ReportColor.Red) {
+    color = 'bg-red-300'
+  }
+  if (value === types.ReportColor.LightGreen) {
+    color = 'bg-green-300'
+  }
+  return <div className={`inline-block rounded w-12 h-6 ${color}`} />
+}
+
+const renderFile = (value: Pick<types.File, 'id' | 'url'>) => {
+  if (!value) return
+  return (
+    <a href={value.url} target="_blank">
+      <Icon icon="cloud-download" />
+    </a>
+  )
+}
+
+const renderDate = (value: string) => new Date(value).toLocaleDateString()
+
 export function ListPage() {
   const token = useToken()
   const [page, setPage] = useState(1)
@@ -262,10 +288,37 @@ export function ListPage() {
                     }
                   />
                 </Table.Summary.Cell>
-                <Table.Summary.Cell
-                  index={9}
-                  colSpan={isAdministrator ? 6 : isManager ? 4 : 3}
-                />
+                <Table.Summary.Cell index={9} />
+                {(isManager || isAdministrator) && (
+                  <Table.Summary.Cell index={10}>
+                    <div className="bp4-html-select">
+                      <select
+                        value={filter.color?.contains || undefined}
+                        onChange={(e) =>
+                          setFilter((prev) => ({
+                            ...prev,
+                            color: e.target.value
+                              ? {
+                                  contains: e.target.value
+                                }
+                              : undefined
+                          }))
+                        }
+                      >
+                        <option value=""></option>
+                        <option value="Red">Красный</option>
+                        <option value="Yellow">Желтый</option>
+                        <option value="LightGreen">Светло зеленый</option>
+                      </select>
+                      <span className="bp4-icon bp4-icon-double-caret-vertical" />
+                    </div>
+                  </Table.Summary.Cell>
+                )}
+                <Table.Summary.Cell index={11} />
+                <Table.Summary.Cell index={12} />
+                {isAdministrator && <Table.Summary.Cell index={13} />}
+                {isAdministrator && <Table.Summary.Cell index={14} />}
+                {isAdministrator && <Table.Summary.Cell index={15} />}
               </Table.Summary.Row>
             </Table.Summary>
           )}
@@ -366,7 +419,7 @@ export function ListPage() {
               />
             }
             dataIndex="sampledAt"
-            render={(value) => new Date(value).toLocaleDateString()}
+            render={renderDate}
           />
           <Table.Column title="Примечание" dataIndex="note" />
           {(isManager || isAdministrator) && (
@@ -375,20 +428,7 @@ export function ListPage() {
               dataIndex="color"
               align="center"
               width={84}
-              render={(value: types.ReportColor) => {
-                if (!value) return null
-                let color = 'bg-gray-300'
-                if (value === types.ReportColor.Yellow) {
-                  color = 'bg-yellow-300'
-                }
-                if (value === types.ReportColor.Red) {
-                  color = 'bg-red-300'
-                }
-                if (value === types.ReportColor.LightGreen) {
-                  color = 'bg-green-300'
-                }
-                return <div className={`inline-block rounded w-12 h-6 ${color}`} />
-              }}
+              render={renderColor}
             />
           )}
           <Table.Column
@@ -396,26 +436,14 @@ export function ListPage() {
             dataIndex="laboratoryResult"
             align="center"
             width={84}
-            render={(value) =>
-              value ? (
-                <a href={value.url} target="_blank">
-                  <Icon icon="cloud-download" />
-                </a>
-              ) : undefined
-            }
+            render={renderFile}
           />
           <Table.Column
             title="Экспресс результат лаборатории"
             dataIndex="expressLaboratoryResult"
             align="center"
             width={84}
-            render={(value) =>
-              value ? (
-                <a href={value.url} target="_blank">
-                  <Icon icon="cloud-download" />
-                </a>
-              ) : undefined
-            }
+            render={renderFile}
           />
           {isAdministrator && (
             <>
