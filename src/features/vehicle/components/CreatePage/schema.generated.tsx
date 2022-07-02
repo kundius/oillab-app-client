@@ -2,13 +2,13 @@ import * as Types from '../../../../types';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 export type VehicleCreatePageMutationVariables = Types.Exact<{
   input: Types.VehicleCreateInput;
 }>;
 
 
-export type VehicleCreatePageMutation = { __typename?: 'Mutation', vehicleCreate: { __typename?: 'VehicleCreateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'Vehicle', id: number }> } };
+export type VehicleCreatePageMutation = { __typename?: 'Mutation', vehicleCreate: { __typename?: 'VehicleCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Vehicle', id: number } | null } };
 
 
 export const VehicleCreatePageDocument = gql`

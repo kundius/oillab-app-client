@@ -2,13 +2,13 @@ import * as Types from '../../../../types';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 export type VehicleSelectVehicleFragment = { __typename?: 'Vehicle', id: number, model: string, stateNumber: string };
 
 export type VehicleSelectVehicleQueryVariables = Types.Exact<{
   page: Types.Scalars['Int'];
   perPage: Types.Scalars['Int'];
-  filter?: Types.Maybe<Types.VehicleFilter>;
+  filter?: Types.InputMaybe<Types.VehicleFilter>;
 }>;
 
 

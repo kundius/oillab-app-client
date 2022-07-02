@@ -1,0 +1,29 @@
+fragment LubricantListPageItem on Lubricant {
+  id
+  model
+  brand
+  viscosity
+}
+
+query LubricantListPageLubricantPaginate(
+  $sort: [LubricantSort!]
+  $filter: LubricantFilter
+  $page: Int
+  $perPage: Int
+) {
+  lubricantPaginate(
+    sort: $sort
+    filter: $filter
+    page: $page
+    perPage: $perPage
+  ) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
+    items {
+      ...LubricantListPageItem
+    }
+  }
+}

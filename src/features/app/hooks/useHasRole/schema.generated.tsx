@@ -2,11 +2,11 @@ import * as Types from '../../../../types';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 export type AppUseCurrentRoleQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type AppUseCurrentRoleQuery = { __typename?: 'Query', currentUser?: Types.Maybe<{ __typename?: 'User', id: number, role: Types.UserRole }> };
+export type AppUseCurrentRoleQuery = { __typename?: 'Query', currentUser?: { __typename?: 'User', id: number, role: Types.UserRole } | null };
 
 
 export const AppUseCurrentRoleDocument = gql`

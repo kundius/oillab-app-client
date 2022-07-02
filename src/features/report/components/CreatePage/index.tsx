@@ -17,9 +17,9 @@ import {
 
 import { UploadFile, UploadFileValue } from '@components/UploadFile'
 import {
-  SelectUser,
-  SelectUserValue
-} from '@features/users/components/SelectUser'
+  Select as SelectUser,
+  SelectValue as SelectUserValue
+} from '@features/users/components/Select'
 import {
   SelectVehicle,
   SelectVehicleValue

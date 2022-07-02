@@ -2,18 +2,18 @@ import * as Types from '../../../../types';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-const defaultOptions =  {}
-export type UsersListPageItemFragment = { __typename?: 'User', id: number, name: string, email?: Types.Maybe<string>, createdAt: any, lastActivityAt: any };
+const defaultOptions = {} as const;
+export type UsersListPageItemFragment = { __typename?: 'User', id: number, name: string, email: string, createdAt: any, lastActivityAt: any };
 
 export type UsersListPageUserPaginateQueryVariables = Types.Exact<{
-  sort?: Types.Maybe<Array<Types.UserSort> | Types.UserSort>;
-  filter?: Types.Maybe<Types.UserFilter>;
-  page?: Types.Maybe<Types.Scalars['Int']>;
-  perPage?: Types.Maybe<Types.Scalars['Int']>;
+  sort?: Types.InputMaybe<Array<Types.UserSort> | Types.UserSort>;
+  filter?: Types.InputMaybe<Types.UserFilter>;
+  page?: Types.InputMaybe<Types.Scalars['Int']>;
+  perPage?: Types.InputMaybe<Types.Scalars['Int']>;
 }>;
 
 
-export type UsersListPageUserPaginateQuery = { __typename?: 'Query', userPaginate: { __typename?: 'UserPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'User', id: number, name: string, email?: Types.Maybe<string>, createdAt: any, lastActivityAt: any }> } };
+export type UsersListPageUserPaginateQuery = { __typename?: 'Query', userPaginate: { __typename?: 'UserPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'User', id: number, name: string, email: string, createdAt: any, lastActivityAt: any }> } };
 
 export const UsersListPageItemFragmentDoc = gql`
     fragment UsersListPageItem on User {

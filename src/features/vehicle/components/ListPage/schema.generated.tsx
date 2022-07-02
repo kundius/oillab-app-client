@@ -2,14 +2,14 @@ import * as Types from '../../../../types';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 export type VehicleListPageItemFragment = { __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string, owner: { __typename?: 'User', id: number, name: string } };
 
 export type VehicleListPageVehiclePaginateQueryVariables = Types.Exact<{
-  sort?: Types.Maybe<Array<Types.VehicleSort> | Types.VehicleSort>;
-  filter?: Types.Maybe<Types.VehicleFilter>;
-  page?: Types.Maybe<Types.Scalars['Int']>;
-  perPage?: Types.Maybe<Types.Scalars['Int']>;
+  sort?: Types.InputMaybe<Array<Types.VehicleSort> | Types.VehicleSort>;
+  filter?: Types.InputMaybe<Types.VehicleFilter>;
+  page?: Types.InputMaybe<Types.Scalars['Int']>;
+  perPage?: Types.InputMaybe<Types.Scalars['Int']>;
 }>;
 
 

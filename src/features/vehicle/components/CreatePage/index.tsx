@@ -11,9 +11,9 @@ import { useForm, Controller } from 'react-hook-form'
 import { useRouter } from 'next/router'
 
 import {
-  SelectUser,
-  SelectUserValue
-} from '@features/users/components/SelectUser'
+  Select as SelectUser,
+  SelectValue as SelectUserValue
+} from '@features/users/components/Select'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { AppToaster } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'

@@ -6,14 +6,17 @@ import classNames from 'classnames'
 
 import { Container } from '@app/components/Container'
 import { useLogout } from '@features/app/hooks/useLogout'
+import { useHasRole } from '@app/features/app/hooks/useHasRole'
 
 import * as schema from './schema.generated'
+import * as types from '@app/types'
 import styles from './styles.module.css'
 
 export const Header = () => {
   const { data: { currentUser } = {} } = schema.useAppHeaderCurrentUserQuery()
   const [logout] = useLogout()
   const router = useRouter()
+  const isAdministrator = useHasRole(types.UserRole.Administrator)
   return (
     <div className={styles.wrapper}>
       <Container>
@@ -44,7 +47,7 @@ export const Header = () => {
                   </a>
                 </Link>
               </li>
-              {currentUser?.role === 'Administrator' && (
+              {isAdministrator && (
                 <li>
                   <Link href="/users" passHref>
                     <a
@@ -58,7 +61,7 @@ export const Header = () => {
                   </Link>
                 </li>
               )}
-              {currentUser?.role === 'Administrator' && (
+              {isAdministrator && (
                 <li>
                   <Link href="/vehicle" passHref>
                     <a
@@ -68,6 +71,20 @@ export const Header = () => {
                       })}
                     >
                       Техника
+                    </a>
+                  </Link>
+                </li>
+              )}
+              {isAdministrator && (
+                <li>
+                  <Link href="/lubricant" passHref>
+                    <a
+                      className={classNames(styles.link, {
+                        [styles.linkActive]:
+                          router.pathname.startsWith('/lubricant')
+                      })}
+                    >
+                      Смазочный материал
                     </a>
                   </Link>
                 </li>

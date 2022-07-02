@@ -1,9 +1,9 @@
-fragment UsersSelectUserFragment on User {
+fragment UsersSelectFragment on User {
   id
   name
 }
 
-query UsersSelectUserQuery (
+query UsersSelectQuery (
   $search: String
   $page: Int!
   $perPage: Int!
@@ -23,7 +23,7 @@ query UsersSelectUserQuery (
       perPage
     }
     items {
-      ...UsersSelectUserFragment
+      ...UsersSelectFragment
     }
   }
 }

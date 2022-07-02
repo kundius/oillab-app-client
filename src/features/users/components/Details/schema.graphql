@@ -1,0 +1,13 @@
+fragment UsersDetailsFragment on User {
+  id
+  name
+  email
+  phone
+  organization
+}
+
+query UsersDetailsQuery($id: Int!) {
+  user(id: $id) {
+    ...UsersDetailsFragment
+  }
+}

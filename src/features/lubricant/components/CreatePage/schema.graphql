@@ -1,0 +1,11 @@
+mutation LubricantCreatePage($input: LubricantCreateInput!) {
+  lubricantCreate(input: $input) {
+    success
+    error {
+      message
+    }
+    record {
+      id
+    }
+  }
+}

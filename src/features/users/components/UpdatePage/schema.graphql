@@ -2,6 +2,8 @@ fragment UsersUpdatePageFragment on User {
   id
   name
   email
+  phone
+  organization
   role
 }
 

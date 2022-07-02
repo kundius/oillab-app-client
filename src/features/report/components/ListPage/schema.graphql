@@ -29,9 +29,6 @@ fragment ReportListPageItem on Report {
     stateNumber
     engineModel
   }
-  applicationForm {
-    ...ReportUpdateApplicationFormModalFragment
-  }
 }
 
 query ReportListPageReportPaginate(

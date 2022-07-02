@@ -1,0 +1,12 @@
+fragment LubricantDetailsFragment on Lubricant {
+  id
+  model
+  brand
+  viscosity
+}
+
+query LubricantDetailsQuery($id: Int!) {
+  lubricant(id: $id) {
+    ...LubricantDetailsFragment
+  }
+}

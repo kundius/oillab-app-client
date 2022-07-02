@@ -1,0 +1,26 @@
+fragment LubricantSelectFragment on Lubricant {
+  id
+  model
+  brand
+}
+
+query LubricantSelectQuery (
+  $page: Int!
+  $perPage: Int!
+  $filter: LubricantFilter
+) {
+  lubricantPaginate(
+    filter: $filter
+    page: $page
+    perPage: $perPage
+  ) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
+    items {
+      ...LubricantSelectFragment
+    }
+  }
+}

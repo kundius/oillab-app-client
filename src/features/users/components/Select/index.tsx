@@ -5,23 +5,23 @@ import { Pagination } from '@components/Pagination'
 
 import * as schema from './schema.generated'
 
-export interface SelectUserValue {
+export interface SelectValue {
   label: string
   value: number
 }
 
-export interface SelectUserProps {
-  value?: SelectUserValue | null
-  onChange?: (v?: SelectUserValue | null) => void
+export interface SelectProps {
+  value?: SelectValue | null
+  onChange?: (v?: SelectValue | null) => void
 }
 
-export function SelectUser ({ value, onChange }: SelectUserProps) {
+export function Select ({ value, onChange }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
 
-  const query = schema.useUsersSelectUserQuery({
+  const query = schema.useUsersSelectQuery({
     variables: {
       page,
       perPage,
@@ -32,7 +32,7 @@ export function SelectUser ({ value, onChange }: SelectUserProps) {
 
   const handleOpen = () => setIsOpen(true)
   const handleClose = () => setIsOpen(false)
-  const handleSelect = (record: schema.UsersSelectUserFragment) => {
+  const handleSelect = (record: schema.UsersSelectFragment) => {
     handleClose()
     onChange?.({
       value: record.id,

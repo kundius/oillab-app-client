@@ -2,7 +2,7 @@ import * as Types from '../../../../types';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 export type VehicleDetailsForFormFragment = { __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string };
 
 export type VehicleDetailsForFormQueryVariables = Types.Exact<{
@@ -10,7 +10,7 @@ export type VehicleDetailsForFormQueryVariables = Types.Exact<{
 }>;
 
 
-export type VehicleDetailsForFormQuery = { __typename?: 'Query', vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string }> };
+export type VehicleDetailsForFormQuery = { __typename?: 'Query', vehicle?: { __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string } | null };
 
 export const VehicleDetailsForFormFragmentDoc = gql`
     fragment VehicleDetailsForFormFragment on Vehicle {

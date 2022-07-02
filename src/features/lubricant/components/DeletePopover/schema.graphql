@@ -1,0 +1,8 @@
+mutation LubricantDeletePopover($id: Int!) {
+  lubricantDelete(id: $id) {
+    success
+    error {
+      message
+    }
+  }
+}

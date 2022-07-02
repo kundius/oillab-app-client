@@ -16,6 +16,18 @@ import Link from 'next/link'
 
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { AppToaster } from '@components/AppToaster'
+import { FormField } from '@components/FormField'
+import { FormFieldSet } from '@components/FormFieldSet'
+import {
+  Select as SelectLubricant,
+  SelectValue as SelectLubricantValue
+} from '@features/lubricant/components/Select'
+import {
+  Select as SelectUser,
+  SelectValue as SelectUserValue
+} from '@features/users/components/Select'
+import { Details as LubricantDetails } from '@features/lubricant/components/Details'
+import { Details as UserDetails } from '@features/users/components/Details'
 
 import * as schema from './schema.generated'
 import * as types from '@app/types'
@@ -27,55 +39,9 @@ export interface ApplicationFormPageProps {
   initialReport: schema.ReportApplicationFormPageFragment
 }
 
-const Field = ({ label, children }) => (
-  <div className="flex gap-8 items-center">
-    <div className="w-1/4 flex justify-end leading-none text-right">
-      {label}
-    </div>
-    <div className="w-2/4 flex justify-start">{children}</div>
-  </div>
-)
-
-const Fieldset = ({ title, children }) => (
-  <div>
-    <div className="font-bold text-lg mb-4">{title}</div>
-    <div className="space-y-4">{children}</div>
-  </div>
-)
-
-const getDefaultValues = (data: schema.ReportApplicationFormPageFragment) => {
-  const af = data?.applicationForm
-  if (af) {
-    return {
-      productType: af.productType,
-      customerOrganization: af.customerOrganization,
-      customerPhone: af.customerPhone,
-      customerPerson: af.customerPerson,
-      customerEmail: af.customerEmail,
-      vehicleEquipmentManufacturer: af.vehicleEquipmentManufacturer,
-      vehicleRegistrationNumber: af.vehicleRegistrationNumber,
-      vehicleEquipmentModel: af.vehicleEquipmentModel,
-      vehicleTotalOperatingTime: af.vehicleTotalOperatingTime,
-      vehicleSamplingPoint: af.vehicleSamplingPoint,
-      vehicleTotalOperatingTimeLubricant: af.vehicleTotalOperatingTimeLubricant,
-      vehicleLiquidVolume: af.vehicleLiquidVolume,
-      vehicleToppingUpLubricant: af.vehicleToppingUpLubricant,
-      lubricantBrand: af.lubricantBrand,
-      lubricantViscosity: af.lubricantViscosity,
-      lubricantModel: af.lubricantModel,
-      lubricantState: af.lubricantState,
-      selectionVolume: af.selectionVolume,
-      selectionPlace: af.selectionPlace,
-      note: af.note
-    }
-  }
-  return {
-    customerOrganization: data?.client?.name,
-    vehicleRegistrationNumber: data?.vehicle?.stateNumber,
-    vehicleTotalOperatingTime: data?.totalMileage,
-    vehicleTotalOperatingTimeLubricant: data?.lubricantMileage,
-    vehicleEquipmentModel: data?.vehicle?.engineModel,
-  }
+interface FormFields extends types.ReportUpdateApplicationFormInput {
+  lubricant?: SelectLubricantValue | null
+  customer?: SelectUserValue | null
 }
 
 export function ApplicationFormPage({
@@ -93,20 +59,37 @@ export function ApplicationFormPage({
   const {
     handleSubmit,
     control,
-    setValue,
-    reset,
     watch,
     formState: { isDirty }
-  } = useForm<types.ReportUpdateApplicationFormInput>({
-    defaultValues: getDefaultValues(initialReport)
+  } = useForm<FormFields>({
+    defaultValues: {
+      lubricant: initialReport?.applicationForm?.lubricant
+        ? {
+            label: initialReport?.applicationForm?.lubricant.model,
+            value: initialReport?.applicationForm?.lubricant.id
+          }
+        : null,
+      customer: initialReport?.applicationForm?.customer
+        ? {
+            label: initialReport?.applicationForm?.customer.name,
+            value: initialReport?.applicationForm?.customer.id
+          }
+        : null
+    }
   })
   const token = useToken()
+  const watchLubricant = watch('lubricant')
+  const watchCustomer = watch('customer')
 
-  const onSubmit = async (input: types.ReportUpdateApplicationFormInput) => {
+  const onSubmit = async ({ lubricant, customer, ...input }: FormFields) => {
     const response = await mutation({
       variables: {
         id: initialReport.id,
-        input
+        input: {
+          ...input,
+          lubricantId: lubricant?.value || null,
+          customerId: customer?.value || null
+        }
       }
     })
 
@@ -172,9 +155,7 @@ export function ApplicationFormPage({
                     />
                   </a>
                   <MenuDivider title="Рекдактировать" />
-                  <Link
-                    href={`/report/${initialReport.id}`}
-                  >
+                  <Link href={`/report/${initialReport.id}`}>
                     <MenuItem icon="edit" text="Отчет" />
                   </Link>
                 </Menu>
@@ -197,136 +178,57 @@ export function ApplicationFormPage({
           className="space-y-8 max-w-full ml-auto mr-auto"
           style={{ width: 800 }}
         >
-          <Fieldset title="Данные владельца техники/заказчика">
-            <Field label="Организация">
+          <FormFieldSet title="Данные владельца техники/заказчика">
+            <FormField label="Выбрать пользователя:">
               <Controller
-                name="customerOrganization"
+                name="customer"
                 control={control}
                 render={({
-                  field: { ref, value, ...field },
+                  field: { ref, ...field },
                   fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
+                }) => <SelectUser {...field} />}
+              />
+            </FormField>
+            {watchCustomer && (
+              <UserDetails
+                id={watchCustomer.value}
+                render={(data) => (
+                  <>
+                    <FormField label="Имя:">{data.name}</FormField>
+                    <FormField label="E-mail:">{data.email}</FormField>
+                    <FormField label="Организация:">
+                      {data.organization}
+                    </FormField>
+                    <FormField label="Телефон:">{data.phone}</FormField>
+                  </>
                 )}
               />
-            </Field>
-            <Field label="Контактное лицо">
+            )}
+          </FormFieldSet>
+          <FormFieldSet title="Информация о смазочном материале">
+            <FormField label="Смазочный материал">
               <Controller
-                name="customerPerson"
+                name="lubricant"
                 control={control}
                 render={({
-                  field: { ref, value, ...field },
+                  field: { ref, ...field },
                   fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
+                }) => <SelectLubricant {...field} />}
+              />
+            </FormField>
+            {watchLubricant && (
+              <LubricantDetails
+                id={watchLubricant.value}
+                render={(data) => (
+                  <>
+                    <FormField label="Модель">{data.model}</FormField>
+                    <FormField label="Бренд">{data.brand}</FormField>
+                    <FormField label="Вязкость">{data.viscosity}</FormField>
+                  </>
                 )}
               />
-            </Field>
-            <Field label="Контактный телефон">
-              <Controller
-                name="customerPhone"
-                control={control}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </Field>
-            <Field label="Электронная почта">
-              <Controller
-                name="customerEmail"
-                control={control}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </Field>
-          </Fieldset>
-          <Fieldset title="Информация о смазочном материале">
-            <Field label="Бренд СМ">
-              <Controller
-                name="lubricantBrand"
-                control={control}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </Field>
-            <Field label="Марка СМ">
-              <Controller
-                name="lubricantModel"
-                control={control}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </Field>
-            <Field label="Вязкость">
-              <Controller
-                name="lubricantViscosity"
-                control={control}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </Field>
-            <Field label="Состояние СМ">
+            )}
+            <FormField label="Состояние СМ">
               <Controller
                 name="lubricantState"
                 control={control}
@@ -343,10 +245,15 @@ export function ApplicationFormPage({
                   />
                 )}
               />
-            </Field>
-          </Fieldset>
-          <Fieldset title="Техника / точка отбора образца">
-            <Field label="Производитель оборудования">
+            </FormField>
+          </FormFieldSet>
+          <FormFieldSet title="Техника / точка отбора образца">
+            {initialReport.vehicle && (
+              <FormField label="Производитель оборудования:">
+                {initialReport.vehicle.engineModel}
+              </FormField>
+            )}
+            <FormField label="Производитель оборудования">
               <Controller
                 name="vehicleEquipmentManufacturer"
                 control={control}
@@ -363,8 +270,8 @@ export function ApplicationFormPage({
                   />
                 )}
               />
-            </Field>
-            <Field label="Модель оборудования">
+            </FormField>
+            <FormField label="Модель оборудования">
               <Controller
                 name="vehicleEquipmentModel"
                 control={control}
@@ -381,8 +288,8 @@ export function ApplicationFormPage({
                   />
                 )}
               />
-            </Field>
-            <Field label="Регистрационный номер">
+            </FormField>
+            <FormField label="Регистрационный номер">
               <Controller
                 name="vehicleRegistrationNumber"
                 control={control}
@@ -399,8 +306,8 @@ export function ApplicationFormPage({
                   />
                 )}
               />
-            </Field>
-            <Field label="Общая наработка узла">
+            </FormField>
+            <FormField label="Общая наработка узла">
               <Controller
                 name="vehicleTotalOperatingTime"
                 control={control}
@@ -417,8 +324,8 @@ export function ApplicationFormPage({
                   />
                 )}
               />
-            </Field>
-            <Field label="Общая наработка на СМ">
+            </FormField>
+            <FormField label="Общая наработка на СМ">
               <Controller
                 name="vehicleTotalOperatingTimeLubricant"
                 control={control}
@@ -435,8 +342,8 @@ export function ApplicationFormPage({
                   />
                 )}
               />
-            </Field>
-            <Field label="Долив СМ">
+            </FormField>
+            <FormField label="Долив СМ">
               <Controller
                 name="vehicleToppingUpLubricant"
                 control={control}
@@ -453,8 +360,8 @@ export function ApplicationFormPage({
                   />
                 )}
               />
-            </Field>
-            <Field label="Точка отбора образца">
+            </FormField>
+            <FormField label="Точка отбора образца">
               <Controller
                 name="vehicleSamplingPoint"
                 control={control}
@@ -471,8 +378,8 @@ export function ApplicationFormPage({
                   />
                 )}
               />
-            </Field>
-            <Field label="Объём жидкости в оборудовании">
+            </FormField>
+            <FormField label="Объём жидкости в оборудовании">
               <Controller
                 name="vehicleLiquidVolume"
                 control={control}
@@ -489,10 +396,10 @@ export function ApplicationFormPage({
                   />
                 )}
               />
-            </Field>
-          </Fieldset>
-          <Fieldset title="Информация об отборе образца">
-            <Field label="Тип продукта">
+            </FormField>
+          </FormFieldSet>
+          <FormFieldSet title="Информация об отборе образца">
+            <FormField label="Тип продукта">
               <Controller
                 name="productType"
                 control={control}
@@ -515,8 +422,8 @@ export function ApplicationFormPage({
                   </div>
                 )}
               />
-            </Field>
-            <Field label="Бренд">
+            </FormField>
+            <FormField label="Бренд">
               <Controller
                 name="selectionBrand"
                 control={control}
@@ -533,8 +440,8 @@ export function ApplicationFormPage({
                   />
                 )}
               />
-            </Field>
-            <Field label="Объём образца">
+            </FormField>
+            <FormField label="Объём образца">
               <Controller
                 name="selectionVolume"
                 control={control}
@@ -551,8 +458,8 @@ export function ApplicationFormPage({
                   />
                 )}
               />
-            </Field>
-            <Field label="Место отбора пробы">
+            </FormField>
+            <FormField label="Место отбора пробы">
               <Controller
                 name="selectionPlace"
                 control={control}
@@ -569,9 +476,9 @@ export function ApplicationFormPage({
                   />
                 )}
               />
-            </Field>
-          </Fieldset>
-          <Field label="Примечание">
+            </FormField>
+          </FormFieldSet>
+          <FormField label="Примечание">
             <Controller
               name="note"
               control={control}
@@ -588,7 +495,7 @@ export function ApplicationFormPage({
                 />
               )}
             />
-          </Field>
+          </FormField>
         </div>
       </MainTemplate>
     </form>

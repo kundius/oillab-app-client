@@ -9,7 +9,10 @@ fragment ReportApplicationFormPageFragment on Report {
   sampledAt
   client {
     id
+    organization
+    phone
     name
+    email
   }
   vehicle {
     id
@@ -21,10 +24,13 @@ fragment ReportApplicationFormPageFragment on Report {
   applicationForm {
     id
     productType
-    customerOrganization
-    customerPhone
-    customerPerson
-    customerEmail
+    customer {
+      id
+      organization
+      phone
+      name
+      email
+    }
     vehicleEquipmentManufacturer
     vehicleRegistrationNumber
     vehicleEquipmentModel
@@ -33,9 +39,12 @@ fragment ReportApplicationFormPageFragment on Report {
     vehicleTotalOperatingTimeLubricant
     vehicleLiquidVolume
     vehicleToppingUpLubricant
-    lubricantBrand
-    lubricantViscosity
-    lubricantModel
+    lubricant {
+      id
+      model
+      brand
+      viscosity
+    }
     lubricantState
     selectionVolume
     selectionPlace

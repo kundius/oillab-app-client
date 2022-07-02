@@ -1,4 +1,5 @@
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -19,9 +20,9 @@ export type AuthenticationError = DefaultError & {
 };
 
 export type DateFilter = {
-  eq?: Maybe<Scalars['DateTime']>;
-  gt?: Maybe<Scalars['DateTime']>;
-  lt?: Maybe<Scalars['DateTime']>;
+  eq?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  lt?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type DefaultError = {
@@ -48,12 +49,73 @@ export type File = {
 };
 
 export type IdFilter = {
-  eq?: Maybe<Scalars['Float']>;
-  in?: Maybe<Array<Scalars['Int']>>;
+  eq?: InputMaybe<Scalars['Float']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+};
+
+export type Lubricant = {
+  __typename?: 'Lubricant';
+  brand: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  id: Scalars['Float'];
+  model: Scalars['String'];
+  reportApplicationForms?: Maybe<ReportApplicationForm>;
+  updatedAt: Scalars['DateTime'];
+  viscosity: Scalars['String'];
+};
+
+export type LubricantCreateInput = {
+  brand: Scalars['String'];
+  model: Scalars['String'];
+  viscosity: Scalars['String'];
+};
+
+export type LubricantCreateResponse = {
+  __typename?: 'LubricantCreateResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<Lubricant>;
+  success: Scalars['Boolean'];
+};
+
+export type LubricantFilter = {
+  brand?: InputMaybe<StringFilter>;
+  model?: InputMaybe<StringFilter>;
+  viscosity?: InputMaybe<StringFilter>;
+};
+
+export type LubricantPaginateResponse = {
+  __typename?: 'LubricantPaginateResponse';
+  items: Array<Lubricant>;
+  pageInfo: PageInfo;
+};
+
+export enum LubricantSort {
+  BrandAsc = 'BRAND_ASC',
+  BrandDesc = 'BRAND_DESC',
+  ModelAsc = 'MODEL_ASC',
+  ModelDesc = 'MODEL_DESC',
+  ViscosityAsc = 'VISCOSITY_ASC',
+  ViscosityDesc = 'VISCOSITY_DESC'
+}
+
+export type LubricantUpdateInput = {
+  brand?: InputMaybe<Scalars['String']>;
+  model?: InputMaybe<Scalars['String']>;
+  viscosity?: InputMaybe<Scalars['String']>;
+};
+
+export type LubricantUpdateResponse = {
+  __typename?: 'LubricantUpdateResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<Lubricant>;
+  success: Scalars['Boolean'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
+  lubricantCreate: LubricantCreateResponse;
+  lubricantDelete: DefaultMutationResponse;
+  lubricantUpdate: LubricantUpdateResponse;
   reportCreate: ReportCreateResponse;
   reportDelete: DefaultMutationResponse;
   reportGeneratePdf: ReportGeneratePdfResponse;
@@ -69,6 +131,22 @@ export type Mutation = {
 };
 
 
+export type MutationLubricantCreateArgs = {
+  input: LubricantCreateInput;
+};
+
+
+export type MutationLubricantDeleteArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationLubricantUpdateArgs = {
+  id: Scalars['Int'];
+  input: LubricantUpdateInput;
+};
+
+
 export type MutationReportCreateArgs = {
   input: ReportCreateInput;
 };
@@ -80,8 +158,8 @@ export type MutationReportDeleteArgs = {
 
 
 export type MutationReportGeneratePdfArgs = {
-  filter?: Maybe<ReportFilter>;
-  sort?: Maybe<Array<ReportSort>>;
+  filter?: InputMaybe<ReportFilter>;
+  sort?: InputMaybe<Array<ReportSort>>;
 };
 
 
@@ -144,9 +222,9 @@ export type NotFoundError = DefaultError & {
 };
 
 export type NumberFilter = {
-  eq?: Maybe<Scalars['Float']>;
-  gt?: Maybe<Scalars['Float']>;
-  lt?: Maybe<Scalars['Float']>;
+  eq?: InputMaybe<Scalars['Float']>;
+  gt?: InputMaybe<Scalars['Float']>;
+  lt?: InputMaybe<Scalars['Float']>;
 };
 
 export type PageInfo = {
@@ -166,6 +244,8 @@ export type Query = {
   __typename?: 'Query';
   currentUser?: Maybe<User>;
   file?: Maybe<File>;
+  lubricant?: Maybe<Lubricant>;
+  lubricantPaginate: LubricantPaginateResponse;
   report?: Maybe<Report>;
   reportPaginate: ReportPaginateResponse;
   user?: Maybe<User>;
@@ -180,16 +260,29 @@ export type QueryFileArgs = {
 };
 
 
+export type QueryLubricantArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryLubricantPaginateArgs = {
+  filter?: InputMaybe<LubricantFilter>;
+  page?: InputMaybe<Scalars['Int']>;
+  perPage?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<LubricantSort>>;
+};
+
+
 export type QueryReportArgs = {
   id: Scalars['Int'];
 };
 
 
 export type QueryReportPaginateArgs = {
-  filter?: Maybe<ReportFilter>;
-  page?: Maybe<Scalars['Int']>;
-  perPage?: Maybe<Scalars['Int']>;
-  sort?: Maybe<Array<ReportSort>>;
+  filter?: InputMaybe<ReportFilter>;
+  page?: InputMaybe<Scalars['Int']>;
+  perPage?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<ReportSort>>;
 };
 
 
@@ -199,10 +292,10 @@ export type QueryUserArgs = {
 
 
 export type QueryUserPaginateArgs = {
-  filter?: Maybe<UserFilter>;
-  page?: Maybe<Scalars['Int']>;
-  perPage?: Maybe<Scalars['Int']>;
-  sort?: Maybe<Array<UserSort>>;
+  filter?: InputMaybe<UserFilter>;
+  page?: InputMaybe<Scalars['Int']>;
+  perPage?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<UserSort>>;
 };
 
 
@@ -212,10 +305,10 @@ export type QueryVehicleArgs = {
 
 
 export type QueryVehiclePaginateArgs = {
-  filter?: Maybe<VehicleFilter>;
-  page?: Maybe<Scalars['Int']>;
-  perPage?: Maybe<Scalars['Int']>;
-  sort?: Maybe<Array<VehicleSort>>;
+  filter?: InputMaybe<VehicleFilter>;
+  page?: InputMaybe<Scalars['Int']>;
+  perPage?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<VehicleSort>>;
 };
 
 export type Report = {
@@ -241,15 +334,10 @@ export type Report = {
 export type ReportApplicationForm = {
   __typename?: 'ReportApplicationForm';
   createdAt: Scalars['DateTime'];
-  customerEmail?: Maybe<Scalars['String']>;
-  customerOrganization?: Maybe<Scalars['String']>;
-  customerPerson?: Maybe<Scalars['String']>;
-  customerPhone?: Maybe<Scalars['String']>;
+  customer?: Maybe<User>;
   id: Scalars['Float'];
-  lubricantBrand?: Maybe<Scalars['String']>;
-  lubricantModel?: Maybe<Scalars['String']>;
+  lubricant?: Maybe<Lubricant>;
   lubricantState?: Maybe<Scalars['String']>;
-  lubricantViscosity?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
   productType?: Maybe<ProductType>;
   report?: Maybe<Report>;
@@ -274,17 +362,17 @@ export enum ReportColor {
 }
 
 export type ReportCreateInput = {
-  client?: Maybe<Scalars['Int']>;
-  color?: Maybe<Scalars['String']>;
-  expressLaboratoryResult?: Maybe<Scalars['Int']>;
-  laboratoryResult?: Maybe<Scalars['Int']>;
+  client?: InputMaybe<Scalars['Int']>;
+  color?: InputMaybe<Scalars['String']>;
+  expressLaboratoryResult?: InputMaybe<Scalars['Int']>;
+  laboratoryResult?: InputMaybe<Scalars['Int']>;
   lubricant: Scalars['String'];
   lubricantMileage: Scalars['String'];
-  note?: Maybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']>;
   sampledAt: Scalars['DateTime'];
   samplingNodes: Scalars['String'];
   totalMileage: Scalars['String'];
-  vehicle?: Maybe<Scalars['Int']>;
+  vehicle?: InputMaybe<Scalars['Int']>;
 };
 
 export type ReportCreateResponse = {
@@ -295,18 +383,18 @@ export type ReportCreateResponse = {
 };
 
 export type ReportFilter = {
-  clientName?: Maybe<StringFilter>;
-  color?: Maybe<StringFilter>;
-  id?: Maybe<NumberFilter>;
-  lubricant?: Maybe<StringFilter>;
-  lubricantMileage?: Maybe<StringFilter>;
-  sampledAt?: Maybe<DateFilter>;
-  samplingNodes?: Maybe<StringFilter>;
-  totalMileage?: Maybe<StringFilter>;
-  vehicleEngineModel?: Maybe<StringFilter>;
-  vehicleModel?: Maybe<StringFilter>;
-  vehicleReleaseYear?: Maybe<StringFilter>;
-  vehicleStateNumber?: Maybe<StringFilter>;
+  clientName?: InputMaybe<StringFilter>;
+  color?: InputMaybe<StringFilter>;
+  id?: InputMaybe<NumberFilter>;
+  lubricant?: InputMaybe<StringFilter>;
+  lubricantMileage?: InputMaybe<StringFilter>;
+  sampledAt?: InputMaybe<DateFilter>;
+  samplingNodes?: InputMaybe<StringFilter>;
+  totalMileage?: InputMaybe<StringFilter>;
+  vehicleEngineModel?: InputMaybe<StringFilter>;
+  vehicleModel?: InputMaybe<StringFilter>;
+  vehicleReleaseYear?: InputMaybe<StringFilter>;
+  vehicleStateNumber?: InputMaybe<StringFilter>;
 };
 
 export type ReportGeneratePdfResponse = {
@@ -344,27 +432,22 @@ export enum ReportSort {
 }
 
 export type ReportUpdateApplicationFormInput = {
-  customerEmail?: Maybe<Scalars['String']>;
-  customerOrganization?: Maybe<Scalars['String']>;
-  customerPerson?: Maybe<Scalars['String']>;
-  customerPhone?: Maybe<Scalars['String']>;
-  lubricantBrand?: Maybe<Scalars['String']>;
-  lubricantModel?: Maybe<Scalars['String']>;
-  lubricantState?: Maybe<Scalars['String']>;
-  lubricantViscosity?: Maybe<Scalars['String']>;
-  note?: Maybe<Scalars['String']>;
-  productType?: Maybe<Scalars['String']>;
-  selectionBrand?: Maybe<Scalars['String']>;
-  selectionPlace?: Maybe<Scalars['String']>;
-  selectionVolume?: Maybe<Scalars['String']>;
-  vehicleEquipmentManufacturer?: Maybe<Scalars['String']>;
-  vehicleEquipmentModel?: Maybe<Scalars['String']>;
-  vehicleLiquidVolume?: Maybe<Scalars['String']>;
-  vehicleRegistrationNumber?: Maybe<Scalars['String']>;
-  vehicleSamplingPoint?: Maybe<Scalars['String']>;
-  vehicleToppingUpLubricant?: Maybe<Scalars['String']>;
-  vehicleTotalOperatingTime?: Maybe<Scalars['String']>;
-  vehicleTotalOperatingTimeLubricant?: Maybe<Scalars['String']>;
+  customerId?: InputMaybe<Scalars['Int']>;
+  lubricantId?: InputMaybe<Scalars['Int']>;
+  lubricantState?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']>;
+  productType?: InputMaybe<Scalars['String']>;
+  selectionBrand?: InputMaybe<Scalars['String']>;
+  selectionPlace?: InputMaybe<Scalars['String']>;
+  selectionVolume?: InputMaybe<Scalars['String']>;
+  vehicleEquipmentManufacturer?: InputMaybe<Scalars['String']>;
+  vehicleEquipmentModel?: InputMaybe<Scalars['String']>;
+  vehicleLiquidVolume?: InputMaybe<Scalars['String']>;
+  vehicleRegistrationNumber?: InputMaybe<Scalars['String']>;
+  vehicleSamplingPoint?: InputMaybe<Scalars['String']>;
+  vehicleToppingUpLubricant?: InputMaybe<Scalars['String']>;
+  vehicleTotalOperatingTime?: InputMaybe<Scalars['String']>;
+  vehicleTotalOperatingTimeLubricant?: InputMaybe<Scalars['String']>;
 };
 
 export type ReportUpdateApplicationFormResponse = {
@@ -375,17 +458,17 @@ export type ReportUpdateApplicationFormResponse = {
 };
 
 export type ReportUpdateInput = {
-  client?: Maybe<Scalars['Int']>;
-  color?: Maybe<Scalars['String']>;
-  expressLaboratoryResult?: Maybe<Scalars['Int']>;
-  laboratoryResult?: Maybe<Scalars['Int']>;
-  lubricant?: Maybe<Scalars['String']>;
-  lubricantMileage?: Maybe<Scalars['String']>;
-  note?: Maybe<Scalars['String']>;
-  sampledAt?: Maybe<Scalars['DateTime']>;
-  samplingNodes?: Maybe<Scalars['String']>;
-  totalMileage?: Maybe<Scalars['String']>;
-  vehicle?: Maybe<Scalars['Int']>;
+  client?: InputMaybe<Scalars['Int']>;
+  color?: InputMaybe<Scalars['String']>;
+  expressLaboratoryResult?: InputMaybe<Scalars['Int']>;
+  laboratoryResult?: InputMaybe<Scalars['Int']>;
+  lubricant?: InputMaybe<Scalars['String']>;
+  lubricantMileage?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']>;
+  sampledAt?: InputMaybe<Scalars['DateTime']>;
+  samplingNodes?: InputMaybe<Scalars['String']>;
+  totalMileage?: InputMaybe<Scalars['String']>;
+  vehicle?: InputMaybe<Scalars['Int']>;
 };
 
 export type ReportUpdateResponse = {
@@ -409,30 +492,35 @@ export type SignInResponse = {
 };
 
 export type StringFilter = {
-  contains?: Maybe<Scalars['String']>;
-  eq?: Maybe<Scalars['String']>;
+  contains?: InputMaybe<Scalars['String']>;
+  eq?: InputMaybe<Scalars['String']>;
 };
 
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['DateTime'];
-  email?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
   files: Array<Maybe<File>>;
   id: Scalars['Float'];
   isActive: Scalars['Boolean'];
   lastActivityAt: Scalars['DateTime'];
   name: Scalars['String'];
+  organization?: Maybe<Scalars['String']>;
   password: Scalars['String'];
-  reports: Array<Report>;
+  phone?: Maybe<Scalars['String']>;
+  reportApplicationForms: Array<Maybe<ReportApplicationForm>>;
+  reports: Array<Maybe<Report>>;
   role: UserRole;
   updatedAt: Scalars['DateTime'];
-  vehicles: Array<Vehicle>;
+  vehicles: Array<Maybe<Vehicle>>;
 };
 
 export type UserCreateInput = {
   email: Scalars['String'];
   name: Scalars['String'];
+  organization?: InputMaybe<Scalars['String']>;
   password: Scalars['String'];
+  phone?: InputMaybe<Scalars['String']>;
   role: Scalars['String'];
 };
 
@@ -444,8 +532,10 @@ export type UserCreateResponse = {
 };
 
 export type UserFilter = {
-  email?: Maybe<StringFilter>;
-  name?: Maybe<StringFilter>;
+  email?: InputMaybe<StringFilter>;
+  name?: InputMaybe<StringFilter>;
+  organization?: InputMaybe<StringFilter>;
+  phone?: InputMaybe<StringFilter>;
 };
 
 export type UserPaginateResponse = {
@@ -466,14 +556,20 @@ export enum UserSort {
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
   NameAsc = 'NAME_ASC',
-  NameDesc = 'NAME_DESC'
+  NameDesc = 'NAME_DESC',
+  OrganizationAsc = 'ORGANIZATION_ASC',
+  OrganizationDesc = 'ORGANIZATION_DESC',
+  PhoneAsc = 'PHONE_ASC',
+  PhoneDesc = 'PHONE_DESC'
 }
 
 export type UserUpdateInput = {
-  email?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
-  role?: Maybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  organization?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Scalars['String']>;
 };
 
 export type UserUpdateResponse = {
@@ -518,12 +614,12 @@ export type VehicleCreateResponse = {
 };
 
 export type VehicleFilter = {
-  engineModel?: Maybe<StringFilter>;
-  model?: Maybe<StringFilter>;
-  ownerId?: Maybe<IdFilter>;
-  ownerName?: Maybe<StringFilter>;
-  releaseYear?: Maybe<StringFilter>;
-  stateNumber?: Maybe<StringFilter>;
+  engineModel?: InputMaybe<StringFilter>;
+  model?: InputMaybe<StringFilter>;
+  ownerId?: InputMaybe<IdFilter>;
+  ownerName?: InputMaybe<StringFilter>;
+  releaseYear?: InputMaybe<StringFilter>;
+  stateNumber?: InputMaybe<StringFilter>;
 };
 
 export type VehiclePaginateResponse = {
@@ -546,11 +642,11 @@ export enum VehicleSort {
 }
 
 export type VehicleUpdateInput = {
-  engineModel?: Maybe<Scalars['String']>;
-  model?: Maybe<Scalars['String']>;
-  owner?: Maybe<Scalars['Float']>;
-  releaseYear?: Maybe<Scalars['String']>;
-  stateNumber?: Maybe<Scalars['String']>;
+  engineModel?: InputMaybe<Scalars['String']>;
+  model?: InputMaybe<Scalars['String']>;
+  owner?: InputMaybe<Scalars['Float']>;
+  releaseYear?: InputMaybe<Scalars['String']>;
+  stateNumber?: InputMaybe<Scalars['String']>;
 };
 
 export type VehicleUpdateResponse = {

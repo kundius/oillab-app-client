@@ -2,13 +2,13 @@ import * as Types from '../../../../types';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 export type ReportDeletePopoverMutationVariables = Types.Exact<{
   id: Types.Scalars['Int'];
 }>;
 
 
-export type ReportDeletePopoverMutation = { __typename?: 'Mutation', reportDelete: { __typename?: 'DefaultMutationResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string }> } };
+export type ReportDeletePopoverMutation = { __typename?: 'Mutation', reportDelete: { __typename?: 'DefaultMutationResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null } };
 
 
 export const ReportDeletePopoverDocument = gql`

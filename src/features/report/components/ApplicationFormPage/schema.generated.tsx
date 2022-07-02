@@ -2,15 +2,15 @@ import * as Types from '../../../../types';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-const defaultOptions =  {}
-export type ReportApplicationFormPageFragment = { __typename?: 'Report', id: number, number?: Types.Maybe<number>, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string }>, applicationForm?: Types.Maybe<{ __typename?: 'ReportApplicationForm', id: number, productType?: Types.Maybe<Types.ProductType>, customerOrganization?: Types.Maybe<string>, customerPhone?: Types.Maybe<string>, customerPerson?: Types.Maybe<string>, customerEmail?: Types.Maybe<string>, vehicleEquipmentManufacturer?: Types.Maybe<string>, vehicleRegistrationNumber?: Types.Maybe<string>, vehicleEquipmentModel?: Types.Maybe<string>, vehicleTotalOperatingTime?: Types.Maybe<string>, vehicleSamplingPoint?: Types.Maybe<string>, vehicleTotalOperatingTimeLubricant?: Types.Maybe<string>, vehicleLiquidVolume?: Types.Maybe<string>, vehicleToppingUpLubricant?: Types.Maybe<string>, lubricantBrand?: Types.Maybe<string>, lubricantViscosity?: Types.Maybe<string>, lubricantModel?: Types.Maybe<string>, lubricantState?: Types.Maybe<string>, selectionVolume?: Types.Maybe<string>, selectionPlace?: Types.Maybe<string>, note?: Types.Maybe<string>, createdAt: any, updatedAt: any }> };
+const defaultOptions = {} as const;
+export type ReportApplicationFormPageFragment = { __typename?: 'Report', id: number, number?: number | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: string | null, lubricant: string, sampledAt: any, client?: { __typename?: 'User', id: number, organization?: string | null, phone?: string | null, name: string, email: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string } | null, applicationForm?: { __typename?: 'ReportApplicationForm', id: number, productType?: Types.ProductType | null, vehicleEquipmentManufacturer?: string | null, vehicleRegistrationNumber?: string | null, vehicleEquipmentModel?: string | null, vehicleTotalOperatingTime?: string | null, vehicleSamplingPoint?: string | null, vehicleTotalOperatingTimeLubricant?: string | null, vehicleLiquidVolume?: string | null, vehicleToppingUpLubricant?: string | null, lubricantState?: string | null, selectionVolume?: string | null, selectionPlace?: string | null, note?: string | null, createdAt: any, updatedAt: any, customer?: { __typename?: 'User', id: number, organization?: string | null, phone?: string | null, name: string, email: string } | null, lubricant?: { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity: string } | null } | null };
 
 export type ReportApplicationFormPageQueryVariables = Types.Exact<{
   id: Types.Scalars['Int'];
 }>;
 
 
-export type ReportApplicationFormPageQuery = { __typename?: 'Query', report?: Types.Maybe<{ __typename?: 'Report', id: number, number?: Types.Maybe<number>, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string }>, applicationForm?: Types.Maybe<{ __typename?: 'ReportApplicationForm', id: number, productType?: Types.Maybe<Types.ProductType>, customerOrganization?: Types.Maybe<string>, customerPhone?: Types.Maybe<string>, customerPerson?: Types.Maybe<string>, customerEmail?: Types.Maybe<string>, vehicleEquipmentManufacturer?: Types.Maybe<string>, vehicleRegistrationNumber?: Types.Maybe<string>, vehicleEquipmentModel?: Types.Maybe<string>, vehicleTotalOperatingTime?: Types.Maybe<string>, vehicleSamplingPoint?: Types.Maybe<string>, vehicleTotalOperatingTimeLubricant?: Types.Maybe<string>, vehicleLiquidVolume?: Types.Maybe<string>, vehicleToppingUpLubricant?: Types.Maybe<string>, lubricantBrand?: Types.Maybe<string>, lubricantViscosity?: Types.Maybe<string>, lubricantModel?: Types.Maybe<string>, lubricantState?: Types.Maybe<string>, selectionVolume?: Types.Maybe<string>, selectionPlace?: Types.Maybe<string>, note?: Types.Maybe<string>, createdAt: any, updatedAt: any }> }>, currentUser?: Types.Maybe<{ __typename?: 'User', id: number, role: Types.UserRole }> };
+export type ReportApplicationFormPageQuery = { __typename?: 'Query', report?: { __typename?: 'Report', id: number, number?: number | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: string | null, lubricant: string, sampledAt: any, client?: { __typename?: 'User', id: number, organization?: string | null, phone?: string | null, name: string, email: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string } | null, applicationForm?: { __typename?: 'ReportApplicationForm', id: number, productType?: Types.ProductType | null, vehicleEquipmentManufacturer?: string | null, vehicleRegistrationNumber?: string | null, vehicleEquipmentModel?: string | null, vehicleTotalOperatingTime?: string | null, vehicleSamplingPoint?: string | null, vehicleTotalOperatingTimeLubricant?: string | null, vehicleLiquidVolume?: string | null, vehicleToppingUpLubricant?: string | null, lubricantState?: string | null, selectionVolume?: string | null, selectionPlace?: string | null, note?: string | null, createdAt: any, updatedAt: any, customer?: { __typename?: 'User', id: number, organization?: string | null, phone?: string | null, name: string, email: string } | null, lubricant?: { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity: string } | null } | null } | null, currentUser?: { __typename?: 'User', id: number, role: Types.UserRole } | null };
 
 export type ReportApplicationFormPageMutationVariables = Types.Exact<{
   id: Types.Scalars['Int'];
@@ -18,7 +18,7 @@ export type ReportApplicationFormPageMutationVariables = Types.Exact<{
 }>;
 
 
-export type ReportApplicationFormPageMutation = { __typename?: 'Mutation', reportUpdateApplicationForm: { __typename?: 'ReportUpdateApplicationFormResponse', success: boolean, record?: Types.Maybe<{ __typename?: 'Report', id: number, number?: Types.Maybe<number>, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: Types.Maybe<string>, lubricant: string, sampledAt: any, client?: Types.Maybe<{ __typename?: 'User', id: number, name: string }>, vehicle?: Types.Maybe<{ __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string }>, applicationForm?: Types.Maybe<{ __typename?: 'ReportApplicationForm', id: number, productType?: Types.Maybe<Types.ProductType>, customerOrganization?: Types.Maybe<string>, customerPhone?: Types.Maybe<string>, customerPerson?: Types.Maybe<string>, customerEmail?: Types.Maybe<string>, vehicleEquipmentManufacturer?: Types.Maybe<string>, vehicleRegistrationNumber?: Types.Maybe<string>, vehicleEquipmentModel?: Types.Maybe<string>, vehicleTotalOperatingTime?: Types.Maybe<string>, vehicleSamplingPoint?: Types.Maybe<string>, vehicleTotalOperatingTimeLubricant?: Types.Maybe<string>, vehicleLiquidVolume?: Types.Maybe<string>, vehicleToppingUpLubricant?: Types.Maybe<string>, lubricantBrand?: Types.Maybe<string>, lubricantViscosity?: Types.Maybe<string>, lubricantModel?: Types.Maybe<string>, lubricantState?: Types.Maybe<string>, selectionVolume?: Types.Maybe<string>, selectionPlace?: Types.Maybe<string>, note?: Types.Maybe<string>, createdAt: any, updatedAt: any }> }>, error?: Types.Maybe<{ __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string }> } };
+export type ReportApplicationFormPageMutation = { __typename?: 'Mutation', reportUpdateApplicationForm: { __typename?: 'ReportUpdateApplicationFormResponse', success: boolean, record?: { __typename?: 'Report', id: number, number?: number | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: string | null, lubricant: string, sampledAt: any, client?: { __typename?: 'User', id: number, organization?: string | null, phone?: string | null, name: string, email: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string } | null, applicationForm?: { __typename?: 'ReportApplicationForm', id: number, productType?: Types.ProductType | null, vehicleEquipmentManufacturer?: string | null, vehicleRegistrationNumber?: string | null, vehicleEquipmentModel?: string | null, vehicleTotalOperatingTime?: string | null, vehicleSamplingPoint?: string | null, vehicleTotalOperatingTimeLubricant?: string | null, vehicleLiquidVolume?: string | null, vehicleToppingUpLubricant?: string | null, lubricantState?: string | null, selectionVolume?: string | null, selectionPlace?: string | null, note?: string | null, createdAt: any, updatedAt: any, customer?: { __typename?: 'User', id: number, organization?: string | null, phone?: string | null, name: string, email: string } | null, lubricant?: { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity: string } | null } | null } | null, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null } };
 
 export const ReportApplicationFormPageFragmentDoc = gql`
     fragment ReportApplicationFormPageFragment on Report {
@@ -32,7 +32,10 @@ export const ReportApplicationFormPageFragmentDoc = gql`
   sampledAt
   client {
     id
+    organization
+    phone
     name
+    email
   }
   vehicle {
     id
@@ -44,10 +47,13 @@ export const ReportApplicationFormPageFragmentDoc = gql`
   applicationForm {
     id
     productType
-    customerOrganization
-    customerPhone
-    customerPerson
-    customerEmail
+    customer {
+      id
+      organization
+      phone
+      name
+      email
+    }
     vehicleEquipmentManufacturer
     vehicleRegistrationNumber
     vehicleEquipmentModel
@@ -56,9 +62,12 @@ export const ReportApplicationFormPageFragmentDoc = gql`
     vehicleTotalOperatingTimeLubricant
     vehicleLiquidVolume
     vehicleToppingUpLubricant
-    lubricantBrand
-    lubricantViscosity
-    lubricantModel
+    lubricant {
+      id
+      model
+      brand
+      viscosity
+    }
     lubricantState
     selectionVolume
     selectionPlace

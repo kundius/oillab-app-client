@@ -22,7 +22,6 @@ import { Wall } from '@components/Wall'
 import { useHasRole } from '@features/app/hooks/useHasRole'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DeletePopover } from '@features/report/components/DeletePopover'
-import { UpdateApplicationFormModal } from '@features/report/components/UpdateApplicationFormModal'
 import { AppToaster } from '@components/AppToaster'
 import { useToken } from '@app/features/app/hooks/useToken'
 

@@ -1,0 +1,27 @@
+fragment LubricantUpdatePageFragment on Lubricant {
+  id
+  model
+  brand
+  viscosity
+}
+
+query LubricantUpdatePageQuery($id: Int!) {
+  lubricant(id: $id) {
+    ...LubricantUpdatePageFragment
+  }
+}
+
+mutation LubricantUpdatePageMutation($id: Int!, $input: LubricantUpdateInput!) {
+  lubricantUpdate(
+    id: $id
+    input: $input
+  ) {
+    success
+    error {
+      message
+    }
+    record {
+      ...LubricantUpdatePageFragment
+    }
+  }
+}

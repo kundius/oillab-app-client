@@ -2,13 +2,13 @@ import * as Types from '../../../../types';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 export type UsersCreatePageMutationVariables = Types.Exact<{
   input: Types.UserCreateInput;
 }>;
 
 
-export type UsersCreatePageMutation = { __typename?: 'Mutation', userCreate: { __typename?: 'UserCreateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'User', id: number, name: string, email?: Types.Maybe<string>, role: Types.UserRole }> } };
+export type UsersCreatePageMutation = { __typename?: 'Mutation', userCreate: { __typename?: 'UserCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'User', id: number, name: string, email: string, role: Types.UserRole } | null } };
 
 
 export const UsersCreatePageDocument = gql`

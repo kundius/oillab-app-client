@@ -22,9 +22,9 @@ import { DetailsForForm } from '@features/vehicle/components/DetailsForForm'
 import { AppToaster } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import {
-  SelectUser,
-  SelectUserValue
-} from '@features/users/components/SelectUser'
+  Select as SelectUser,
+  SelectValue as SelectUserValue
+} from '@features/users/components/Select'
 import {
   SelectVehicle,
   SelectVehicleValue

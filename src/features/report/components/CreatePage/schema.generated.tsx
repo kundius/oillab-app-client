@@ -2,18 +2,18 @@ import * as Types from '../../../../types';
 
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 export type ReportCreatePageQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type ReportCreatePageQuery = { __typename?: 'Query', currentUser?: Types.Maybe<{ __typename?: 'User', id: number, role: Types.UserRole }> };
+export type ReportCreatePageQuery = { __typename?: 'Query', currentUser?: { __typename?: 'User', id: number, role: Types.UserRole } | null };
 
 export type ReportCreatePageMutationVariables = Types.Exact<{
   input: Types.ReportCreateInput;
 }>;
 
 
-export type ReportCreatePageMutation = { __typename?: 'Mutation', reportCreate: { __typename?: 'ReportCreateResponse', success: boolean, error?: Types.Maybe<{ __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string }>, record?: Types.Maybe<{ __typename?: 'Report', id: number }> } };
+export type ReportCreatePageMutation = { __typename?: 'Mutation', reportCreate: { __typename?: 'ReportCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Report', id: number } | null } };
 
 
 export const ReportCreatePageQueryDocument = gql`
