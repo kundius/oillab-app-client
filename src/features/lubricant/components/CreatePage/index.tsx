@@ -175,9 +175,6 @@ export function CreatePage() {
             <Controller
               name="viscosity"
               control={control}
-              rules={{
-                required: 'Значение обязательно'
-              }}
               render={({
                 field: { ref, value, ...field },
                 fieldState: { error }
@@ -185,14 +182,6 @@ export function CreatePage() {
                 <InputGroup
                   className="w-full"
                   disabled={mutationState.loading}
-                  rightElement={
-                    !!error ? (
-                      <ErrorIcon
-                        message={error.message}
-                        loading={mutationState.loading}
-                      />
-                    ) : undefined
-                  }
                   inputRef={ref}
                   value={value || undefined}
                   {...field}

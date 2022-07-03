@@ -193,9 +193,6 @@ export function UpdatePage({ initialLubricant }: UpdatePageProps) {
             <Controller
               name="viscosity"
               control={control}
-              rules={{
-                required: 'Значение обязательно'
-              }}
               render={({
                 field: { ref, value, ...field },
                 fieldState: { error }
@@ -203,14 +200,6 @@ export function UpdatePage({ initialLubricant }: UpdatePageProps) {
                 <InputGroup
                   className="w-full"
                   disabled={mutationState.loading}
-                  rightElement={
-                    !!error ? (
-                      <ErrorIcon
-                        message={error.message}
-                        loading={mutationState.loading}
-                      />
-                    ) : undefined
-                  }
                   inputRef={ref}
                   value={value || undefined}
                   {...field}

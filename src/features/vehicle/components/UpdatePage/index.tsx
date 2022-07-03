@@ -46,8 +46,6 @@ export function UpdatePage({ initialVehicle }: UpdatePageProps) {
   const {
     handleSubmit,
     control,
-    setValue,
-    reset,
     formState: { isDirty }
   } = useForm<FormFields>({
     defaultValues: {
