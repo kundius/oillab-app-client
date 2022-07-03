@@ -29,6 +29,12 @@ fragment ReportUpdatePageFragment on Report {
     releaseYear
     engineModel
   }
+  lubricantEntity {
+    id
+    brand
+    model
+    viscosity
+  }
 }
 
 query ReportUpdatePageQuery($id: Int!) {

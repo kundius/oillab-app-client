@@ -39,14 +39,12 @@ export interface ApplicationFormPageProps {
   initialReport: schema.ReportApplicationFormPageFragment
 }
 
-interface FormFields extends types.ReportUpdateApplicationFormInput {
-  lubricant?: SelectLubricantValue | null
-  customer?: SelectUserValue | null
-}
+type FormFields = types.ReportUpdateApplicationFormInput
 
 export function ApplicationFormPage({
   initialReport
 }: ApplicationFormPageProps) {
+  const client = initialReport.client
   const apollo = useApolloClient()
   const query = schema.useReportApplicationFormPageQuery({
     variables: {
@@ -62,34 +60,15 @@ export function ApplicationFormPage({
     watch,
     formState: { isDirty }
   } = useForm<FormFields>({
-    defaultValues: {
-      lubricant: initialReport?.applicationForm?.lubricant
-        ? {
-            label: initialReport?.applicationForm?.lubricant.model,
-            value: initialReport?.applicationForm?.lubricant.id
-          }
-        : null,
-      customer: initialReport?.applicationForm?.customer
-        ? {
-            label: initialReport?.applicationForm?.customer.name,
-            value: initialReport?.applicationForm?.customer.id
-          }
-        : null
-    }
+    defaultValues: {}
   })
   const token = useToken()
-  const watchLubricant = watch('lubricant')
-  const watchCustomer = watch('customer')
 
-  const onSubmit = async ({ lubricant, customer, ...input }: FormFields) => {
+  const onSubmit = async (input: FormFields) => {
     const response = await mutation({
       variables: {
         id: initialReport.id,
-        input: {
-          ...input,
-          lubricantId: lubricant?.value || null,
-          customerId: customer?.value || null
-        }
+        input
       }
     })
 
@@ -179,55 +158,15 @@ export function ApplicationFormPage({
           style={{ width: 800 }}
         >
           <FormFieldSet title="Данные владельца техники/заказчика">
-            <FormField label="Выбрать пользователя:">
-              <Controller
-                name="customer"
-                control={control}
-                render={({
-                  field: { ref, ...field },
-                  fieldState: { error }
-                }) => <SelectUser {...field} />}
-              />
-            </FormField>
-            {watchCustomer && (
-              <UserDetails
-                id={watchCustomer.value}
-                render={(data) => (
-                  <>
-                    <FormField label="Имя:">{data.name}</FormField>
-                    <FormField label="E-mail:">{data.email}</FormField>
-                    <FormField label="Организация:">
-                      {data.organization}
-                    </FormField>
-                    <FormField label="Телефон:">{data.phone}</FormField>
-                  </>
-                )}
-              />
-            )}
+            <FormField label="Имя:">{initialReport.client?.name}</FormField>
+            <FormField label="E-mail:">{initialReport.client?.email}</FormField>
+            <FormField label="Организация:">{initialReport.client?.organization}</FormField>
+            <FormField label="Телефон:">{initialReport.client?.phone}</FormField>
           </FormFieldSet>
           <FormFieldSet title="Информация о смазочном материале">
-            <FormField label="Смазочный материал">
-              <Controller
-                name="lubricant"
-                control={control}
-                render={({
-                  field: { ref, ...field },
-                  fieldState: { error }
-                }) => <SelectLubricant {...field} />}
-              />
-            </FormField>
-            {watchLubricant && (
-              <LubricantDetails
-                id={watchLubricant.value}
-                render={(data) => (
-                  <>
-                    <FormField label="Модель">{data.model}</FormField>
-                    <FormField label="Бренд">{data.brand}</FormField>
-                    <FormField label="Вязкость">{data.viscosity}</FormField>
-                  </>
-                )}
-              />
-            )}
+            <FormField label="Модель">{initialReport.lubricantEntity?.model}</FormField>
+            <FormField label="Бренд">{initialReport.lubricantEntity?.brand}</FormField>
+            <FormField label="Вязкость">{initialReport.lubricantEntity?.viscosity}</FormField>
             <FormField label="Состояние СМ">
               <Controller
                 name="lubricantState"
@@ -399,30 +338,6 @@ export function ApplicationFormPage({
             </FormField>
           </FormFieldSet>
           <FormFieldSet title="Информация об отборе образца">
-            <FormField label="Тип продукта">
-              <Controller
-                name="productType"
-                control={control}
-                render={({
-                  field: { value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <div className="bp4-html-select">
-                    <select
-                      {...field}
-                      disabled={mutationState.loading}
-                      defaultValue={value || undefined}
-                    >
-                      <option>Выбрать тип продукта...</option>
-                      <option value="Fuel">Топливо</option>
-                      <option value="Oil">Масло</option>
-                      <option value="Coolant">Охлаждающая жидкость</option>
-                    </select>
-                    <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
-                  </div>
-                )}
-              />
-            </FormField>
             <FormField label="Бренд">
               <Controller
                 name="selectionBrand"

@@ -3,6 +3,7 @@ fragment LubricantUpdatePageFragment on Lubricant {
   model
   brand
   viscosity
+  productType
 }
 
 query LubricantUpdatePageQuery($id: Int!) {

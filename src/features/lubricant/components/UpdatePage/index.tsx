@@ -17,6 +17,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { AppToaster } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
+import { FormField } from '@components/FormField'
 import {
   Select as SelectUser,
   SelectValue as SelectUserValue
@@ -28,13 +29,6 @@ import * as types from '@app/types'
 export interface UpdatePageProps {
   initialLubricant: schema.LubricantUpdatePageFragment
 }
-
-const Field = ({ label, children }) => (
-  <div className="flex gap-4 items-center">
-    <div className="leading-none">{label}</div>
-    <div className="grow">{children}</div>
-  </div>
-)
 
 export function UpdatePage({ initialLubricant }: UpdatePageProps) {
   const apollo = useApolloClient()
@@ -55,7 +49,8 @@ export function UpdatePage({ initialLubricant }: UpdatePageProps) {
     defaultValues: {
       model: initialLubricant.model || undefined,
       brand: initialLubricant.brand || undefined,
-      viscosity: initialLubricant.viscosity || undefined
+      viscosity: initialLubricant.viscosity || undefined,
+      productType: initialLubricant.productType || undefined
     }
   })
 
@@ -116,7 +111,31 @@ export function UpdatePage({ initialLubricant }: UpdatePageProps) {
           className="space-y-8 max-w-full ml-auto mr-auto"
           style={{ width: 800 }}
         >
-          <Field label="Модель">
+          <FormField label="Тип продукта">
+            <Controller
+              name="productType"
+              control={control}
+              render={({
+                field: { value, ...field },
+                fieldState: { error }
+              }) => (
+                <div className="bp4-html-select">
+                  <select
+                    {...field}
+                    disabled={mutationState.loading}
+                    defaultValue={value || undefined}
+                  >
+                    <option value="">Выбрать тип продукта...</option>
+                    <option value="Fuel">Топливо</option>
+                    <option value="Oil">Масло</option>
+                    <option value="Coolant">Охлаждающая жидкость</option>
+                  </select>
+                  <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
+                </div>
+              )}
+            />
+          </FormField>
+          <FormField label="Модель">
             <Controller
               name="model"
               control={control}
@@ -144,8 +163,8 @@ export function UpdatePage({ initialLubricant }: UpdatePageProps) {
                 />
               )}
             />
-          </Field>
-          <Field label="Бренд">
+          </FormField>
+          <FormField label="Бренд">
             <Controller
               name="brand"
               control={control}
@@ -173,8 +192,8 @@ export function UpdatePage({ initialLubricant }: UpdatePageProps) {
                 />
               )}
             />
-          </Field>
-          <Field label="Вязкость">
+          </FormField>
+          <FormField label="Вязкость">
             <Controller
               name="viscosity"
               control={control}
@@ -202,7 +221,7 @@ export function UpdatePage({ initialLubricant }: UpdatePageProps) {
                 />
               )}
             />
-          </Field>
+          </FormField>
         </div>
       </MainTemplate>
     </form>

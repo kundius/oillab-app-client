@@ -3,14 +3,14 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type LubricantUpdatePageFragment = { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity: string };
+export type LubricantUpdatePageFragment = { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity: string, productType?: Types.ProductType | null };
 
 export type LubricantUpdatePageQueryVariables = Types.Exact<{
   id: Types.Scalars['Int'];
 }>;
 
 
-export type LubricantUpdatePageQuery = { __typename?: 'Query', lubricant?: { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity: string } | null };
+export type LubricantUpdatePageQuery = { __typename?: 'Query', lubricant?: { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity: string, productType?: Types.ProductType | null } | null };
 
 export type LubricantUpdatePageMutationVariables = Types.Exact<{
   id: Types.Scalars['Int'];
@@ -18,7 +18,7 @@ export type LubricantUpdatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type LubricantUpdatePageMutation = { __typename?: 'Mutation', lubricantUpdate: { __typename?: 'LubricantUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity: string } | null } };
+export type LubricantUpdatePageMutation = { __typename?: 'Mutation', lubricantUpdate: { __typename?: 'LubricantUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity: string, productType?: Types.ProductType | null } | null } };
 
 export const LubricantUpdatePageFragmentDoc = gql`
     fragment LubricantUpdatePageFragment on Lubricant {
@@ -26,6 +26,7 @@ export const LubricantUpdatePageFragmentDoc = gql`
   model
   brand
   viscosity
+  productType
 }
     `;
 export const LubricantUpdatePageQueryDocument = gql`

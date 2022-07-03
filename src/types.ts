@@ -59,7 +59,8 @@ export type Lubricant = {
   createdAt: Scalars['DateTime'];
   id: Scalars['Float'];
   model: Scalars['String'];
-  reportApplicationForms?: Maybe<ReportApplicationForm>;
+  productType?: Maybe<ProductType>;
+  reports: Array<Maybe<Report>>;
   updatedAt: Scalars['DateTime'];
   viscosity: Scalars['String'];
 };
@@ -321,6 +322,7 @@ export type Report = {
   id: Scalars['Float'];
   laboratoryResult?: Maybe<File>;
   lubricant: Scalars['String'];
+  lubricantEntity?: Maybe<Lubricant>;
   lubricantMileage: Scalars['String'];
   note?: Maybe<Scalars['String']>;
   number?: Maybe<Scalars['Int']>;
@@ -334,12 +336,9 @@ export type Report = {
 export type ReportApplicationForm = {
   __typename?: 'ReportApplicationForm';
   createdAt: Scalars['DateTime'];
-  customer?: Maybe<User>;
   id: Scalars['Float'];
-  lubricant?: Maybe<Lubricant>;
   lubricantState?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
-  productType?: Maybe<ProductType>;
   report?: Maybe<Report>;
   selectionBrand?: Maybe<Scalars['String']>;
   selectionPlace?: Maybe<Scalars['String']>;
@@ -367,6 +366,7 @@ export type ReportCreateInput = {
   expressLaboratoryResult?: InputMaybe<Scalars['Int']>;
   laboratoryResult?: InputMaybe<Scalars['Int']>;
   lubricant: Scalars['String'];
+  lubricantEntityId?: InputMaybe<Scalars['Int']>;
   lubricantMileage: Scalars['String'];
   note?: InputMaybe<Scalars['String']>;
   sampledAt: Scalars['DateTime'];
@@ -432,8 +432,6 @@ export enum ReportSort {
 }
 
 export type ReportUpdateApplicationFormInput = {
-  customerId?: InputMaybe<Scalars['Int']>;
-  lubricantId?: InputMaybe<Scalars['Int']>;
   lubricantState?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
   productType?: InputMaybe<Scalars['String']>;
@@ -463,6 +461,7 @@ export type ReportUpdateInput = {
   expressLaboratoryResult?: InputMaybe<Scalars['Int']>;
   laboratoryResult?: InputMaybe<Scalars['Int']>;
   lubricant?: InputMaybe<Scalars['String']>;
+  lubricantEntityId?: InputMaybe<Scalars['Int']>;
   lubricantMileage?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
   sampledAt?: InputMaybe<Scalars['DateTime']>;
@@ -508,7 +507,6 @@ export type User = {
   organization?: Maybe<Scalars['String']>;
   password: Scalars['String'];
   phone?: Maybe<Scalars['String']>;
-  reportApplicationForms: Array<Maybe<ReportApplicationForm>>;
   reports: Array<Maybe<Report>>;
   role: UserRole;
   updatedAt: Scalars['DateTime'];

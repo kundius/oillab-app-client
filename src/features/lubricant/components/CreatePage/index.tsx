@@ -17,16 +17,10 @@ import {
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { AppToaster } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
+import { FormField } from '@components/FormField'
 
 import * as schema from './schema.generated'
 import * as types from '@app/types'
-
-const Field = ({ label, children }) => (
-  <div className="flex gap-4 items-center">
-    <div className="leading-none">{label}</div>
-    <div className="grow">{children}</div>
-  </div>
-)
 
 export function CreatePage() {
   const apollo = useApolloClient()
@@ -95,7 +89,31 @@ export function CreatePage() {
           className="space-y-8 max-w-full ml-auto mr-auto"
           style={{ width: 800 }}
         >
-          <Field label="Модель">
+          <FormField label="Тип продукта">
+            <Controller
+              name="productType"
+              control={control}
+              render={({
+                field: { value, ...field },
+                fieldState: { error }
+              }) => (
+                <div className="bp4-html-select">
+                  <select
+                    {...field}
+                    disabled={mutationState.loading}
+                    defaultValue={value || undefined}
+                  >
+                    <option value="">Выбрать тип продукта...</option>
+                    <option value="Fuel">Топливо</option>
+                    <option value="Oil">Масло</option>
+                    <option value="Coolant">Охлаждающая жидкость</option>
+                  </select>
+                  <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
+                </div>
+              )}
+            />
+          </FormField>
+          <FormField label="Модель">
             <Controller
               name="model"
               control={control}
@@ -123,8 +141,8 @@ export function CreatePage() {
                 />
               )}
             />
-          </Field>
-          <Field label="Бренд">
+          </FormField>
+          <FormField label="Бренд">
             <Controller
               name="brand"
               control={control}
@@ -152,8 +170,8 @@ export function CreatePage() {
                 />
               )}
             />
-          </Field>
-          <Field label="Вязкость">
+          </FormField>
+          <FormField label="Вязкость">
             <Controller
               name="viscosity"
               control={control}
@@ -181,7 +199,7 @@ export function CreatePage() {
                 />
               )}
             />
-          </Field>
+          </FormField>
         </div>
       </MainTemplate>
     </form>

@@ -24,6 +24,10 @@ import {
   SelectVehicle,
   SelectVehicleValue
 } from '@features/vehicle/components/SelectVehicle'
+import {
+  Select as SelectLubricant,
+  SelectValue as SelectLubricantValue
+} from '@features/lubricant/components/Select'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DetailsForForm } from '@features/vehicle/components/DetailsForForm'
 import { AppToaster } from '@components/AppToaster'
@@ -32,20 +36,14 @@ import { useHasRole } from '@app/features/app/hooks/useHasRole'
 
 import * as schema from './schema.generated'
 import * as types from '@app/types'
+import { FormField } from '@app/components/FormField'
 
-export interface FormFields {
-  stateNumber: string
-  totalMileage: string
-  lubricantMileage: string
-  samplingNodes: string
-  note?: string
-  color?: string
-  lubricant: string
-  sampledAt: string
-  client?: SelectUserValue | null
-  vehicle?: SelectVehicleValue | null
-  laboratoryResult?: UploadFileValue | null
-  expressLaboratoryResult?: UploadFileValue | null
+export interface FormFields extends types.ReportCreateInput {
+  clientEntity?: SelectUserValue | null
+  vehicleEntity?: SelectVehicleValue | null
+  lubricantEntity?: SelectLubricantValue | null
+  laboratoryResultFile?: UploadFileValue | null
+  expressLaboratoryResultFile?: UploadFileValue | null
 }
 
 const jsDateFormatter: DateFormatProps = {
@@ -65,33 +63,38 @@ export function CreatePage() {
   const {
     handleSubmit,
     control,
-    reset,
     watch,
     formState: { isDirty }
   } = useForm<FormFields>()
 
-  const watchClient = watch('client')
-  const watchVehicle = watch('vehicle')
+  const watchClient = watch('clientEntity')
+  const watchVehicle = watch('vehicleEntity')
 
   const onSubmit = async ({
-    client,
-    vehicle,
-    laboratoryResult,
-    expressLaboratoryResult,
+    clientEntity,
+    vehicleEntity,
+    lubricantEntity,
+    laboratoryResultFile,
+    expressLaboratoryResultFile,
     ...input
   }: FormFields) => {
     const response = await mutation({
       variables: {
         input: {
           ...input,
-          client: client?.value,
-          vehicle: vehicle?.value,
+          client: clientEntity === null ? clientEntity : clientEntity?.value,
+          vehicle:
+            vehicleEntity === null ? vehicleEntity : vehicleEntity?.value,
+          lubricantEntityId:
+            lubricantEntity === null ? lubricantEntity : lubricantEntity?.value,
           laboratoryResult:
-            laboratoryResult === null ? laboratoryResult : laboratoryResult?.id,
+            laboratoryResultFile === null
+              ? laboratoryResultFile
+              : laboratoryResultFile?.id,
           expressLaboratoryResult:
-            expressLaboratoryResult === null
-              ? expressLaboratoryResult
-              : expressLaboratoryResult?.id
+            expressLaboratoryResultFile === null
+              ? expressLaboratoryResultFile
+              : expressLaboratoryResultFile?.id
         }
       }
     })
@@ -145,256 +148,214 @@ export function CreatePage() {
           style={{ width: 800 }}
         >
           {isAdministrator && (
-            <div className="flex gap-8 items-center">
-              <div className="w-1/4 flex justify-end leading-none text-right">
-                Владелец техники:
-              </div>
-              <div className="w-2/4">
-                <Controller
-                  name="client"
-                  control={control}
-                  render={({
-                    field: { ref, ...field },
-                    fieldState: { error }
-                  }) => <SelectUser {...field} />}
-                />
-              </div>
-              <div className="w-1/4" />
-            </div>
+            <FormField label="Владелец техники:">
+              <Controller
+                name="clientEntity"
+                control={control}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => <SelectUser {...field} />}
+              />
+            </FormField>
           )}
           {watchClient && (
-            <div className="flex gap-8 items-center">
-              <div className="w-1/4 flex justify-end leading-none text-right">
-                Техника:
-              </div>
-              <div className="w-2/4">
-                <Controller
-                  name="vehicle"
-                  control={control}
-                  render={({
-                    field: { ref, ...field },
-                    fieldState: { error }
-                  }) => <SelectVehicle ownerId={watchClient.value} {...field} />}
-                />
-              </div>
-              <div className="w-1/4" />
-            </div>
+            <FormField label="Техника:">
+              <Controller
+                name="vehicleEntity"
+                control={control}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => <SelectVehicle ownerId={watchClient.value} {...field} />}
+              />
+            </FormField>
           )}
           {watchVehicle && <DetailsForForm id={watchVehicle.value} />}
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Общий пробег агрегата:
-            </div>
-            <div className="w-2/4">
-              <Controller
-                name="totalMileage"
-                control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Пробег/наработка на смазочном материале:
-            </div>
-            <div className="w-2/4">
-              <Controller
-                name="lubricantMileage"
-                control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Узел пробоотбора:
-            </div>
-            <div className="w-2/4">
-              <Controller
-                name="samplingNodes"
-                control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Смазочный материал:
-            </div>
-            <div className="w-2/4">
-              <Controller
-                name="lubricant"
-                control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Дата забора пробы/образца:
-            </div>
-            <div className="w-2/4">
-              <Controller
-                name="sampledAt"
-                control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, onChange, ...field },
-                  fieldState: { error }
-                }) => (
-                  <DateInput
-                    {...jsDateFormatter}
-                    disabled={mutationState.loading}
-                    className="w-full"
-                    value={value ? new Date(value) : undefined}
-                    onChange={onChange}
-                    popoverProps={{ position: Position.BOTTOM }}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Примечание:
-            </div>
-            <div className="w-2/4">
-              <Controller
-                name="note"
-                control={control}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
+          <FormField label="Общий пробег агрегата:">
+            <Controller
+              name="totalMileage"
+              control={control}
+              rules={{
+                required: 'Значение обязательно'
+              }}
+              render={({
+                field: { ref, value, ...field },
+                fieldState: { error }
+              }) => (
+                <InputGroup
+                  className="w-full"
+                  disabled={mutationState.loading}
+                  rightElement={
+                    !!error ? (
+                      <ErrorIcon
+                        message={error.message}
+                        loading={mutationState.loading}
+                      />
+                    ) : undefined
+                  }
+                  inputRef={ref}
+                  value={value || undefined}
+                  {...field}
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="Пробег/наработка на смазочном материале:">
+            <Controller
+              name="lubricantMileage"
+              control={control}
+              rules={{
+                required: 'Значение обязательно'
+              }}
+              render={({
+                field: { ref, value, ...field },
+                fieldState: { error }
+              }) => (
+                <InputGroup
+                  className="w-full"
+                  disabled={mutationState.loading}
+                  rightElement={
+                    !!error ? (
+                      <ErrorIcon
+                        message={error.message}
+                        loading={mutationState.loading}
+                      />
+                    ) : undefined
+                  }
+                  inputRef={ref}
+                  value={value || undefined}
+                  {...field}
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="Узел пробоотбора:">
+            <Controller
+              name="samplingNodes"
+              control={control}
+              rules={{
+                required: 'Значение обязательно'
+              }}
+              render={({
+                field: { ref, value, ...field },
+                fieldState: { error }
+              }) => (
+                <InputGroup
+                  className="w-full"
+                  disabled={mutationState.loading}
+                  rightElement={
+                    !!error ? (
+                      <ErrorIcon
+                        message={error.message}
+                        loading={mutationState.loading}
+                      />
+                    ) : undefined
+                  }
+                  inputRef={ref}
+                  value={value || undefined}
+                  {...field}
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="Смазочный материал:">
+            <Controller
+              name="lubricant"
+              control={control}
+              rules={{
+                required: 'Значение обязательно'
+              }}
+              render={({
+                field: { ref, value, ...field },
+                fieldState: { error }
+              }) => (
+                <InputGroup
+                  className="w-full"
+                  disabled={mutationState.loading}
+                  rightElement={
+                    !!error ? (
+                      <ErrorIcon
+                        message={error.message}
+                        loading={mutationState.loading}
+                      />
+                    ) : undefined
+                  }
+                  inputRef={ref}
+                  value={value || undefined}
+                  {...field}
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="Смазочный материал:">
+            <Controller
+              name="lubricantEntity"
+              control={control}
+              render={({
+                field: { ref, ...field },
+                fieldState: { error }
+              }) => <SelectLubricant {...field} />}
+            />
+          </FormField>
+          <FormField label="Дата забора пробы/образца:">
+            <Controller
+              name="sampledAt"
+              control={control}
+              rules={{
+                required: 'Значение обязательно'
+              }}
+              render={({
+                field: { ref, value, onChange, ...field },
+                fieldState: { error }
+              }) => (
+                <DateInput
+                  {...jsDateFormatter}
+                  disabled={mutationState.loading}
+                  className="w-full"
+                  value={value ? new Date(value) : undefined}
+                  onChange={onChange}
+                  popoverProps={{ position: Position.BOTTOM }}
+                  rightElement={
+                    !!error ? (
+                      <ErrorIcon
+                        message={error.message}
+                        loading={mutationState.loading}
+                      />
+                    ) : undefined
+                  }
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="Примечание:">
+            <Controller
+              name="note"
+              control={control}
+              render={({
+                field: { ref, value, ...field },
+                fieldState: { error }
+              }) => (
+                <InputGroup
+                  className="w-full"
+                  disabled={mutationState.loading}
+                  rightElement={
+                    !!error ? (
+                      <ErrorIcon
+                        message={error.message}
+                        loading={mutationState.loading}
+                      />
+                    ) : undefined
+                  }
+                  inputRef={ref}
+                  value={value || undefined}
+                  {...field}
+                />
+              )}
+            />
+          </FormField>
           {(isManager || isAdministrator) && (
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Цвет:
-            </div>
-            <div className="w-2/4 flex justify-start">
+            <FormField label="Цвет:">
               <Controller
                 name="color"
                 control={control}
@@ -417,45 +378,31 @@ export function CreatePage() {
                   </div>
                 )}
               />
-            </div>
-            <div className="w-1/4" />
-          </div>
+            </FormField>
           )}
           {isAdministrator && (
-            <div className="flex gap-8 items-center">
-              <div className="w-1/4 flex justify-end leading-none text-right">
-                Экспресс результат лаборатории:
-              </div>
-              <div className="w-2/4">
-                <Controller
-                  name="expressLaboratoryResult"
-                  control={control}
-                  render={({
-                    field: { ref, ...field },
-                    fieldState: { error }
-                  }) => <UploadFile {...field} />}
-                />
-              </div>
-              <div className="w-1/4" />
-            </div>
+            <FormField label="Экспресс результат лаборатории:">
+              <Controller
+                name="expressLaboratoryResultFile"
+                control={control}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => <UploadFile {...field} />}
+              />
+            </FormField>
           )}
           {isAdministrator && (
-            <div className="flex gap-8 items-center">
-              <div className="w-1/4 flex justify-end leading-none text-right">
-                Результат лаборатории:
-              </div>
-              <div className="w-2/4">
-                <Controller
-                  name="laboratoryResult"
-                  control={control}
-                  render={({
-                    field: { ref, ...field },
-                    fieldState: { error }
-                  }) => <UploadFile {...field} />}
-                />
-              </div>
-              <div className="w-1/4" />
-            </div>
+            <FormField label="Результат лаборатории:">
+              <Controller
+                name="laboratoryResultFile"
+                control={control}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => <UploadFile {...field} />}
+              />
+            </FormField>
           )}
         </div>
       </MainTemplate>

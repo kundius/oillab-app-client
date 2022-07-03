@@ -21,16 +21,15 @@ fragment ReportApplicationFormPageFragment on Report {
     releaseYear
     engineModel
   }
+  lubricantEntity {
+    id
+    model
+    brand
+    viscosity
+    productType
+  }
   applicationForm {
     id
-    productType
-    customer {
-      id
-      organization
-      phone
-      name
-      email
-    }
     vehicleEquipmentManufacturer
     vehicleRegistrationNumber
     vehicleEquipmentModel
@@ -39,12 +38,6 @@ fragment ReportApplicationFormPageFragment on Report {
     vehicleTotalOperatingTimeLubricant
     vehicleLiquidVolume
     vehicleToppingUpLubricant
-    lubricant {
-      id
-      model
-      brand
-      viscosity
-    }
     lubricantState
     selectionVolume
     selectionPlace
