@@ -62,14 +62,14 @@ export type Lubricant = {
   productType?: Maybe<ProductType>;
   reports: Array<Maybe<Report>>;
   updatedAt: Scalars['DateTime'];
-  viscosity: Scalars['String'];
+  viscosity?: Maybe<Scalars['String']>;
 };
 
 export type LubricantCreateInput = {
   brand: Scalars['String'];
   model: Scalars['String'];
   productType?: InputMaybe<Scalars['String']>;
-  viscosity: Scalars['String'];
+  viscosity?: InputMaybe<Scalars['String']>;
 };
 
 export type LubricantCreateResponse = {
@@ -573,7 +573,7 @@ export type Vehicle = {
   createdAt: Scalars['DateTime'];
   engineModel: Scalars['String'];
   id: Scalars['Float'];
-  liquidVolume: Scalars['String'];
+  liquidVolume?: Maybe<Scalars['String']>;
   model: Scalars['String'];
   owner: User;
   releaseYear: Scalars['String'];
