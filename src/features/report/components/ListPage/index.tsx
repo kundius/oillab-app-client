@@ -9,12 +9,10 @@ import {
   NonIdealState,
   Spinner,
   Icon,
-  NumericInput,
   InputGroup
 } from '@blueprintjs/core'
 import { DateFormatProps, DateInput } from '@blueprintjs/datetime'
 import getRuntimeConfig from '@app/utils/getRuntimeConfig'
-import Cookies from 'universal-cookie'
 
 import { Table } from '@components/Table'
 import { Pagination } from '@components/Pagination'
@@ -24,6 +22,7 @@ import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DeletePopover } from '@features/report/components/DeletePopover'
 import { AppToaster } from '@components/AppToaster'
 import { useToken } from '@app/features/app/hooks/useToken'
+import { ApplicationFormModal } from '@app/features/report/components/ApplicationFormModal'
 
 import * as schema from './schema.generated'
 import * as types from '@app/types'
@@ -54,7 +53,7 @@ const renderFile = (value: Pick<types.File, 'id' | 'url'>) => {
   if (!value) return
   return (
     <a href={value.url} target="_blank">
-      <Icon icon="cloud-download" />
+      <AnchorButton icon="cloud-download" small minimal />
     </a>
   )
 }
@@ -460,15 +459,19 @@ export function ListPage() {
                       <AnchorButton icon="cloud-download" small />
                     </a>
                     <Divider />
-                    <Link
-                      href={`/report/${record.id}/applicationForm`}
-                      passHref
+                    <ApplicationFormModal
+                      id={record.id}
+                      initialData={record?.applicationForm || undefined}
                     >
-                      <AnchorButton
-                        icon={record.applicationForm ? 'edit' : 'plus'}
-                        small
-                      />
-                    </Link>
+                      {({ isLoading, open, close }) => (
+                        <AnchorButton
+                          icon="edit"
+                          disabled={isLoading}
+                          small
+                          onClick={open}
+                        />
+                      )}
+                    </ApplicationFormModal>
                   </ButtonGroup>
                 )}
               />

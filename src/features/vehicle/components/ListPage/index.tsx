@@ -158,9 +158,9 @@ export function ListPage() {
               <Table.Title
                 text="Владелец"
                 filter="string"
-                filterValue={filter.ownerName || undefined}
-                onFilterChange={(ownerName) =>
-                  setFilter((prev) => ({ ...prev, ownerName }))
+                filterValue={filter.owner?.name || undefined}
+                onFilterChange={(value) =>
+                  setFilter((prev) => ({ ...prev, owner: { name: value } }))
                 }
               />
             }

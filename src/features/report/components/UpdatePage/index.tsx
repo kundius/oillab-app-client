@@ -201,10 +201,6 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                       text="Регистрационная наклейка"
                     />
                   </a>
-                  <MenuDivider title="Рекдактировать" />
-                  <Link href={`/report/${initialReport.id}/applicationForm`}>
-                    <MenuItem icon="edit" text="Бланк-заявка" />
-                  </Link>
                 </Menu>
               }
             >

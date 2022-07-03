@@ -30,17 +30,10 @@ fragment ReportApplicationFormPageFragment on Report {
   }
   applicationForm {
     id
-    vehicleEquipmentManufacturer
-    vehicleRegistrationNumber
-    vehicleEquipmentModel
-    vehicleTotalOperatingTime
     vehicleSamplingPoint
-    vehicleTotalOperatingTimeLubricant
-    vehicleLiquidVolume
     vehicleToppingUpLubricant
     lubricantState
     selectionVolume
-    selectionPlace
     note
     createdAt
     updatedAt

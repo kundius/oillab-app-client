@@ -8,6 +8,7 @@ fragment VehicleUpdatePageFragment on Vehicle {
   releaseYear
   stateNumber
   engineModel
+  liquidVolume
 }
 
 query VehicleUpdatePageQuery($id: Int!) {

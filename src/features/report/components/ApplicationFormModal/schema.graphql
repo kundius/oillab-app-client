@@ -1,0 +1,31 @@
+fragment ReportApplicationFormModalFragment on ReportApplicationForm {
+  id
+  vehicleSamplingPoint
+  vehicleToppingUpLubricant
+  lubricantState
+  selectionVolume
+  note
+  createdAt
+  updatedAt
+}
+
+mutation ReportApplicationFormModal(
+  $id: Int!
+  $input: ReportUpdateApplicationFormInput!
+) {
+  reportUpdateApplicationForm(
+    id: $id
+    input: $input
+  ) {
+    success
+    record {
+      id
+      applicationForm {
+        ...ReportApplicationFormModalFragment
+      }
+    }
+    error {
+      message
+    }
+  }
+}

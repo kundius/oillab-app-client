@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  Button,
-  InputGroup,
-  Intent,
-  Position,
-  Tooltip
-} from '@blueprintjs/core'
+import { Button, InputGroup, Intent } from '@blueprintjs/core'
 import { useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -19,13 +13,11 @@ import { AppToaster } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 
 import * as schema from './schema.generated'
+import * as types from '@app/types'
+import { FormField } from '@app/components/FormField'
 
-export interface FormFields {
-  model: string
-  releaseYear: string
-  stateNumber: string
-  engineModel: string
-  owner: SelectUserValue
+export interface FormFields extends types.VehicleCreateInput {
+  ownerEntity: SelectUserValue
 }
 
 export function CreatePage() {
@@ -36,16 +28,15 @@ export function CreatePage() {
   const {
     handleSubmit,
     control,
-    reset,
     formState: { isDirty }
   } = useForm<FormFields>()
 
-  const onSubmit = async ({ owner, ...input }: FormFields) => {
+  const onSubmit = async ({ ownerEntity, ...input }: FormFields) => {
     const response = await mutation({
       variables: {
         input: {
           ...input,
-          owner: owner.value
+          owner: ownerEntity.value
         }
       }
     })
@@ -98,175 +89,160 @@ export function CreatePage() {
           className="space-y-8 max-w-full ml-auto mr-auto"
           style={{ width: 800 }}
         >
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Гос номер:
-            </div>
-            <div className="w-2/4 flex justify-start">
-              <Controller
-                name="stateNumber"
-                control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Модель:
-            </div>
-            <div className="w-2/4 flex justify-start">
-              <Controller
-                name="model"
-                control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Год выпуска:
-            </div>
-            <div className="w-2/4 flex justify-start">
-              <Controller
-                name="releaseYear"
-                control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Модель двигателя:
-            </div>
-            <div className="w-2/4 flex justify-start">
-              <Controller
-                name="engineModel"
-                control={control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
-          <div className="flex gap-8 items-center">
-            <div className="w-1/4 flex justify-end leading-none text-right">
-              Владелец техники:
-            </div>
-            <div className="w-2/4 flex justify-start">
-              <Controller
-                name="owner"
-                control={control}
-                rules={{
-                  required: true
-                }}
-                render={({
-                  field: { ref, ...field },
-                  fieldState: { error }
-                }) => (
-                  <div className="inline-flex space-x-2">
-                    <SelectUser {...field} />
-                    {!!error && (
+          <FormField label="Гос номер:">
+            <Controller
+              name="stateNumber"
+              control={control}
+              rules={{
+                required: 'Значение обязательно'
+              }}
+              render={({
+                field: { ref, value, ...field },
+                fieldState: { error }
+              }) => (
+                <InputGroup
+                  className="w-full"
+                  disabled={mutationState.loading}
+                  rightElement={
+                    !!error ? (
                       <ErrorIcon
-                        message="Укажите владельца"
+                        message={error.message}
                         loading={mutationState.loading}
                       />
-                    )}
-                  </div>
-                )}
-              />
-            </div>
-            <div className="w-1/4" />
-          </div>
+                    ) : undefined
+                  }
+                  inputRef={ref}
+                  value={value || undefined}
+                  {...field}
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="Модель:">
+            <Controller
+              name="model"
+              control={control}
+              rules={{
+                required: 'Значение обязательно'
+              }}
+              render={({
+                field: { ref, value, ...field },
+                fieldState: { error }
+              }) => (
+                <InputGroup
+                  className="w-full"
+                  disabled={mutationState.loading}
+                  rightElement={
+                    !!error ? (
+                      <ErrorIcon
+                        message={error.message}
+                        loading={mutationState.loading}
+                      />
+                    ) : undefined
+                  }
+                  inputRef={ref}
+                  value={value || undefined}
+                  {...field}
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="Год выпуска:">
+            <Controller
+              name="releaseYear"
+              control={control}
+              rules={{
+                required: 'Значение обязательно'
+              }}
+              render={({
+                field: { ref, value, ...field },
+                fieldState: { error }
+              }) => (
+                <InputGroup
+                  className="w-full"
+                  disabled={mutationState.loading}
+                  rightElement={
+                    !!error ? (
+                      <ErrorIcon
+                        message={error.message}
+                        loading={mutationState.loading}
+                      />
+                    ) : undefined
+                  }
+                  inputRef={ref}
+                  value={value || undefined}
+                  {...field}
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="Модель двигателя:">
+            <Controller
+              name="engineModel"
+              control={control}
+              rules={{
+                required: 'Значение обязательно'
+              }}
+              render={({
+                field: { ref, value, ...field },
+                fieldState: { error }
+              }) => (
+                <InputGroup
+                  className="w-full"
+                  disabled={mutationState.loading}
+                  rightElement={
+                    !!error ? (
+                      <ErrorIcon
+                        message={error.message}
+                        loading={mutationState.loading}
+                      />
+                    ) : undefined
+                  }
+                  inputRef={ref}
+                  value={value || undefined}
+                  {...field}
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="Объем жидкости в оборудовании:">
+            <Controller
+              name="liquidVolume"
+              control={control}
+              render={({
+                field: { ref, value, ...field },
+                fieldState: { error }
+              }) => (
+                <InputGroup
+                  className="w-full"
+                  disabled={mutationState.loading}
+                  inputRef={ref}
+                  value={value || undefined}
+                  {...field}
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="Владелец техники:">
+            <Controller
+              name="ownerEntity"
+              control={control}
+              rules={{
+                required: true
+              }}
+              render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                <div className="inline-flex space-x-2">
+                  <SelectUser {...field} />
+                  {!!error && (
+                    <ErrorIcon
+                      message="Укажите владельца"
+                      loading={mutationState.loading}
+                    />
+                  )}
+                </div>
+              )}
+            />
+          </FormField>
         </div>
       </MainTemplate>
     </form>

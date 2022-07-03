@@ -18,10 +18,6 @@ import { MainTemplate } from '@features/app/components/MainTemplate'
 import { AppToaster } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import { FormField } from '@components/FormField'
-import {
-  Select as SelectUser,
-  SelectValue as SelectUserValue
-} from '@features/users/components/Select'
 
 import * as schema from './schema.generated'
 import * as types from '@app/types'
