@@ -88,23 +88,6 @@ export function ListPage() {
           <Table.Column
             title={
               <Table.Title
-                text="Модель"
-                filter="string"
-                filterValue={filter.model || undefined}
-                onFilterChange={(model) =>
-                  setFilter((prev) => ({ ...prev, model }))
-                }
-                sortAsc={types.LubricantSort.ModelAsc}
-                sortDesc={types.LubricantSort.ModelDesc}
-                sortValue={sort}
-                onSortChange={setSort}
-              />
-            }
-            dataIndex="model"
-          />
-          <Table.Column
-            title={
-              <Table.Title
                 text="Бренд"
                 filter="string"
                 filterValue={filter.brand || undefined}
@@ -118,6 +101,23 @@ export function ListPage() {
               />
             }
             dataIndex="brand"
+          />
+          <Table.Column
+            title={
+              <Table.Title
+                text="Модель"
+                filter="string"
+                filterValue={filter.model || undefined}
+                onFilterChange={(model) =>
+                  setFilter((prev) => ({ ...prev, model }))
+                }
+                sortAsc={types.LubricantSort.ModelAsc}
+                sortDesc={types.LubricantSort.ModelDesc}
+                sortValue={sort}
+                onSortChange={setSort}
+              />
+            }
+            dataIndex="model"
           />
           <Table.Column
             title={

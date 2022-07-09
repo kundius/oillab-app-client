@@ -176,12 +176,15 @@ export function ListPage() {
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={1}>
                   <InputGroup
-                    value={filter.clientName?.contains || undefined}
+                    value={filter.client?.name?.contains || undefined}
                     onChange={(e) =>
                       setFilter((prev) => ({
                         ...prev,
-                        clientName: {
-                          contains: e.target.value
+                        client: {
+                          ...prev.client,
+                          name: {
+                            contains: e.target.value
+                          }
                         }
                       }))
                     }
@@ -190,12 +193,15 @@ export function ListPage() {
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={2}>
                   <InputGroup
-                    value={filter.vehicleModel?.contains || undefined}
+                    value={filter.vehicle?.model?.contains || undefined}
                     onChange={(e) =>
                       setFilter((prev) => ({
                         ...prev,
-                        vehicleModel: {
-                          contains: e.target.value
+                        vehicle: {
+                          ...prev.vehicle,
+                          model: {
+                            contains: e.target.value
+                          }
                         }
                       }))
                     }
@@ -204,12 +210,15 @@ export function ListPage() {
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={3}>
                   <InputGroup
-                    value={filter.vehicleStateNumber?.contains || undefined}
+                    value={filter.vehicle?.stateNumber?.contains || undefined}
                     onChange={(e) =>
                       setFilter((prev) => ({
                         ...prev,
-                        vehicleStateNumber: {
-                          contains: e.target.value
+                        vehicle: {
+                          ...prev.vehicle,
+                          stateNumber: {
+                            contains: e.target.value
+                          }
                         }
                       }))
                     }

@@ -134,9 +134,9 @@ export function CreatePage () {
               )}
             />
           </FormField>
-          <FormField label="Организация:">
+          <FormField label="Контактное лицо:">
             <Controller
-              name="organization"
+              name="contactPerson"
               control={control}
               render={({
                 field: { ref, value, ...field },

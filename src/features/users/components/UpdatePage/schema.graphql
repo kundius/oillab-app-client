@@ -3,7 +3,7 @@ fragment UsersUpdatePageFragment on User {
   name
   email
   phone
-  organization
+  contactPerson
   role
 }
 

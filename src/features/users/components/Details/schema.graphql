@@ -3,7 +3,7 @@ fragment UsersDetailsFragment on User {
   name
   email
   phone
-  organization
+  contactPerson
 }
 
 query UsersDetailsQuery($id: Int!) {

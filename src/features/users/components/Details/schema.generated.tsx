@@ -3,14 +3,14 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type UsersDetailsFragment = { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, organization?: string | null };
+export type UsersDetailsFragment = { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, contactPerson?: string | null };
 
 export type UsersDetailsQueryVariables = Types.Exact<{
   id: Types.Scalars['Int'];
 }>;
 
 
-export type UsersDetailsQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, organization?: string | null } | null };
+export type UsersDetailsQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, contactPerson?: string | null } | null };
 
 export const UsersDetailsFragmentDoc = gql`
     fragment UsersDetailsFragment on User {
@@ -18,7 +18,7 @@ export const UsersDetailsFragmentDoc = gql`
   name
   email
   phone
-  organization
+  contactPerson
 }
     `;
 export const UsersDetailsQueryDocument = gql`

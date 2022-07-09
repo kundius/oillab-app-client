@@ -28,7 +28,7 @@ export function UpdatePage ({ user }: UpdatePageProps) {
       name: user.name || undefined,
       email: user.email || undefined,
       role: user.role || undefined,
-      organization: user.organization || undefined,
+      contactPerson: user.contactPerson || undefined,
       phone: user.phone || undefined
     }
   })
@@ -146,9 +146,9 @@ export function UpdatePage ({ user }: UpdatePageProps) {
               )}
             />
           </FormField>
-          <FormField label="Организация:">
+          <FormField label="Контактное лицо:">
             <Controller
-              name="organization"
+              name="contactPerson"
               control={control}
               render={({
                 field: { ref, value, ...field },

@@ -377,7 +377,7 @@ export type ReportCreateResponse = {
 };
 
 export type ReportFilter = {
-  clientName?: InputMaybe<StringFilterOperator>;
+  client?: InputMaybe<UserFilter>;
   color?: InputMaybe<StringFilterOperator>;
   id?: InputMaybe<NumberFilterOperator>;
   lubricant?: InputMaybe<StringFilterOperator>;
@@ -385,10 +385,7 @@ export type ReportFilter = {
   sampledAt?: InputMaybe<DateFilterOperator>;
   samplingNodes?: InputMaybe<StringFilterOperator>;
   totalMileage?: InputMaybe<StringFilterOperator>;
-  vehicleEngineModel?: InputMaybe<StringFilterOperator>;
-  vehicleModel?: InputMaybe<StringFilterOperator>;
-  vehicleReleaseYear?: InputMaybe<StringFilterOperator>;
-  vehicleStateNumber?: InputMaybe<StringFilterOperator>;
+  vehicle?: InputMaybe<VehicleFilter>;
 };
 
 export type ReportGeneratePdfResponse = {
@@ -489,7 +486,7 @@ export type User = {
   isActive: Scalars['Boolean'];
   lastActivityAt: Scalars['DateTime'];
   name: Scalars['String'];
-  organization?: Maybe<Scalars['String']>;
+  contactPerson?: Maybe<Scalars['String']>;
   password: Scalars['String'];
   phone?: Maybe<Scalars['String']>;
   reports: Array<Maybe<Report>>;
@@ -501,7 +498,7 @@ export type User = {
 export type UserCreateInput = {
   email: Scalars['String'];
   name: Scalars['String'];
-  organization?: InputMaybe<Scalars['String']>;
+  contactPerson?: InputMaybe<Scalars['String']>;
   password: Scalars['String'];
   phone?: InputMaybe<Scalars['String']>;
   role: Scalars['String'];
@@ -517,7 +514,7 @@ export type UserCreateResponse = {
 export type UserFilter = {
   email?: InputMaybe<StringFilterOperator>;
   name?: InputMaybe<StringFilterOperator>;
-  organization?: InputMaybe<StringFilterOperator>;
+  contactPerson?: InputMaybe<StringFilterOperator>;
   phone?: InputMaybe<StringFilterOperator>;
 };
 
@@ -540,8 +537,8 @@ export enum UserSort {
   IdDesc = 'ID_DESC',
   NameAsc = 'NAME_ASC',
   NameDesc = 'NAME_DESC',
-  OrganizationAsc = 'ORGANIZATION_ASC',
-  OrganizationDesc = 'ORGANIZATION_DESC',
+  ContactPersonAsc = 'CONTACT_PERSON_ASC',
+  ContactPersonDesc = 'CONTACT_PERSON_DESC',
   PhoneAsc = 'PHONE_ASC',
   PhoneDesc = 'PHONE_DESC'
 }
@@ -549,7 +546,7 @@ export enum UserSort {
 export type UserUpdateInput = {
   email?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
-  organization?: InputMaybe<Scalars['String']>;
+  contactPerson?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Scalars['String']>;
@@ -604,7 +601,6 @@ export type VehicleFilter = {
   model?: InputMaybe<StringFilterOperator>;
   owner?: InputMaybe<UserFilter>;
   ownerId?: InputMaybe<IdFilterOperator>;
-  ownerName?: InputMaybe<StringFilterOperator>;
   releaseYear?: InputMaybe<StringFilterOperator>;
   stateNumber?: InputMaybe<StringFilterOperator>;
 };

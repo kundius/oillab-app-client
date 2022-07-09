@@ -3,14 +3,14 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type UsersUpdatePageFragment = { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, organization?: string | null, role: Types.UserRole };
+export type UsersUpdatePageFragment = { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, contactPerson?: string | null, role: Types.UserRole };
 
 export type UsersUpdatePageQueryVariables = Types.Exact<{
   id: Types.Scalars['Int'];
 }>;
 
 
-export type UsersUpdatePageQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, organization?: string | null, role: Types.UserRole } | null };
+export type UsersUpdatePageQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, contactPerson?: string | null, role: Types.UserRole } | null };
 
 export type UsersUpdatePageMutationVariables = Types.Exact<{
   id: Types.Scalars['Int'];
@@ -18,7 +18,7 @@ export type UsersUpdatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type UsersUpdatePageMutation = { __typename?: 'Mutation', userUpdate: { __typename?: 'UserUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, organization?: string | null, role: Types.UserRole } | null } };
+export type UsersUpdatePageMutation = { __typename?: 'Mutation', userUpdate: { __typename?: 'UserUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, contactPerson?: string | null, role: Types.UserRole } | null } };
 
 export const UsersUpdatePageFragmentDoc = gql`
     fragment UsersUpdatePageFragment on User {
@@ -26,7 +26,7 @@ export const UsersUpdatePageFragmentDoc = gql`
   name
   email
   phone
-  organization
+  contactPerson
   role
 }
     `;
