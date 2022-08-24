@@ -2,6 +2,7 @@ fragment LubricantSelectFragment on Lubricant {
   id
   model
   brand
+  viscosity
 }
 
 query LubricantSelectQuery (

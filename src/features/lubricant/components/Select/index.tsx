@@ -43,7 +43,7 @@ export function Select ({ value, onChange }: SelectProps) {
     handleClose()
     onChange?.({
       value: record.id,
-      label: record.model
+      label: `${record.brand} / ${record.model} / ${record.viscosity}`
     })
   }
   const onPaginate = (page: number, pageSize: number) => setPage(page)
@@ -90,7 +90,7 @@ export function Select ({ value, onChange }: SelectProps) {
                 className="flex justify-between items-center font-medium bg-white border rounded p-2"
                 key={record.id}
               >
-                {record.model} / {record.brand}
+                {record.brand} / {record.model} / {record.viscosity}
                 <Button
                   small
                   onClick={() => handleSelect(record)}

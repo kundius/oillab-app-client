@@ -123,7 +123,6 @@ export type Mutation = {
   reportDelete: DefaultMutationResponse;
   reportGeneratePdf: ReportGeneratePdfResponse;
   reportUpdate: ReportUpdateResponse;
-  reportUpdateApplicationForm: ReportUpdateApplicationFormResponse;
   signIn: SignInResponse;
   userCreate: UserCreateResponse;
   userDelete: DefaultMutationResponse;
@@ -169,12 +168,6 @@ export type MutationReportGeneratePdfArgs = {
 export type MutationReportUpdateArgs = {
   id: Scalars['Int'];
   input: ReportUpdateInput;
-};
-
-
-export type MutationReportUpdateApplicationFormArgs = {
-  id: Scalars['Int'];
-  input: ReportUpdateApplicationFormInput;
 };
 
 
@@ -316,14 +309,12 @@ export type QueryVehiclePaginateArgs = {
 
 export type Report = {
   __typename?: 'Report';
-  applicationForm?: Maybe<ReportApplicationForm>;
   client?: Maybe<User>;
   color?: Maybe<ReportColor>;
   createdAt: Scalars['DateTime'];
   expressLaboratoryResult?: Maybe<File>;
   id: Scalars['Float'];
   laboratoryResult?: Maybe<File>;
-  lubricant: Scalars['String'];
   lubricantEntity?: Maybe<Lubricant>;
   lubricantMileage: Scalars['String'];
   note?: Maybe<Scalars['String']>;
@@ -333,19 +324,6 @@ export type Report = {
   totalMileage: Scalars['String'];
   updatedAt: Scalars['DateTime'];
   vehicle?: Maybe<Vehicle>;
-};
-
-export type ReportApplicationForm = {
-  __typename?: 'ReportApplicationForm';
-  createdAt: Scalars['DateTime'];
-  id: Scalars['Float'];
-  lubricantState?: Maybe<Scalars['String']>;
-  note?: Maybe<Scalars['String']>;
-  report?: Maybe<Report>;
-  selectionVolume?: Maybe<Scalars['String']>;
-  updatedAt: Scalars['DateTime'];
-  vehicleSamplingPoint?: Maybe<Scalars['String']>;
-  vehicleToppingUpLubricant?: Maybe<Scalars['String']>;
 };
 
 export enum ReportColor {
@@ -359,9 +337,11 @@ export type ReportCreateInput = {
   color?: InputMaybe<Scalars['String']>;
   expressLaboratoryResult?: InputMaybe<Scalars['Int']>;
   laboratoryResult?: InputMaybe<Scalars['Int']>;
-  lubricant: Scalars['String'];
   lubricantEntityId?: InputMaybe<Scalars['Int']>;
   lubricantMileage: Scalars['String'];
+  vehicleToppingUpLubricant?: InputMaybe<Scalars['String']>;
+  lubricantState?: InputMaybe<Scalars['String']>;
+  selectionVolume?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
   sampledAt: Scalars['DateTime'];
   samplingNodes: Scalars['String'];
@@ -380,7 +360,7 @@ export type ReportFilter = {
   client?: InputMaybe<UserFilter>;
   color?: InputMaybe<StringFilterOperator>;
   id?: InputMaybe<NumberFilterOperator>;
-  lubricant?: InputMaybe<StringFilterOperator>;
+  lubricantEntity?: InputMaybe<LubricantFilter>;
   lubricantMileage?: InputMaybe<StringFilterOperator>;
   sampledAt?: InputMaybe<DateFilterOperator>;
   samplingNodes?: InputMaybe<StringFilterOperator>;
@@ -406,8 +386,6 @@ export enum ReportSort {
   ColorDesc = 'COLOR_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
-  LubricantAsc = 'LUBRICANT_ASC',
-  LubricantDesc = 'LUBRICANT_DESC',
   LubricantMileageAsc = 'LUBRICANT_MILEAGE_ASC',
   LubricantMileageDesc = 'LUBRICANT_MILEAGE_DESC',
   NumberAsc = 'NUMBER_ASC',
@@ -422,29 +400,16 @@ export enum ReportSort {
   TotalMileageDesc = 'TOTAL_MILEAGE_DESC'
 }
 
-export type ReportUpdateApplicationFormInput = {
-  lubricantState?: InputMaybe<Scalars['String']>;
-  note?: InputMaybe<Scalars['String']>;
-  selectionVolume?: InputMaybe<Scalars['String']>;
-  vehicleSamplingPoint?: InputMaybe<Scalars['String']>;
-  vehicleToppingUpLubricant?: InputMaybe<Scalars['String']>;
-};
-
-export type ReportUpdateApplicationFormResponse = {
-  __typename?: 'ReportUpdateApplicationFormResponse';
-  error?: Maybe<DefaultError>;
-  record?: Maybe<Report>;
-  success: Scalars['Boolean'];
-};
-
 export type ReportUpdateInput = {
   client?: InputMaybe<Scalars['Int']>;
   color?: InputMaybe<Scalars['String']>;
   expressLaboratoryResult?: InputMaybe<Scalars['Int']>;
   laboratoryResult?: InputMaybe<Scalars['Int']>;
-  lubricant?: InputMaybe<Scalars['String']>;
   lubricantEntityId?: InputMaybe<Scalars['Int']>;
   lubricantMileage?: InputMaybe<Scalars['String']>;
+  vehicleToppingUpLubricant?: InputMaybe<Scalars['String']>;
+  lubricantState?: InputMaybe<Scalars['String']>;
+  selectionVolume?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
   sampledAt?: InputMaybe<Scalars['DateTime']>;
   samplingNodes?: InputMaybe<Scalars['String']>;

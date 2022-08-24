@@ -90,12 +90,12 @@ export function CreatePage () {
           className="space-y-8 max-w-full ml-auto mr-auto"
           style={{ width: 800 }}
         >
-          <FormField label="Имя:">
+          <FormField label="Владелец техники:">
             <Controller
               name="name"
               control={control}
               rules={{
-                required: 'Введите имя:'
+                required: 'Введите название:'
               }}
               render={({
                 field: { ref, value, ...field },
@@ -196,13 +196,16 @@ export function CreatePage () {
             <Controller
               name="role"
               control={control}
+              rules={{
+                required: 'Выберите роль'
+              }}
               render={({
                 field: { value, ...field },
                 fieldState: { error }
               }) => (
                 <div className="bp4-html-select">
                   <select {...field}>
-                    <option selected={!value}>Выбрать роль...</option>
+                    <option value="" selected={!value}>Выбрать роль...</option>
                     <option value="Member" selected={value === 'Member'}>Member</option>
                     <option value="Administrator" selected={value === 'Administrator'}>Administrator</option>
                     <option value="Manager" selected={value === 'Manager'}>Manager</option>

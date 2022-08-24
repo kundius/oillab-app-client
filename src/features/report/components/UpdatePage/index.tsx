@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import {
   Button,
   InputGroup,
@@ -9,6 +9,7 @@ import {
   MenuDivider,
   MenuItem
 } from '@blueprintjs/core'
+import { format, parse } from 'date-fns'
 import { useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 import { DateInput, DateFormatProps } from '@blueprintjs/datetime'
@@ -54,12 +55,6 @@ export interface UpdatePageProps {
   initialReport: schema.ReportUpdatePageFragment
 }
 
-const jsDateFormatter: DateFormatProps = {
-  formatDate: (date) => date.toLocaleDateString(),
-  parseDate: (str) => new Date(str),
-  placeholder: 'M/D/YYYY'
-}
-
 export function UpdatePage({ initialReport }: UpdatePageProps) {
   const apollo = useApolloClient()
   const query = schema.useReportUpdatePageQuery({
@@ -83,9 +78,11 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
       totalMileage: initialReport.totalMileage || undefined,
       lubricantMileage: initialReport.lubricantMileage || undefined,
       samplingNodes: initialReport.samplingNodes || undefined,
+      vehicleToppingUpLubricant: initialReport.vehicleToppingUpLubricant || undefined,
+      lubricantState: initialReport.lubricantState || undefined,
+      selectionVolume: initialReport.selectionVolume || undefined,
       note: initialReport.note || undefined,
       color: initialReport.color || undefined,
-      lubricant: initialReport.lubricant || undefined,
       sampledAt: initialReport.sampledAt || undefined,
       clientEntity: initialReport.client
         ? {
@@ -101,7 +98,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
         : undefined,
       lubricantEntity: initialReport.lubricantEntity
         ? {
-            label: initialReport.lubricantEntity.model,
+            label: `${initialReport.lubricantEntity.brand} / ${initialReport.lubricantEntity.model} / ${initialReport.lubricantEntity.viscosity}`,
             value: initialReport.lubricantEntity.id
           }
         : undefined,
@@ -110,6 +107,9 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
     }
   })
   const token = useToken()
+  const dateFnsFormat = 'dd.MM.yyyy'
+  const formatDate = useCallback((date: Date) => format(date, dateFnsFormat), [])
+  const parseDate = useCallback((date: string) => parse(date, dateFnsFormat, new Date()), [])
 
   const watchClient = watch('clientEntity')
   const watchVehicle = watch('vehicleEntity')
@@ -337,11 +337,49 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
           </FormField>
           <FormField label="Смазочный материал:">
             <Controller
-              name="lubricant"
+              name="lubricantEntity"
+              control={control}
+              render={({
+                field: { ref, ...field },
+                fieldState: { error }
+              }) => <SelectLubricant {...field} />}
+            />
+          </FormField>
+          <FormField label="Дата забора пробы/образца:">
+            <Controller
+              name="sampledAt"
               control={control}
               rules={{
                 required: 'Значение обязательно'
               }}
+              render={({
+                field: { ref, value, onChange, ...field },
+                fieldState: { error }
+              }) => (
+                <DateInput
+                  formatDate={formatDate}
+                  parseDate={parseDate}
+                  placeholder={dateFnsFormat}
+                  disabled={mutationState.loading}
+                  className="w-full"
+                  value={value ? new Date(value) : undefined}
+                  onChange={onChange}
+                  rightElement={
+                    !!error ? (
+                      <ErrorIcon
+                        message={error.message}
+                        loading={mutationState.loading}
+                      />
+                    ) : undefined
+                  }
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="Долив СМ:">
+            <Controller
+              name="vehicleToppingUpLubricant"
+              control={control}
               render={({
                 field: { ref, value, ...field },
                 fieldState: { error }
@@ -364,34 +402,17 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
               )}
             />
           </FormField>
-          <FormField label="Смазочный материал:">
+          <FormField label="Состояние СМ:">
             <Controller
-              name="lubricantEntity"
+              name="lubricantState"
               control={control}
               render={({
-                field: { ref, ...field },
-                fieldState: { error }
-              }) => <SelectLubricant {...field} />}
-            />
-          </FormField>
-          <FormField label="Дата забора пробы/образца:">
-            <Controller
-              name="sampledAt"
-              control={control}
-              rules={{
-                required: 'Значение обязательно'
-              }}
-              render={({
-                field: { ref, value, onChange, ...field },
+                field: { ref, value, ...field },
                 fieldState: { error }
               }) => (
-                <DateInput
-                  {...jsDateFormatter}
-                  disabled={mutationState.loading}
+                <InputGroup
                   className="w-full"
-                  value={value ? new Date(value) : undefined}
-                  onChange={onChange}
-                  popoverProps={{ position: Position.BOTTOM }}
+                  disabled={mutationState.loading}
                   rightElement={
                     !!error ? (
                       <ErrorIcon
@@ -400,6 +421,35 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                       />
                     ) : undefined
                   }
+                  inputRef={ref}
+                  value={value || undefined}
+                  {...field}
+                />
+              )}
+            />
+          </FormField>
+          <FormField label="Объём образца:">
+            <Controller
+              name="selectionVolume"
+              control={control}
+              render={({
+                field: { ref, value, ...field },
+                fieldState: { error }
+              }) => (
+                <InputGroup
+                  className="w-full"
+                  disabled={mutationState.loading}
+                  rightElement={
+                    !!error ? (
+                      <ErrorIcon
+                        message={error.message}
+                        loading={mutationState.loading}
+                      />
+                    ) : undefined
+                  }
+                  inputRef={ref}
+                  value={value || undefined}
+                  {...field}
                 />
               )}
             />

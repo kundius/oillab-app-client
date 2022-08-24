@@ -113,9 +113,9 @@ export function CreatePage() {
               )}
             />
           </FormField>
-          <FormField label="Модель">
+          <FormField label="Бренд">
             <Controller
-              name="model"
+              name="brand"
               control={control}
               rules={{
                 required: 'Значение обязательно'
@@ -142,9 +142,9 @@ export function CreatePage() {
               )}
             />
           </FormField>
-          <FormField label="Бренд">
+          <FormField label="Модель">
             <Controller
-              name="brand"
+              name="model"
               control={control}
               rules={{
                 required: 'Значение обязательно'

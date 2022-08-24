@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import Link from 'next/link'
 import {
   ButtonGroup,
@@ -11,7 +11,9 @@ import {
   Icon,
   InputGroup
 } from '@blueprintjs/core'
+import { format, parse } from 'date-fns'
 import { DateFormatProps, DateInput } from '@blueprintjs/datetime'
+import { Popover2, Tooltip2 } from "@blueprintjs/popover2";
 import getRuntimeConfig from '@app/utils/getRuntimeConfig'
 
 import { Table } from '@components/Table'
@@ -20,9 +22,9 @@ import { Wall } from '@components/Wall'
 import { useHasRole } from '@features/app/hooks/useHasRole'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DeletePopover } from '@features/report/components/DeletePopover'
+import { FilterPopover as LubricantFilterPopover } from '@features/lubricant/components/FilterPopover'
 import { AppToaster } from '@components/AppToaster'
 import { useToken } from '@app/features/app/hooks/useToken'
-import { ApplicationFormModal } from '@app/features/report/components/ApplicationFormModal'
 
 import * as schema from './schema.generated'
 import * as types from '@app/types'
@@ -58,6 +60,24 @@ const renderFile = (value: Pick<types.File, 'id' | 'url'>) => {
   )
 }
 
+const renderTooltip = (value: string) => {
+  if (!value) return
+  return (
+    <Tooltip2
+      content={value}
+      renderTarget={({ isOpen, ref, ...tooltipProps }) => (
+        <AnchorButton
+          {...tooltipProps}
+          elementRef={ref || undefined}
+          icon="comment"
+          small
+          minimal
+        />
+      )}
+    />
+  )
+}
+
 const renderDate = (value: string) => new Date(value).toLocaleDateString()
 
 export function ListPage() {
@@ -87,6 +107,10 @@ export function ListPage() {
     perPage,
     total: 0
   }
+  const dateFnsFormat = 'dd.MM.yyyy'
+  const formatDate = useCallback((date: Date) => format(date, dateFnsFormat), [])
+  const parseDate = useCallback((date: string) => parse(date, dateFnsFormat, new Date()), [])
+
 
   const handleGeneratePdf = async () => {
     const response = await generatePdf({
@@ -268,23 +292,20 @@ export function ListPage() {
                   />
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={7}>
-                  <InputGroup
-                    value={filter.lubricant?.contains || undefined}
-                    onChange={(e) =>
-                      setFilter((prev) => ({
-                        ...prev,
-                        lubricant: {
-                          contains: e.target.value
-                        }
-                      }))
-                    }
-                    fill
+                  <LubricantFilterPopover
+                    value={filter.lubricantEntity}
+                    onChange={(value) => setFilter((prev) => ({
+                      ...prev,
+                      lubricantEntity: value
+                    }))}
                   />
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={8}>
                   <DateInput
-                    {...jsDateFormatter}
-                    value={filter.sampledAt?.eq || undefined}
+                    formatDate={formatDate}
+                    parseDate={parseDate}
+                    placeholder={dateFnsFormat}
+                    value={filter.sampledAt?.eq ? new Date(filter.sampledAt.eq) : undefined}
                     onChange={(value) =>
                       setFilter((prev) => ({
                         ...prev,
@@ -404,16 +425,9 @@ export function ListPage() {
             dataIndex="samplingNodes"
           />
           <Table.Column
-            title={
-              <Table.Title
-                text="Смазочный материал"
-                sortAsc={types.ReportSort.LubricantAsc}
-                sortDesc={types.ReportSort.LubricantDesc}
-                sortValue={sort}
-                onSortChange={setSort}
-              />
-            }
-            dataIndex="lubricant"
+            title="Смазочный материал"
+            dataIndex="lubricantEntity"
+            render={(lubricantEntity) => `${lubricantEntity?.brand} / ${lubricantEntity?.model} / ${lubricantEntity?.viscosity}`}
           />
           <Table.Column
             title={
@@ -428,7 +442,13 @@ export function ListPage() {
             dataIndex="sampledAt"
             render={renderDate}
           />
-          <Table.Column title="Примечание" dataIndex="note" />
+          <Table.Column
+            title="Примечание"
+            dataIndex="note"
+            align="center"
+            width={84}
+            render={renderTooltip}
+          />
           {(isManager || isAdministrator) && (
             <Table.Column
               title="Цвет"
@@ -467,20 +487,6 @@ export function ListPage() {
                     >
                       <AnchorButton icon="cloud-download" small />
                     </a>
-                    <Divider />
-                    <ApplicationFormModal
-                      id={record.id}
-                      initialData={record?.applicationForm || undefined}
-                    >
-                      {({ isLoading, open, close }) => (
-                        <AnchorButton
-                          icon="edit"
-                          disabled={isLoading}
-                          small
-                          onClick={open}
-                        />
-                      )}
-                    </ApplicationFormModal>
                   </ButtonGroup>
                 )}
               />

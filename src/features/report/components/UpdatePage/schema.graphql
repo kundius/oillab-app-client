@@ -4,9 +4,11 @@ fragment ReportUpdatePageFragment on Report {
   totalMileage
   lubricantMileage
   samplingNodes
+  vehicleToppingUpLubricant
+  lubricantState
+  selectionVolume
   note
   color
-  lubricant
   sampledAt
   expressLaboratoryResult {
     id
