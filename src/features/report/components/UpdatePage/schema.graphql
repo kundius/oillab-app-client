@@ -1,6 +1,7 @@
 fragment ReportUpdatePageFragment on Report {
   id
   number
+  formNumber
   totalMileage
   lubricantMileage
   samplingNodes

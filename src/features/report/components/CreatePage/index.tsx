@@ -172,6 +172,39 @@ export function CreatePage() {
             </FormField>
           )}
           {watchVehicle && <DetailsForForm id={watchVehicle.value} />}
+          <FormField label="Номер бланка:">
+            <Controller
+              name="formNumber"
+              control={control}
+              rules={{
+                required: 'Номер бланка не может быть пустым',
+                pattern: {
+                  value: /^[^0\s]\S*$/,
+                  message: "Номер бланка не может начинаться с 0 или содержать пробелы."
+                }
+              }}
+              render={({
+                field: { ref, value, ...field },
+                fieldState: { error }
+              }) => (
+                <InputGroup
+                  className="w-full"
+                  disabled={mutationState.loading}
+                  rightElement={
+                    !!error ? (
+                      <ErrorIcon
+                        message={error.message}
+                        loading={mutationState.loading}
+                      />
+                    ) : undefined
+                  }
+                  inputRef={ref}
+                  value={value || undefined}
+                  {...field}
+                />
+              )}
+            />
+          </FormField>
           <FormField label="Общий пробег агрегата:">
             <Controller
               name="totalMileage"

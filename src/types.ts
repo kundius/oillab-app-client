@@ -313,17 +313,21 @@ export type Report = {
   color?: Maybe<ReportColor>;
   createdAt: Scalars['DateTime'];
   expressLaboratoryResult?: Maybe<File>;
+  formNumber?: Maybe<Scalars['String']>;
   id: Scalars['Float'];
   laboratoryResult?: Maybe<File>;
   lubricantEntity?: Maybe<Lubricant>;
   lubricantMileage: Scalars['String'];
+  lubricantState?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
   number?: Maybe<Scalars['Int']>;
   sampledAt: Scalars['DateTime'];
   samplingNodes: Scalars['String'];
+  selectionVolume?: Maybe<Scalars['String']>;
   totalMileage: Scalars['String'];
   updatedAt: Scalars['DateTime'];
   vehicle?: Maybe<Vehicle>;
+  vehicleToppingUpLubricant?: Maybe<Scalars['String']>;
 };
 
 export enum ReportColor {
@@ -336,17 +340,18 @@ export type ReportCreateInput = {
   client?: InputMaybe<Scalars['Int']>;
   color?: InputMaybe<Scalars['String']>;
   expressLaboratoryResult?: InputMaybe<Scalars['Int']>;
+  formNumber: Scalars['String'];
   laboratoryResult?: InputMaybe<Scalars['Int']>;
   lubricantEntityId?: InputMaybe<Scalars['Int']>;
   lubricantMileage: Scalars['String'];
-  vehicleToppingUpLubricant?: InputMaybe<Scalars['String']>;
   lubricantState?: InputMaybe<Scalars['String']>;
-  selectionVolume?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
   sampledAt: Scalars['DateTime'];
   samplingNodes: Scalars['String'];
+  selectionVolume?: InputMaybe<Scalars['String']>;
   totalMileage: Scalars['String'];
   vehicle?: InputMaybe<Scalars['Int']>;
+  vehicleToppingUpLubricant?: InputMaybe<Scalars['String']>;
 };
 
 export type ReportCreateResponse = {
@@ -404,17 +409,18 @@ export type ReportUpdateInput = {
   client?: InputMaybe<Scalars['Int']>;
   color?: InputMaybe<Scalars['String']>;
   expressLaboratoryResult?: InputMaybe<Scalars['Int']>;
+  formNumber?: InputMaybe<Scalars['String']>;
   laboratoryResult?: InputMaybe<Scalars['Int']>;
   lubricantEntityId?: InputMaybe<Scalars['Int']>;
   lubricantMileage?: InputMaybe<Scalars['String']>;
-  vehicleToppingUpLubricant?: InputMaybe<Scalars['String']>;
   lubricantState?: InputMaybe<Scalars['String']>;
-  selectionVolume?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
   sampledAt?: InputMaybe<Scalars['DateTime']>;
   samplingNodes?: InputMaybe<Scalars['String']>;
+  selectionVolume?: InputMaybe<Scalars['String']>;
   totalMileage?: InputMaybe<Scalars['String']>;
   vehicle?: InputMaybe<Scalars['Int']>;
+  vehicleToppingUpLubricant?: InputMaybe<Scalars['String']>;
 };
 
 export type ReportUpdateResponse = {
@@ -444,6 +450,7 @@ export type StringFilterOperator = {
 
 export type User = {
   __typename?: 'User';
+  contactPerson?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   files: Array<Maybe<File>>;
@@ -451,7 +458,6 @@ export type User = {
   isActive: Scalars['Boolean'];
   lastActivityAt: Scalars['DateTime'];
   name: Scalars['String'];
-  contactPerson?: Maybe<Scalars['String']>;
   password: Scalars['String'];
   phone?: Maybe<Scalars['String']>;
   reports: Array<Maybe<Report>>;
@@ -461,9 +467,9 @@ export type User = {
 };
 
 export type UserCreateInput = {
+  contactPerson?: InputMaybe<Scalars['String']>;
   email: Scalars['String'];
   name: Scalars['String'];
-  contactPerson?: InputMaybe<Scalars['String']>;
   password: Scalars['String'];
   phone?: InputMaybe<Scalars['String']>;
   role: Scalars['String'];
@@ -477,9 +483,9 @@ export type UserCreateResponse = {
 };
 
 export type UserFilter = {
+  contactPerson?: InputMaybe<StringFilterOperator>;
   email?: InputMaybe<StringFilterOperator>;
   name?: InputMaybe<StringFilterOperator>;
-  contactPerson?: InputMaybe<StringFilterOperator>;
   phone?: InputMaybe<StringFilterOperator>;
 };
 
@@ -496,25 +502,25 @@ export enum UserRole {
 }
 
 export enum UserSort {
+  ContactPersonAsc = 'CONTACT_PERSON_ASC',
+  ContactPersonDesc = 'CONTACT_PERSON_DESC',
   EmailAsc = 'EMAIL_ASC',
   EmailDesc = 'EMAIL_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
   NameAsc = 'NAME_ASC',
   NameDesc = 'NAME_DESC',
-  ContactPersonAsc = 'CONTACT_PERSON_ASC',
-  ContactPersonDesc = 'CONTACT_PERSON_DESC',
   PhoneAsc = 'PHONE_ASC',
   PhoneDesc = 'PHONE_DESC'
 }
 
 export type UserUpdateInput = {
+  contactPerson?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
-  contactPerson?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
-  role?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<UserRole>;
 };
 
 export type UserUpdateResponse = {
