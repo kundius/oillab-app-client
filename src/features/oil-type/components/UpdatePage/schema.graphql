@@ -1,0 +1,26 @@
+fragment OilTypeUpdatePageFragment on OilType {
+  id
+  name
+  standard
+}
+
+query OilTypeUpdatePageQuery($id: Int!) {
+  oiltype(id: $id) {
+    ...OilTypeUpdatePageFragment
+  }
+}
+
+mutation OilTypeUpdatePageMutation($id: Int!, $input: OilTypeUpdateInput!) {
+  oiltypeUpdate(
+    id: $id
+    input: $input
+  ) {
+    success
+    error {
+      message
+    }
+    record {
+      ...OilTypeUpdatePageFragment
+    }
+  }
+}

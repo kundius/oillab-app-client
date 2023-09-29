@@ -89,6 +89,20 @@ export const Header = () => {
                   </Link>
                 </li>
               )}
+              {isAdministrator && (
+                <li>
+                  <Link href="/oil-type" passHref>
+                    <a
+                      className={classNames(styles.link, {
+                        [styles.linkActive]:
+                          router.pathname.startsWith('/oil-type')
+                      })}
+                    >
+                      Вид масел
+                    </a>
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
           {currentUser && (

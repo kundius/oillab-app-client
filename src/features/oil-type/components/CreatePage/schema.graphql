@@ -1,0 +1,11 @@
+mutation OilTypeCreatePage($input: OilTypeCreateInput!) {
+  oiltypeCreate(input: $input) {
+    success
+    error {
+      message
+    }
+    record {
+      id
+    }
+  }
+}

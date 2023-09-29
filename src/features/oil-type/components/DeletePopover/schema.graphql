@@ -1,0 +1,8 @@
+mutation OilTypeDeletePopover($id: Int!) {
+  oiltypeDelete(id: $id) {
+    success
+    error {
+      message
+    }
+  }
+}

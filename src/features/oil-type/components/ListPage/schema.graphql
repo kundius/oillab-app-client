@@ -1,0 +1,28 @@
+fragment OilTypeListPageItem on OilType {
+  id
+  name
+  standard
+}
+
+query OilTypeListPageOilTypePaginate(
+  $sort: [OilTypeSort!]
+  $filter: OilTypeFilter
+  $page: Int
+  $perPage: Int
+) {
+  oiltypePaginate(
+    sort: $sort
+    filter: $filter
+    page: $page
+    perPage: $perPage
+  ) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
+    items {
+      ...OilTypeListPageItem
+    }
+  }
+}
