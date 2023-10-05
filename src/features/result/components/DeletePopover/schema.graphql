@@ -1,0 +1,8 @@
+mutation ResultDeletePopover($id: Int!) {
+  resultDelete(id: $id) {
+    success
+    error {
+      message
+    }
+  }
+}

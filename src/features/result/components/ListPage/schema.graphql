@@ -1,0 +1,31 @@
+fragment ResultListPageItem on Result {
+  id
+  number
+  oilType {
+    id
+    name
+  }
+}
+
+query ResultListPageResultPaginate(
+  $sort: [ResultSort!]
+  $filter: ResultFilter
+  $page: Int
+  $perPage: Int
+) {
+  resultPaginate(
+    sort: $sort
+    filter: $filter
+    page: $page
+    perPage: $perPage
+  ) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
+    items {
+      ...ResultListPageItem
+    }
+  }
+}

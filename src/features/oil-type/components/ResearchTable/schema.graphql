@@ -1,0 +1,57 @@
+fragment OilTypeResearchTableItem on OilTypeResearch {
+  id
+  name
+}
+
+query OilTypeResearchTableList(
+  $oilTypeId: Int!
+) {
+  oilTypeResearchList(
+    oilTypeId: $oilTypeId
+  ) {
+    items {
+      ...OilTypeResearchTableItem
+    }
+  }
+}
+
+mutation OilTypeResearchTableCreate($oilTypeId: Int!, $input: OilTypeResearchCreateInput!) {
+  oilTypeResearchCreate(
+    oilTypeId: $oilTypeId
+    input: $input
+  ) {
+    success
+    error {
+      message
+    }
+    record {
+      ...OilTypeResearchTableItem
+    }
+  }
+}
+
+mutation OilTypeResearchTableUpdate($id: Int!, $input: OilTypeResearchUpdateInput!) {
+  oilTypeResearchUpdate(
+    id: $id
+    input: $input
+  ) {
+    success
+    error {
+      message
+    }
+    record {
+      ...OilTypeResearchTableItem
+    }
+  }
+}
+
+mutation OilTypeResearchTableDelete($id: Int!) {
+  oilTypeResearchDelete(
+    id: $id
+  ) {
+    success
+    error {
+      message
+    }
+  }
+}

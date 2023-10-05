@@ -1,0 +1,59 @@
+fragment OilTypeIndicatorsTableItem on OilTypeIndicator {
+  id
+  name
+  ntd
+  units
+}
+
+query OilTypeIndicatorsTableList(
+  $oilTypeId: Int!
+) {
+  oilTypeIndicatorList(
+    oilTypeId: $oilTypeId
+  ) {
+    items {
+      ...OilTypeIndicatorsTableItem
+    }
+  }
+}
+
+mutation OilTypeIndicatorsTableCreate($oilTypeId: Int!, $input: OilTypeIndicatorCreateInput!) {
+  oilTypeIndicatorCreate(
+    oilTypeId: $oilTypeId
+    input: $input
+  ) {
+    success
+    error {
+      message
+    }
+    record {
+      ...OilTypeIndicatorsTableItem
+    }
+  }
+}
+
+mutation OilTypeIndicatorsTableUpdate($id: Int!, $input: OilTypeIndicatorUpdateInput!) {
+  oilTypeIndicatorUpdate(
+    id: $id
+    input: $input
+  ) {
+    success
+    error {
+      message
+    }
+    record {
+      ...OilTypeIndicatorsTableItem
+    }
+  }
+}
+
+mutation OilTypeIndicatorsTableDelete($id: Int!) {
+  oilTypeIndicatorDelete(
+    id: $id
+  ) {
+    success
+    error {
+      message
+    }
+  }
+}

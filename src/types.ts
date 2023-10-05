@@ -119,6 +119,12 @@ export type Mutation = {
   lubricantCreate: LubricantCreateResponse;
   lubricantDelete: DefaultMutationResponse;
   lubricantUpdate: LubricantUpdateResponse;
+  oilTypeIndicatorCreate: OilTypeIndicatorCreateResponse;
+  oilTypeIndicatorDelete: DefaultMutationResponse;
+  oilTypeIndicatorUpdate: OilTypeIndicatorUpdateResponse;
+  oilTypeResearchCreate: OilTypeResearchCreateResponse;
+  oilTypeResearchDelete: DefaultMutationResponse;
+  oilTypeResearchUpdate: OilTypeResearchUpdateResponse;
   oiltypeCreate: OilTypeCreateResponse;
   oiltypeDelete: DefaultMutationResponse;
   oiltypeUpdate: OilTypeUpdateResponse;
@@ -126,6 +132,9 @@ export type Mutation = {
   reportDelete: DefaultMutationResponse;
   reportGeneratePdf: ReportGeneratePdfResponse;
   reportUpdate: ReportUpdateResponse;
+  resultCreate: ResultCreateResponse;
+  resultDelete: DefaultMutationResponse;
+  resultUpdate: ResultUpdateResponse;
   signIn: SignInResponse;
   userCreate: UserCreateResponse;
   userDelete: DefaultMutationResponse;
@@ -149,6 +158,40 @@ export type MutationLubricantDeleteArgs = {
 export type MutationLubricantUpdateArgs = {
   id: Scalars['Int'];
   input: LubricantUpdateInput;
+};
+
+
+export type MutationOilTypeIndicatorCreateArgs = {
+  input: OilTypeIndicatorCreateInput;
+  oilTypeId: Scalars['Int'];
+};
+
+
+export type MutationOilTypeIndicatorDeleteArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationOilTypeIndicatorUpdateArgs = {
+  id: Scalars['Int'];
+  input: OilTypeIndicatorUpdateInput;
+};
+
+
+export type MutationOilTypeResearchCreateArgs = {
+  input: OilTypeResearchCreateInput;
+  oilTypeId: Scalars['Int'];
+};
+
+
+export type MutationOilTypeResearchDeleteArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationOilTypeResearchUpdateArgs = {
+  id: Scalars['Int'];
+  input: OilTypeResearchUpdateInput;
 };
 
 
@@ -187,6 +230,22 @@ export type MutationReportGeneratePdfArgs = {
 export type MutationReportUpdateArgs = {
   id: Scalars['Int'];
   input: ReportUpdateInput;
+};
+
+
+export type MutationResultCreateArgs = {
+  input: ResultCreateInput;
+};
+
+
+export type MutationResultDeleteArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationResultUpdateArgs = {
+  id: Scalars['Int'];
+  input: ResultUpdateInput;
 };
 
 
@@ -246,7 +305,10 @@ export type OilType = {
   __typename?: 'OilType';
   createdAt: Scalars['DateTime'];
   id: Scalars['Float'];
+  indicators: Array<Maybe<OilTypeIndicator>>;
   name: Scalars['String'];
+  researches: Array<Maybe<OilTypeResearch>>;
+  results: Array<Maybe<Result>>;
   standard: Scalars['Boolean'];
   updatedAt: Scalars['DateTime'];
 };
@@ -267,10 +329,84 @@ export type OilTypeFilter = {
   name?: InputMaybe<StringFilterOperator>;
 };
 
+export type OilTypeIndicator = {
+  __typename?: 'OilTypeIndicator';
+  id: Scalars['Float'];
+  name: Scalars['String'];
+  ntd: Scalars['String'];
+  oilType: OilType;
+  units: Scalars['String'];
+};
+
+export type OilTypeIndicatorCreateInput = {
+  name: Scalars['String'];
+  ntd: Scalars['String'];
+  units: Scalars['String'];
+};
+
+export type OilTypeIndicatorCreateResponse = {
+  __typename?: 'OilTypeIndicatorCreateResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<OilTypeIndicator>;
+  success: Scalars['Boolean'];
+};
+
+export type OilTypeIndicatorListResponse = {
+  __typename?: 'OilTypeIndicatorListResponse';
+  items: Array<OilTypeIndicator>;
+};
+
+export type OilTypeIndicatorUpdateInput = {
+  name?: InputMaybe<Scalars['String']>;
+  ntd?: InputMaybe<Scalars['String']>;
+  units?: InputMaybe<Scalars['String']>;
+};
+
+export type OilTypeIndicatorUpdateResponse = {
+  __typename?: 'OilTypeIndicatorUpdateResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<OilTypeIndicator>;
+  success: Scalars['Boolean'];
+};
+
 export type OilTypePaginateResponse = {
   __typename?: 'OilTypePaginateResponse';
   items: Array<OilType>;
   pageInfo: PageInfo;
+};
+
+export type OilTypeResearch = {
+  __typename?: 'OilTypeResearch';
+  id: Scalars['Float'];
+  name: Scalars['String'];
+  oilType: OilType;
+};
+
+export type OilTypeResearchCreateInput = {
+  name: Scalars['String'];
+};
+
+export type OilTypeResearchCreateResponse = {
+  __typename?: 'OilTypeResearchCreateResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<OilTypeResearch>;
+  success: Scalars['Boolean'];
+};
+
+export type OilTypeResearchListResponse = {
+  __typename?: 'OilTypeResearchListResponse';
+  items: Array<OilTypeResearch>;
+};
+
+export type OilTypeResearchUpdateInput = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type OilTypeResearchUpdateResponse = {
+  __typename?: 'OilTypeResearchUpdateResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<OilTypeResearch>;
+  success: Scalars['Boolean'];
 };
 
 export enum OilTypeSort {
@@ -311,10 +447,16 @@ export type Query = {
   file?: Maybe<File>;
   lubricant?: Maybe<Lubricant>;
   lubricantPaginate: LubricantPaginateResponse;
+  oilTypeIndicator?: Maybe<OilType>;
+  oilTypeIndicatorList: OilTypeIndicatorListResponse;
+  oilTypeResearch?: Maybe<OilType>;
+  oilTypeResearchList: OilTypeResearchListResponse;
   oiltype?: Maybe<OilType>;
   oiltypePaginate: OilTypePaginateResponse;
   report?: Maybe<Report>;
   reportPaginate: ReportPaginateResponse;
+  result?: Maybe<Result>;
+  resultPaginate: ResultPaginateResponse;
   user?: Maybe<User>;
   userPaginate: UserPaginateResponse;
   vehicle?: Maybe<Vehicle>;
@@ -337,6 +479,26 @@ export type QueryLubricantPaginateArgs = {
   page?: InputMaybe<Scalars['Int']>;
   perPage?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<LubricantSort>>;
+};
+
+
+export type QueryOilTypeIndicatorArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryOilTypeIndicatorListArgs = {
+  oilTypeId: Scalars['Int'];
+};
+
+
+export type QueryOilTypeResearchArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryOilTypeResearchListArgs = {
+  oilTypeId: Scalars['Int'];
 };
 
 
@@ -363,6 +525,19 @@ export type QueryReportPaginateArgs = {
   page?: InputMaybe<Scalars['Int']>;
   perPage?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Array<ReportSort>>;
+};
+
+
+export type QueryResultArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryResultPaginateArgs = {
+  filter?: InputMaybe<ResultFilter>;
+  page?: InputMaybe<Scalars['Int']>;
+  perPage?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<Array<ResultSort>>;
 };
 
 
@@ -511,6 +686,67 @@ export type ReportUpdateResponse = {
   __typename?: 'ReportUpdateResponse';
   error?: Maybe<DefaultError>;
   record?: Maybe<Report>;
+  success: Scalars['Boolean'];
+};
+
+export type Result = {
+  __typename?: 'Result';
+  createdAt: Scalars['DateTime'];
+  id: Scalars['Float'];
+  indicators: Array<ResultIndicator>;
+  number: Scalars['String'];
+  oilType: OilType;
+  updatedAt: Scalars['DateTime'];
+};
+
+export type ResultCreateInput = {
+  number: Scalars['String'];
+  oilTypeId: Scalars['Float'];
+};
+
+export type ResultCreateResponse = {
+  __typename?: 'ResultCreateResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<Result>;
+  success: Scalars['Boolean'];
+};
+
+export type ResultFilter = {
+  number?: InputMaybe<StringFilterOperator>;
+};
+
+export type ResultIndicator = {
+  __typename?: 'ResultIndicator';
+  id: Scalars['Float'];
+  oilTypeIndicator: OilTypeIndicator;
+  result: Result;
+  value: Scalars['String'];
+};
+
+export type ResultPaginateResponse = {
+  __typename?: 'ResultPaginateResponse';
+  items: Array<Result>;
+  pageInfo: PageInfo;
+};
+
+export enum ResultSort {
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC'
+}
+
+export type ResultUpdateIndicatorValue = {
+  oilTypeIndicatorId: Scalars['Float'];
+  value: Scalars['String'];
+};
+
+export type ResultUpdateInput = {
+  values: Array<ResultUpdateIndicatorValue>;
+};
+
+export type ResultUpdateResponse = {
+  __typename?: 'ResultUpdateResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<Result>;
   success: Scalars['Boolean'];
 };
 

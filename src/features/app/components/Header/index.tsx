@@ -91,6 +91,20 @@ export const Header = () => {
               )}
               {isAdministrator && (
                 <li>
+                  <Link href="/result" passHref>
+                    <a
+                      className={classNames(styles.link, {
+                        [styles.linkActive]:
+                          router.pathname.startsWith('/result')
+                      })}
+                    >
+                      Внести результат
+                    </a>
+                  </Link>
+                </li>
+              )}
+              {isAdministrator && (
+                <li>
                   <Link href="/oil-type" passHref>
                     <a
                       className={classNames(styles.link, {

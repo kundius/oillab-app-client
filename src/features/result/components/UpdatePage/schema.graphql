@@ -1,0 +1,46 @@
+fragment ResultUpdatePageOilTypeIndicatorFragment on OilTypeIndicator {
+  id
+  name
+  ntd
+  units
+}
+
+fragment ResultUpdatePageFragment on Result {
+  id
+  number
+  oilType {
+    id
+    name
+    indicators {
+      ...ResultUpdatePageOilTypeIndicatorFragment
+    }
+  }
+  indicators {
+    id
+    value
+    oilTypeIndicator {
+      id
+    }
+  }
+}
+
+query ResultUpdatePageQuery($id: Int!) {
+  result(id: $id) {
+    ...ResultUpdatePageFragment
+  }
+}
+
+mutation ResultUpdatePageMutation($id: Int!, $input: ResultUpdateInput!) {
+  resultUpdate(
+    id: $id
+    input: $input
+  ) {
+    success
+    error {
+      message
+    }
+    record {
+      ...ResultUpdatePageFragment
+    }
+  }
+}

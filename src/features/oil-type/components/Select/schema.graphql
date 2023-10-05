@@ -1,0 +1,25 @@
+fragment OilTypeSelectFragment on OilType {
+  id
+  name
+}
+
+query OilTypeSelectQuery (
+  $page: Int!
+  $perPage: Int!
+  $filter: OilTypeFilter
+) {
+  oiltypePaginate(
+    filter: $filter
+    page: $page
+    perPage: $perPage
+  ) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
+    items {
+      ...OilTypeSelectFragment
+    }
+  }
+}

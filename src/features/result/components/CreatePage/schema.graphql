@@ -1,0 +1,11 @@
+mutation ResultCreatePage($input: ResultCreateInput!) {
+  resultCreate(input: $input) {
+    success
+    error {
+      message
+    }
+    record {
+      id
+    }
+  }
+}

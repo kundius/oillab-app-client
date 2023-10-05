@@ -103,6 +103,7 @@ export function Select ({ value, onChange }: SelectProps) {
               />
             </div>
             <Pagination
+              simple
               onChange={onPaginate}
               current={page}
               pageSize={perPage}

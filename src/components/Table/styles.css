@@ -203,6 +203,11 @@
   border-bottom: 0;
 }
 
+.app-table tfoot tr td,
+.app-table tfoot tr th {
+  border-top: 1px solid #e1e6eb;
+}
+
 .app-table-content {
 }
 
