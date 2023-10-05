@@ -52,7 +52,7 @@ export function UpdatePage({ initialResult }: UpdatePageProps) {
   const getDefaultValues = () => {
     return result.indicators.map((item) => ({
       oilTypeIndicatorId: item.oilTypeIndicator.id,
-      value: item.value
+      value: item.value || ''
     }))
   }
 

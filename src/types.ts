@@ -335,6 +335,7 @@ export type OilTypeIndicator = {
   name: Scalars['String'];
   ntd: Scalars['String'];
   oilType: OilType;
+  resultIndicators: Array<ResultIndicator>;
   units: Scalars['String'];
 };
 
@@ -720,7 +721,7 @@ export type ResultIndicator = {
   id: Scalars['Float'];
   oilTypeIndicator: OilTypeIndicator;
   result: Result;
-  value: Scalars['String'];
+  value?: Maybe<Scalars['String']>;
 };
 
 export type ResultPaginateResponse = {

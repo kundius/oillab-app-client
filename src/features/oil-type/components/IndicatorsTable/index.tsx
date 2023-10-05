@@ -59,6 +59,10 @@ export function IndicatorsTable({ oilTypeId }: IndicatorsTableProps) {
         id: 'ROOT_QUERY',
         fieldName: 'oilTypeIndicatorList'
       })
+      apollo.cache.evict({
+        id: `OilType:${response.data?.oilTypeIndicatorCreate.record?.oilType.id}`,
+        fieldName: 'indicators'
+      })
       AppToaster.show({
         message: 'Параметр добавлен',
         intent: Intent.SUCCESS
@@ -137,6 +141,10 @@ export function IndicatorsTable({ oilTypeId }: IndicatorsTableProps) {
         apollo.cache.evict({
           id: 'ROOT_QUERY',
           fieldName: 'oilTypeIndicatorList'
+        })
+        apollo.cache.evict({
+          id: `OilType:${record.oilType.id}`,
+          fieldName: 'indicators'
         })
         AppToaster.show({
           message: 'Параметр удален',

@@ -3,6 +3,9 @@ fragment OilTypeIndicatorsTableItem on OilTypeIndicator {
   name
   ntd
   units
+  oilType {
+    id
+  }
 }
 
 query OilTypeIndicatorsTableList(

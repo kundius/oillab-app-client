@@ -3,14 +3,14 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type OilTypeIndicatorsTableItemFragment = { __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string };
+export type OilTypeIndicatorsTableItemFragment = { __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string, oilType: { __typename?: 'OilType', id: number } };
 
 export type OilTypeIndicatorsTableListQueryVariables = Types.Exact<{
   oilTypeId: Types.Scalars['Int'];
 }>;
 
 
-export type OilTypeIndicatorsTableListQuery = { __typename?: 'Query', oilTypeIndicatorList: { __typename?: 'OilTypeIndicatorListResponse', items: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string }> } };
+export type OilTypeIndicatorsTableListQuery = { __typename?: 'Query', oilTypeIndicatorList: { __typename?: 'OilTypeIndicatorListResponse', items: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string, oilType: { __typename?: 'OilType', id: number } }> } };
 
 export type OilTypeIndicatorsTableCreateMutationVariables = Types.Exact<{
   oilTypeId: Types.Scalars['Int'];
@@ -18,7 +18,7 @@ export type OilTypeIndicatorsTableCreateMutationVariables = Types.Exact<{
 }>;
 
 
-export type OilTypeIndicatorsTableCreateMutation = { __typename?: 'Mutation', oilTypeIndicatorCreate: { __typename?: 'OilTypeIndicatorCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null } };
+export type OilTypeIndicatorsTableCreateMutation = { __typename?: 'Mutation', oilTypeIndicatorCreate: { __typename?: 'OilTypeIndicatorCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string, oilType: { __typename?: 'OilType', id: number } } | null } };
 
 export type OilTypeIndicatorsTableUpdateMutationVariables = Types.Exact<{
   id: Types.Scalars['Int'];
@@ -26,7 +26,7 @@ export type OilTypeIndicatorsTableUpdateMutationVariables = Types.Exact<{
 }>;
 
 
-export type OilTypeIndicatorsTableUpdateMutation = { __typename?: 'Mutation', oilTypeIndicatorUpdate: { __typename?: 'OilTypeIndicatorUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null } };
+export type OilTypeIndicatorsTableUpdateMutation = { __typename?: 'Mutation', oilTypeIndicatorUpdate: { __typename?: 'OilTypeIndicatorUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string, oilType: { __typename?: 'OilType', id: number } } | null } };
 
 export type OilTypeIndicatorsTableDeleteMutationVariables = Types.Exact<{
   id: Types.Scalars['Int'];
@@ -41,6 +41,9 @@ export const OilTypeIndicatorsTableItemFragmentDoc = gql`
   name
   ntd
   units
+  oilType {
+    id
+  }
 }
     `;
 export const OilTypeIndicatorsTableListDocument = gql`
