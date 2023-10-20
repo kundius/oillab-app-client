@@ -3,14 +3,14 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type ReportUpdatePageFragment = { __typename?: 'Report', id: number, number?: number | null, formNumber?: string | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, vehicleToppingUpLubricant?: string | null, lubricantState?: string | null, selectionVolume?: string | null, note?: string | null, color?: Types.ReportColor | null, sampledAt: any, expressLaboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, laboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, client?: { __typename?: 'User', id: number, name: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string } | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, brand: string, model: string, viscosity?: string | null } | null };
+export type ReportUpdatePageFragment = { __typename?: 'Report', id: number, number?: number | null, formNumber?: string | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, vehicleToppingUpLubricant?: string | null, lubricantState?: string | null, selectionVolume?: string | null, note?: string | null, color?: Types.ReportColor | null, sampledAt: any, expressLaboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, laboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, client?: { __typename?: 'User', id: number, name: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string } | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, brand: string, model: string, viscosity?: string | null } | null, oilType?: { __typename?: 'OilType', id: number, name: string } | null };
 
 export type ReportUpdatePageQueryVariables = Types.Exact<{
   id: Types.Scalars['Int'];
 }>;
 
 
-export type ReportUpdatePageQuery = { __typename?: 'Query', report?: { __typename?: 'Report', id: number, number?: number | null, formNumber?: string | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, vehicleToppingUpLubricant?: string | null, lubricantState?: string | null, selectionVolume?: string | null, note?: string | null, color?: Types.ReportColor | null, sampledAt: any, expressLaboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, laboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, client?: { __typename?: 'User', id: number, name: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string } | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, brand: string, model: string, viscosity?: string | null } | null } | null, currentUser?: { __typename?: 'User', id: number, role: Types.UserRole } | null };
+export type ReportUpdatePageQuery = { __typename?: 'Query', report?: { __typename?: 'Report', id: number, number?: number | null, formNumber?: string | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, vehicleToppingUpLubricant?: string | null, lubricantState?: string | null, selectionVolume?: string | null, note?: string | null, color?: Types.ReportColor | null, sampledAt: any, expressLaboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, laboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, client?: { __typename?: 'User', id: number, name: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string } | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, brand: string, model: string, viscosity?: string | null } | null, oilType?: { __typename?: 'OilType', id: number, name: string } | null } | null, currentUser?: { __typename?: 'User', id: number, role: Types.UserRole } | null };
 
 export type ReportUpdatePageMutationVariables = Types.Exact<{
   id: Types.Scalars['Int'];
@@ -18,7 +18,7 @@ export type ReportUpdatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type ReportUpdatePageMutation = { __typename?: 'Mutation', reportUpdate: { __typename?: 'ReportUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Report', id: number, number?: number | null, formNumber?: string | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, vehicleToppingUpLubricant?: string | null, lubricantState?: string | null, selectionVolume?: string | null, note?: string | null, color?: Types.ReportColor | null, sampledAt: any, expressLaboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, laboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, client?: { __typename?: 'User', id: number, name: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string } | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, brand: string, model: string, viscosity?: string | null } | null } | null } };
+export type ReportUpdatePageMutation = { __typename?: 'Mutation', reportUpdate: { __typename?: 'ReportUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Report', id: number, number?: number | null, formNumber?: string | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, vehicleToppingUpLubricant?: string | null, lubricantState?: string | null, selectionVolume?: string | null, note?: string | null, color?: Types.ReportColor | null, sampledAt: any, expressLaboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, laboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, client?: { __typename?: 'User', id: number, name: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string } | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, brand: string, model: string, viscosity?: string | null } | null, oilType?: { __typename?: 'OilType', id: number, name: string } | null } | null } };
 
 export const ReportUpdatePageFragmentDoc = gql`
     fragment ReportUpdatePageFragment on Report {
@@ -60,6 +60,10 @@ export const ReportUpdatePageFragmentDoc = gql`
     brand
     model
     viscosity
+  }
+  oilType {
+    id
+    name
   }
 }
     `;

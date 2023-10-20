@@ -29,6 +29,10 @@ import {
   Select as SelectLubricant,
   SelectValue as SelectLubricantValue
 } from '@features/lubricant/components/Select'
+import {
+  Select as SelectOilType,
+  SelectValue as SelectOilTypeValue
+} from '@features/oil-type/components/Select'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DetailsForForm } from '@features/vehicle/components/DetailsForForm'
 import { AppToaster } from '@components/AppToaster'
@@ -43,6 +47,7 @@ export interface FormFields extends types.ReportCreateInput {
   clientEntity?: SelectUserValue | null
   vehicleEntity?: SelectVehicleValue | null
   lubricantEntity?: SelectLubricantValue | null
+  oilType?: SelectOilTypeValue | null
   laboratoryResultFile?: UploadFileValue | null
   expressLaboratoryResultFile?: UploadFileValue | null
 }
@@ -74,6 +79,7 @@ export function CreatePage() {
     clientEntity,
     vehicleEntity,
     lubricantEntity,
+    oilType,
     laboratoryResultFile,
     expressLaboratoryResultFile,
     ...input
@@ -87,6 +93,8 @@ export function CreatePage() {
             vehicleEntity === null ? vehicleEntity : vehicleEntity?.value,
           lubricantEntityId:
             lubricantEntity === null ? lubricantEntity : lubricantEntity?.value,
+          oilTypeId:
+            oilType === null ? oilType : oilType?.value,
           laboratoryResult:
             laboratoryResultFile === null
               ? laboratoryResultFile
@@ -300,6 +308,16 @@ export function CreatePage() {
                 field: { ref, ...field },
                 fieldState: { error }
               }) => <SelectLubricant {...field} />}
+            />
+          </FormField>
+          <FormField label="Вид масла:">
+            <Controller
+              name="oilType"
+              control={control}
+              render={({
+                field: { ref, ...field },
+                fieldState: { error }
+              }) => <SelectOilType {...field} />}
             />
           </FormField>
           <FormField label="Дата забора пробы/образца:">

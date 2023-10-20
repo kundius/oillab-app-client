@@ -42,10 +42,10 @@ export function ListPage() {
 
   return (
     <MainTemplate
-      title="Типы масел"
+      title="Виды масел"
       headline={[
         {
-          title: 'Типы масел'
+          title: 'Виды масел'
         }
       ]}
       extra={

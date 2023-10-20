@@ -38,6 +38,10 @@ fragment ReportUpdatePageFragment on Report {
     model
     viscosity
   }
+  oilType {
+    id
+    name
+  }
 }
 
 query ReportUpdatePageQuery($id: Int!) {

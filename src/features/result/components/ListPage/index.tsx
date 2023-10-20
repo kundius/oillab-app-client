@@ -99,7 +99,7 @@ export function ListPage() {
             dataIndex="number"
           />
           <Table.Column<schema.ResultListPageItemFragment>
-            title="Тип масла"
+            title="Вид масла"
             dataIndex="oilType"
             render={(row) => row.name}
           />

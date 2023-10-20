@@ -307,6 +307,7 @@ export type OilType = {
   id: Scalars['Float'];
   indicators: Array<Maybe<OilTypeIndicator>>;
   name: Scalars['String'];
+  reports: Array<Maybe<Report>>;
   researches: Array<Maybe<OilTypeResearch>>;
   results: Array<Maybe<Result>>;
   standard: Scalars['Boolean'];
@@ -581,6 +582,7 @@ export type Report = {
   lubricantState?: Maybe<Scalars['String']>;
   note?: Maybe<Scalars['String']>;
   number?: Maybe<Scalars['Int']>;
+  oilType?: Maybe<OilType>;
   sampledAt: Scalars['DateTime'];
   samplingNodes: Scalars['String'];
   selectionVolume?: Maybe<Scalars['String']>;
@@ -606,6 +608,7 @@ export type ReportCreateInput = {
   lubricantMileage: Scalars['String'];
   lubricantState?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
+  oilTypeId?: InputMaybe<Scalars['Int']>;
   sampledAt: Scalars['DateTime'];
   samplingNodes: Scalars['String'];
   selectionVolume?: InputMaybe<Scalars['String']>;
@@ -675,6 +678,7 @@ export type ReportUpdateInput = {
   lubricantMileage?: InputMaybe<Scalars['String']>;
   lubricantState?: InputMaybe<Scalars['String']>;
   note?: InputMaybe<Scalars['String']>;
+  oilTypeId?: InputMaybe<Scalars['Int']>;
   sampledAt?: InputMaybe<Scalars['DateTime']>;
   samplingNodes?: InputMaybe<Scalars['String']>;
   selectionVolume?: InputMaybe<Scalars['String']>;

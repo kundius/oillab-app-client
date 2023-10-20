@@ -35,6 +35,10 @@ import {
   SelectVehicle,
   SelectVehicleValue
 } from '@features/vehicle/components/SelectVehicle'
+import {
+  Select as SelectOilType,
+  SelectValue as SelectOilTypeValue
+} from '@features/oil-type/components/Select'
 import { useHasRole } from '@app/features/app/hooks/useHasRole'
 import { useToken } from '@app/features/app/hooks/useToken'
 
@@ -47,6 +51,7 @@ export interface FormFields extends types.ReportUpdateInput {
   clientEntity?: SelectUserValue | null
   vehicleEntity?: SelectVehicleValue | null
   lubricantEntity?: SelectLubricantValue | null
+  oilType?: SelectOilTypeValue | null
   laboratoryResultFile?: UploadFileValue | null
   expressLaboratoryResultFile?: UploadFileValue | null
 }
@@ -103,6 +108,12 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
             value: initialReport.lubricantEntity.id
           }
         : undefined,
+      oilType: initialReport.oilType
+        ? {
+            label: initialReport.oilType.name,
+            value: initialReport.oilType.id
+          }
+        : undefined,
       expressLaboratoryResultFile: initialReport.expressLaboratoryResult,
       laboratoryResultFile: initialReport.laboratoryResult
     }
@@ -119,6 +130,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
     clientEntity,
     vehicleEntity,
     lubricantEntity,
+    oilType,
     laboratoryResultFile,
     expressLaboratoryResultFile,
     ...input
@@ -133,6 +145,8 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
             vehicleEntity === null ? vehicleEntity : vehicleEntity?.value,
           lubricantEntityId:
             lubricantEntity === null ? lubricantEntity : lubricantEntity?.value,
+          oilTypeId:
+            oilType === null ? oilType : oilType?.value,
           laboratoryResult:
             laboratoryResultFile === null
               ? laboratoryResultFile
@@ -377,6 +391,16 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                 field: { ref, ...field },
                 fieldState: { error }
               }) => <SelectLubricant {...field} />}
+            />
+          </FormField>
+          <FormField label="Вид масла:">
+            <Controller
+              name="oilType"
+              control={control}
+              render={({
+                field: { ref, ...field },
+                fieldState: { error }
+              }) => <SelectOilType {...field} />}
             />
           </FormField>
           <FormField label="Дата забора пробы/образца:">
