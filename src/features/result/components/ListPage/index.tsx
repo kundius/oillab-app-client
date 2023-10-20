@@ -91,12 +91,12 @@ export function ListPage() {
                 text="Номер бланка"
                 filter="string"
                 filterValue={filter.formNumber || undefined}
-                onFilterChange={(number) =>
-                  setFilter((prev) => ({ ...prev, number }))
+                onFilterChange={(formNumber) =>
+                  setFilter((prev) => ({ ...prev, formNumber }))
                 }
               />
             }
-            dataIndex="number"
+            dataIndex="formNumber"
           />
           <Table.Column<schema.ResultListPageItemFragment>
             title="Вид масла"
