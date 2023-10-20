@@ -90,7 +90,7 @@ export function ListPage() {
               <Table.Title
                 text="Номер бланка"
                 filter="string"
-                filterValue={filter.number || undefined}
+                filterValue={filter.formNumber || undefined}
                 onFilterChange={(number) =>
                   setFilter((prev) => ({ ...prev, number }))
                 }

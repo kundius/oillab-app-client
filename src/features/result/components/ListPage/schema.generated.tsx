@@ -3,7 +3,7 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type ResultListPageItemFragment = { __typename?: 'Result', id: number, number: string, oilType: { __typename?: 'OilType', id: number, name: string } };
+export type ResultListPageItemFragment = { __typename?: 'Result', id: number, formNumber: string, oilType: { __typename?: 'OilType', id: number, name: string } };
 
 export type ResultListPageResultPaginateQueryVariables = Types.Exact<{
   sort?: Types.InputMaybe<Array<Types.ResultSort> | Types.ResultSort>;
@@ -13,12 +13,12 @@ export type ResultListPageResultPaginateQueryVariables = Types.Exact<{
 }>;
 
 
-export type ResultListPageResultPaginateQuery = { __typename?: 'Query', resultPaginate: { __typename?: 'ResultPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Result', id: number, number: string, oilType: { __typename?: 'OilType', id: number, name: string } }> } };
+export type ResultListPageResultPaginateQuery = { __typename?: 'Query', resultPaginate: { __typename?: 'ResultPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Result', id: number, formNumber: string, oilType: { __typename?: 'OilType', id: number, name: string } }> } };
 
 export const ResultListPageItemFragmentDoc = gql`
     fragment ResultListPageItem on Result {
   id
-  number
+  formNumber
   oilType {
     id
     name

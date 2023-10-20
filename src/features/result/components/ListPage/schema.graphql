@@ -1,6 +1,6 @@
 fragment ResultListPageItem on Result {
   id
-  number
+  formNumber
   oilType {
     id
     name

@@ -697,15 +697,15 @@ export type ReportUpdateResponse = {
 export type Result = {
   __typename?: 'Result';
   createdAt: Scalars['DateTime'];
+  formNumber: Scalars['String'];
   id: Scalars['Float'];
   indicators: Array<ResultIndicator>;
-  number: Scalars['String'];
   oilType: OilType;
   updatedAt: Scalars['DateTime'];
 };
 
 export type ResultCreateInput = {
-  number: Scalars['String'];
+  formNumber: Scalars['String'];
   oilTypeId: Scalars['Float'];
 };
 
@@ -717,7 +717,7 @@ export type ResultCreateResponse = {
 };
 
 export type ResultFilter = {
-  number?: InputMaybe<StringFilterOperator>;
+  formNumber?: InputMaybe<StringFilterOperator>;
 };
 
 export type ResultIndicator = {

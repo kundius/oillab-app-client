@@ -16,7 +16,7 @@ import {
 import * as schema from './schema.generated'
 
 interface FormFields {
-  number: string
+  formNumber: string
   oilTypeEntity: SelectOilTypeValue
 }
 
@@ -31,7 +31,7 @@ export function CreatePage() {
     const response = await mutation({
       variables: {
         input: {
-          number: input.number,
+          formNumber: input.formNumber,
           oilTypeId: input.oilTypeEntity.value
         }
       }
@@ -87,7 +87,7 @@ export function CreatePage() {
         >
           <FormField label="Номер бланка">
             <Controller
-              name="number"
+              name="formNumber"
               control={form.control}
               rules={{
                 required: 'Значение обязательно'

@@ -30,7 +30,7 @@ export function UpdatePage({ initialResult }: UpdatePageProps) {
 
   const result = query.data?.result || initialResult
 
-  const pageTitle = result.number
+  const pageTitle = result.formNumber
 
   const getColumns = () => {
     return result?.oilType?.indicators.reduce<TableColumn[]>(
