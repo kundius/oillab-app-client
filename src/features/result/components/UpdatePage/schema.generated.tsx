@@ -5,14 +5,16 @@ import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type ResultUpdatePageOilTypeIndicatorFragment = { __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string };
 
-export type ResultUpdatePageFragment = { __typename?: 'Result', id: number, formNumber: string, oilType: { __typename?: 'OilType', id: number, name: string, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }> };
+export type ResultUpdatePageOilTypeResearchFragment = { __typename?: 'OilTypeResearch', id: number, name: string };
+
+export type ResultUpdatePageFragment = { __typename?: 'Result', id: number, formNumber: string, oilType: { __typename?: 'OilType', id: number, name: string, standard: boolean, researches: Array<{ __typename?: 'OilTypeResearch', id: number, name: string } | null>, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }>, researches: Array<{ __typename?: 'ResultResearch', id: number, value?: string | null, oilTypeResearch: { __typename?: 'OilTypeResearch', id: number } }> };
 
 export type ResultUpdatePageQueryVariables = Types.Exact<{
   id: Types.Scalars['Int'];
 }>;
 
 
-export type ResultUpdatePageQuery = { __typename?: 'Query', result?: { __typename?: 'Result', id: number, formNumber: string, oilType: { __typename?: 'OilType', id: number, name: string, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }> } | null };
+export type ResultUpdatePageQuery = { __typename?: 'Query', result?: { __typename?: 'Result', id: number, formNumber: string, oilType: { __typename?: 'OilType', id: number, name: string, standard: boolean, researches: Array<{ __typename?: 'OilTypeResearch', id: number, name: string } | null>, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }>, researches: Array<{ __typename?: 'ResultResearch', id: number, value?: string | null, oilTypeResearch: { __typename?: 'OilTypeResearch', id: number } }> } | null };
 
 export type ResultUpdatePageMutationVariables = Types.Exact<{
   id: Types.Scalars['Int'];
@@ -20,8 +22,14 @@ export type ResultUpdatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type ResultUpdatePageMutation = { __typename?: 'Mutation', resultUpdate: { __typename?: 'ResultUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Result', id: number, formNumber: string, oilType: { __typename?: 'OilType', id: number, name: string, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }> } | null } };
+export type ResultUpdatePageMutation = { __typename?: 'Mutation', resultUpdate: { __typename?: 'ResultUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Result', id: number, formNumber: string, oilType: { __typename?: 'OilType', id: number, name: string, standard: boolean, researches: Array<{ __typename?: 'OilTypeResearch', id: number, name: string } | null>, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }>, researches: Array<{ __typename?: 'ResultResearch', id: number, value?: string | null, oilTypeResearch: { __typename?: 'OilTypeResearch', id: number } }> } | null } };
 
+export const ResultUpdatePageOilTypeResearchFragmentDoc = gql`
+    fragment ResultUpdatePageOilTypeResearchFragment on OilTypeResearch {
+  id
+  name
+}
+    `;
 export const ResultUpdatePageOilTypeIndicatorFragmentDoc = gql`
     fragment ResultUpdatePageOilTypeIndicatorFragment on OilTypeIndicator {
   id
@@ -37,6 +45,10 @@ export const ResultUpdatePageFragmentDoc = gql`
   oilType {
     id
     name
+    standard
+    researches {
+      ...ResultUpdatePageOilTypeResearchFragment
+    }
     indicators {
       ...ResultUpdatePageOilTypeIndicatorFragment
     }
@@ -48,8 +60,16 @@ export const ResultUpdatePageFragmentDoc = gql`
       id
     }
   }
+  researches {
+    id
+    value
+    oilTypeResearch {
+      id
+    }
+  }
 }
-    ${ResultUpdatePageOilTypeIndicatorFragmentDoc}`;
+    ${ResultUpdatePageOilTypeResearchFragmentDoc}
+${ResultUpdatePageOilTypeIndicatorFragmentDoc}`;
 export const ResultUpdatePageQueryDocument = gql`
     query ResultUpdatePageQuery($id: Int!) {
   result(id: $id) {

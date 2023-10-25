@@ -5,12 +5,21 @@ fragment ResultUpdatePageOilTypeIndicatorFragment on OilTypeIndicator {
   units
 }
 
+fragment ResultUpdatePageOilTypeResearchFragment on OilTypeResearch {
+  id
+  name
+}
+
 fragment ResultUpdatePageFragment on Result {
   id
   formNumber
   oilType {
     id
     name
+    standard
+    researches {
+      ...ResultUpdatePageOilTypeResearchFragment
+    }
     indicators {
       ...ResultUpdatePageOilTypeIndicatorFragment
     }
@@ -19,6 +28,13 @@ fragment ResultUpdatePageFragment on Result {
     id
     value
     oilTypeIndicator {
+      id
+    }
+  }
+  researches {
+    id
+    value
+    oilTypeResearch {
       id
     }
   }

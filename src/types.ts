@@ -701,6 +701,7 @@ export type Result = {
   id: Scalars['Float'];
   indicators: Array<ResultIndicator>;
   oilType: OilType;
+  researches: Array<ResultResearch>;
   updatedAt: Scalars['DateTime'];
 };
 
@@ -734,6 +735,14 @@ export type ResultPaginateResponse = {
   pageInfo: PageInfo;
 };
 
+export type ResultResearch = {
+  __typename?: 'ResultResearch';
+  id: Scalars['Float'];
+  oilTypeResearch: OilTypeResearch;
+  result: Result;
+  value?: Maybe<Scalars['String']>;
+};
+
 export enum ResultSort {
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC'
@@ -745,7 +754,13 @@ export type ResultUpdateIndicatorValue = {
 };
 
 export type ResultUpdateInput = {
+  researches: Array<ResultUpdateResearchValue>;
   values: Array<ResultUpdateIndicatorValue>;
+};
+
+export type ResultUpdateResearchValue = {
+  oilTypeResearchId: Scalars['Float'];
+  value: Scalars['String'];
 };
 
 export type ResultUpdateResponse = {

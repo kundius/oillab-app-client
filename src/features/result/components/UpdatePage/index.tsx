@@ -13,11 +13,16 @@ export interface UpdatePageProps {
   initialResult: schema.ResultUpdatePageFragment
 }
 
-interface TableColumn {
+interface IndicatorTableColumn {
   id: number
   name: string
   ntd: string
   units: string
+}
+
+interface ResearchTableColumn {
+  id: number
+  name: string
 }
 
 export function UpdatePage({ initialResult }: UpdatePageProps) {
@@ -32,8 +37,8 @@ export function UpdatePage({ initialResult }: UpdatePageProps) {
 
   const pageTitle = result.formNumber
 
-  const getColumns = () => {
-    return result?.oilType?.indicators.reduce<TableColumn[]>(
+  const getIndicatorColumns = () => {
+    return result?.oilType?.indicators.reduce<IndicatorTableColumn[]>(
       (accumulator, currentValue) => {
         if (!!currentValue) {
           accumulator.push({
@@ -49,26 +54,58 @@ export function UpdatePage({ initialResult }: UpdatePageProps) {
     )
   }
 
-  const getDefaultValues = () => {
+  const getResearchColumns = () => {
+    return result?.oilType?.researches.reduce<ResearchTableColumn[]>(
+      (accumulator, currentValue) => {
+        if (!!currentValue) {
+          accumulator.push({
+            id: currentValue.id,
+            name: currentValue.name
+          })
+        }
+        return accumulator
+      },
+      []
+    )
+  }
+
+  const getIndicatorDefaultValues = () => {
     return result.indicators.map((item) => ({
       oilTypeIndicatorId: item.oilTypeIndicator.id,
       value: item.value || ''
     }))
   }
 
-  const [values, setValues] = useState<types.ResultUpdateIndicatorValue[]>(
-    getDefaultValues()
+  const getResearchDefaultValues = () => {
+    return result.researches.map((item) => ({
+      oilTypeResearchId: item.oilTypeResearch.id,
+      value: item.value || ''
+    }))
+  }
+
+  const [indicatorValues, setIndicatorValues] = useState<types.ResultUpdateIndicatorValue[]>(
+    getIndicatorDefaultValues()
   )
 
-  const getValue = (indiatorId: number) => {
+  const [researchValues, setResearchValues] = useState<types.ResultUpdateResearchValue[]>(
+    getResearchDefaultValues()
+  )
+
+  const getIndicatorValue = (indiatorId: number) => {
     return (
-      values.find((item) => item.oilTypeIndicatorId === indiatorId)?.value || ''
+      indicatorValues.find((item) => item.oilTypeIndicatorId === indiatorId)?.value || ''
+    )
+  }
+  
+  const getResearchValue = (researchId: number) => {
+    return (
+      researchValues.find((item) => item.oilTypeResearchId === researchId)?.value || ''
     )
   }
 
-  const changeHandlerCreator = (indiatorId: number) => {
+  const changeIndicatorHandlerCreator = (indiatorId: number) => {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValues((prev) => {
+      setIndicatorValues((prev) => {
         if (prev.find((item) => item.oilTypeIndicatorId === indiatorId)) {
           return prev.map((item) => ({
             oilTypeIndicatorId: item.oilTypeIndicatorId,
@@ -90,12 +127,37 @@ export function UpdatePage({ initialResult }: UpdatePageProps) {
     }
   }
 
+  const changeResearchHandlerCreator = (researchId: number) => {
+    return (e: React.ChangeEvent<HTMLInputElement>) => {
+      setResearchValues((prev) => {
+        if (prev.find((item) => item.oilTypeResearchId === researchId)) {
+          return prev.map((item) => ({
+            oilTypeResearchId: item.oilTypeResearchId,
+            value:
+              researchId === item.oilTypeResearchId
+                ? e.target.value
+                : item.value
+          }))
+        } else {
+          return [
+            ...prev,
+            {
+              oilTypeResearchId: researchId,
+              value: e.target.value
+            }
+          ]
+        }
+      })
+    }
+  }
+
   const submitHandler = async () => {
     const response = await mutation({
       variables: {
         id: initialResult.id,
         input: {
-          values
+          values: indicatorValues,
+          researches: researchValues
         }
       }
     })
@@ -141,8 +203,8 @@ export function UpdatePage({ initialResult }: UpdatePageProps) {
     >
       <div className="space-y-16">
         <Wall>
-          <Table<TableColumn>
-            data={getColumns()}
+          <Table<IndicatorTableColumn>
+            data={getIndicatorColumns()}
             rowKey={(record) => record.id}
           >
             <Table.Column
@@ -155,7 +217,7 @@ export function UpdatePage({ initialResult }: UpdatePageProps) {
             <Table.Column title="Наименование показателя" dataIndex="name" />
             <Table.Column title="НТД" dataIndex="ntd" />
             <Table.Column title="Единицы измерения" dataIndex="units" />
-            <Table.Column<TableColumn>
+            <Table.Column<IndicatorTableColumn>
               title="Результат"
               dataIndex="id"
               render={(value: number, record) => {
@@ -163,14 +225,45 @@ export function UpdatePage({ initialResult }: UpdatePageProps) {
                   <InputGroup
                     className="w-full my-[-3px]"
                     disabled={mutationState.loading}
-                    value={getValue(value)}
-                    onChange={changeHandlerCreator(value)}
+                    value={getIndicatorValue(value)}
+                    onChange={changeIndicatorHandlerCreator(value)}
                   />
                 )
               }}
             />
           </Table>
         </Wall>
+        {result.oilType.standard && (
+          <Wall>
+            <Table<ResearchTableColumn>
+              data={getResearchColumns()}
+              rowKey={(record) => record.id}
+            >
+              <Table.Column
+                width={60}
+                title="№"
+                render={(_, __, n) => {
+                  return n + 1
+                }}
+              />
+              <Table.Column title="Наименование показателя" dataIndex="name" />
+              <Table.Column<ResearchTableColumn>
+                title="Результат"
+                dataIndex="id"
+                render={(value: number, record) => {
+                  return (
+                    <InputGroup
+                      className="w-full my-[-3px]"
+                      disabled={mutationState.loading}
+                      value={getResearchValue(value)}
+                      onChange={changeResearchHandlerCreator(value)}
+                    />
+                  )
+                }}
+              />
+            </Table>
+          </Wall>
+        )}
       </div>
     </MainTemplate>
   )
