@@ -7,14 +7,14 @@ export type ResultUpdatePageOilTypeIndicatorFragment = { __typename?: 'OilTypeIn
 
 export type ResultUpdatePageOilTypeResearchFragment = { __typename?: 'OilTypeResearch', id: number, name: string };
 
-export type ResultUpdatePageFragment = { __typename?: 'Result', id: number, formNumber: string, oilType: { __typename?: 'OilType', id: number, name: string, standard: boolean, researches: Array<{ __typename?: 'OilTypeResearch', id: number, name: string } | null>, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }>, researches: Array<{ __typename?: 'ResultResearch', id: number, value?: string | null, oilTypeResearch: { __typename?: 'OilTypeResearch', id: number } }> };
+export type ResultUpdatePageFragment = { __typename?: 'Result', id: number, formNumber: string, interpretation?: string | null, oilType: { __typename?: 'OilType', id: number, name: string, standard: boolean, researches: Array<{ __typename?: 'OilTypeResearch', id: number, name: string } | null>, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, color?: Types.ResultIndicatorColor | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }>, researches: Array<{ __typename?: 'ResultResearch', id: number, value?: string | null, color?: Types.ResultResearchColor | null, oilTypeResearch: { __typename?: 'OilTypeResearch', id: number } }> };
 
 export type ResultUpdatePageQueryVariables = Types.Exact<{
   id: Types.Scalars['Int'];
 }>;
 
 
-export type ResultUpdatePageQuery = { __typename?: 'Query', result?: { __typename?: 'Result', id: number, formNumber: string, oilType: { __typename?: 'OilType', id: number, name: string, standard: boolean, researches: Array<{ __typename?: 'OilTypeResearch', id: number, name: string } | null>, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }>, researches: Array<{ __typename?: 'ResultResearch', id: number, value?: string | null, oilTypeResearch: { __typename?: 'OilTypeResearch', id: number } }> } | null };
+export type ResultUpdatePageQuery = { __typename?: 'Query', result?: { __typename?: 'Result', id: number, formNumber: string, interpretation?: string | null, oilType: { __typename?: 'OilType', id: number, name: string, standard: boolean, researches: Array<{ __typename?: 'OilTypeResearch', id: number, name: string } | null>, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, color?: Types.ResultIndicatorColor | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }>, researches: Array<{ __typename?: 'ResultResearch', id: number, value?: string | null, color?: Types.ResultResearchColor | null, oilTypeResearch: { __typename?: 'OilTypeResearch', id: number } }> } | null };
 
 export type ResultUpdatePageMutationVariables = Types.Exact<{
   id: Types.Scalars['Int'];
@@ -22,7 +22,7 @@ export type ResultUpdatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type ResultUpdatePageMutation = { __typename?: 'Mutation', resultUpdate: { __typename?: 'ResultUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Result', id: number, formNumber: string, oilType: { __typename?: 'OilType', id: number, name: string, standard: boolean, researches: Array<{ __typename?: 'OilTypeResearch', id: number, name: string } | null>, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }>, researches: Array<{ __typename?: 'ResultResearch', id: number, value?: string | null, oilTypeResearch: { __typename?: 'OilTypeResearch', id: number } }> } | null } };
+export type ResultUpdatePageMutation = { __typename?: 'Mutation', resultUpdate: { __typename?: 'ResultUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Result', id: number, formNumber: string, interpretation?: string | null, oilType: { __typename?: 'OilType', id: number, name: string, standard: boolean, researches: Array<{ __typename?: 'OilTypeResearch', id: number, name: string } | null>, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, color?: Types.ResultIndicatorColor | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }>, researches: Array<{ __typename?: 'ResultResearch', id: number, value?: string | null, color?: Types.ResultResearchColor | null, oilTypeResearch: { __typename?: 'OilTypeResearch', id: number } }> } | null } };
 
 export const ResultUpdatePageOilTypeResearchFragmentDoc = gql`
     fragment ResultUpdatePageOilTypeResearchFragment on OilTypeResearch {
@@ -42,6 +42,7 @@ export const ResultUpdatePageFragmentDoc = gql`
     fragment ResultUpdatePageFragment on Result {
   id
   formNumber
+  interpretation
   oilType {
     id
     name
@@ -56,6 +57,7 @@ export const ResultUpdatePageFragmentDoc = gql`
   indicators {
     id
     value
+    color
     oilTypeIndicator {
       id
     }
@@ -63,6 +65,7 @@ export const ResultUpdatePageFragmentDoc = gql`
   researches {
     id
     value
+    color
     oilTypeResearch {
       id
     }

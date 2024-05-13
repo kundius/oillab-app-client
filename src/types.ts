@@ -700,6 +700,7 @@ export type Result = {
   formNumber: Scalars['String'];
   id: Scalars['Float'];
   indicators: Array<ResultIndicator>;
+  interpretation?: Maybe<Scalars['String']>;
   oilType: OilType;
   researches: Array<ResultResearch>;
   updatedAt: Scalars['DateTime'];
@@ -723,11 +724,19 @@ export type ResultFilter = {
 
 export type ResultIndicator = {
   __typename?: 'ResultIndicator';
+  color?: Maybe<ResultIndicatorColor>;
   id: Scalars['Float'];
   oilTypeIndicator: OilTypeIndicator;
   result: Result;
   value?: Maybe<Scalars['String']>;
 };
+
+export enum ResultIndicatorColor {
+  Green = 'Green',
+  Red = 'Red',
+  White = 'White',
+  Yellow = 'Yellow'
+}
 
 export type ResultPaginateResponse = {
   __typename?: 'ResultPaginateResponse';
@@ -737,11 +746,19 @@ export type ResultPaginateResponse = {
 
 export type ResultResearch = {
   __typename?: 'ResultResearch';
+  color?: Maybe<ResultResearchColor>;
   id: Scalars['Float'];
   oilTypeResearch: OilTypeResearch;
   result: Result;
   value?: Maybe<Scalars['String']>;
 };
+
+export enum ResultResearchColor {
+  Green = 'Green',
+  Red = 'Red',
+  White = 'White',
+  Yellow = 'Yellow'
+}
 
 export enum ResultSort {
   IdAsc = 'ID_ASC',
@@ -749,16 +766,19 @@ export enum ResultSort {
 }
 
 export type ResultUpdateIndicatorValue = {
+  color: Scalars['String'];
   oilTypeIndicatorId: Scalars['Float'];
   value: Scalars['String'];
 };
 
 export type ResultUpdateInput = {
+  interpretation: Scalars['String'];
   researches: Array<ResultUpdateResearchValue>;
   values: Array<ResultUpdateIndicatorValue>;
 };
 
 export type ResultUpdateResearchValue = {
+  color: Scalars['String'];
   oilTypeResearchId: Scalars['Float'];
   value: Scalars['String'];
 };

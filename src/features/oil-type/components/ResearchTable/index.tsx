@@ -255,7 +255,7 @@ export function ResearchTable({ oilTypeId }: ResearchTableProps) {
                 />
               )
             }
-            return value
+            return <div dangerouslySetInnerHTML={{ __html: value }} />
           }}
         />
         <Table.Column<schema.OilTypeResearchTableItemFragment>

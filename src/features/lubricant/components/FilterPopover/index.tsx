@@ -1,14 +1,6 @@
 import React, { useState } from 'react'
 import {
   Classes,
-  Placement,
-  PlacementOptions,
-  Popover2,
-  Popover2InteractionKind,
-  Popover2SharedProps,
-  StrictModifierNames,
-} from '@blueprintjs/popover2'
-import {
   ButtonGroup,
   Button,
   AnchorButton,
@@ -29,11 +21,11 @@ export function FilterPopover({ value, onChange }) {
   return (
     <div className="flex items-center">
       <div className="mr-1">{value?.brand?.contains || '-'} / {value?.model?.contains || '-'} / {value?.viscosity?.contains || '-'}</div>
-      <Popover2
+      <Popover
+        popoverClassName={Classes.POPOVER_CONTENT_SIZING}
         isOpen={isOpened}
         placement="bottom"
         interactionKind="click"
-        popoverClassName={Classes.POPOVER2_CONTENT_SIZING}
         onInteraction={setIsOpened}
         content={(
             <div>
@@ -85,7 +77,7 @@ export function FilterPopover({ value, onChange }) {
           small
           minimal
         />
-      </Popover2>
+      </Popover>
     </div>
   )
 }

@@ -13,6 +13,7 @@ fragment ResultUpdatePageOilTypeResearchFragment on OilTypeResearch {
 fragment ResultUpdatePageFragment on Result {
   id
   formNumber
+  interpretation
   oilType {
     id
     name
@@ -27,6 +28,7 @@ fragment ResultUpdatePageFragment on Result {
   indicators {
     id
     value
+    color
     oilTypeIndicator {
       id
     }
@@ -34,6 +36,7 @@ fragment ResultUpdatePageFragment on Result {
   researches {
     id
     value
+    color
     oilTypeResearch {
       id
     }

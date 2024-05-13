@@ -325,7 +325,7 @@ export function IndicatorsTable({ oilTypeId }: IndicatorsTableProps) {
                 />
               )
             }
-            return value
+            return <div dangerouslySetInnerHTML={{ __html: value }} />
           }}
         />
         <Table.Column<schema.OilTypeIndicatorsTableItemFragment>
@@ -364,7 +364,7 @@ export function IndicatorsTable({ oilTypeId }: IndicatorsTableProps) {
                 />
               )
             }
-            return value
+            return <div dangerouslySetInnerHTML={{ __html: value }} />
           }}
         />
         <Table.Column<schema.OilTypeIndicatorsTableItemFragment>
@@ -403,7 +403,7 @@ export function IndicatorsTable({ oilTypeId }: IndicatorsTableProps) {
                 />
               )
             }
-            return value
+            return <div dangerouslySetInnerHTML={{ __html: value }} />
           }}
         />
         <Table.Column<schema.OilTypeIndicatorsTableItemFragment>

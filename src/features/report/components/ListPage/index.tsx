@@ -13,7 +13,7 @@ import {
 } from '@blueprintjs/core'
 import { format, parse } from 'date-fns'
 import { DateFormatProps, DateInput } from '@blueprintjs/datetime'
-import { Popover2, Tooltip2 } from "@blueprintjs/popover2";
+import { Tooltip } from "@blueprintjs/core";
 import getRuntimeConfig from '@app/utils/getRuntimeConfig'
 
 import { Table } from '@components/Table'
@@ -63,18 +63,15 @@ const renderFile = (value: Pick<types.File, 'id' | 'url'>) => {
 const renderTooltip = (value: string) => {
   if (!value) return
   return (
-    <Tooltip2
+    <Tooltip
       content={value}
-      renderTarget={({ isOpen, ref, ...tooltipProps }) => (
-        <AnchorButton
-          {...tooltipProps}
-          elementRef={ref || undefined}
-          icon="comment"
-          small
-          minimal
-        />
-      )}
-    />
+    >
+      <AnchorButton
+        icon="comment"
+        small
+        minimal
+      />
+    </Tooltip>
   )
 }
 

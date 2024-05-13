@@ -7,13 +7,13 @@ import {
   AnchorButton,
   Menu,
   MenuDivider,
-  MenuItem
+  MenuItem,
+  Popover
 } from '@blueprintjs/core'
 import { format, parse } from 'date-fns'
 import { useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 import { DateInput, DateFormatProps } from '@blueprintjs/datetime'
-import { Popover2 } from '@blueprintjs/popover2'
 import Link from 'next/link'
 
 import { FormField } from '@components/FormField'
@@ -197,7 +197,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
         ]}
         extra={
           <div className="flex gap-2">
-            <Popover2
+            <Popover
               content={
                 <Menu>
                   <MenuDivider title="Скачать" />
@@ -220,7 +220,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
               }
             >
               <Button icon="more" minimal />
-            </Popover2>
+            </Popover>
             <Button
               intent={Intent.PRIMARY}
               type="submit"
