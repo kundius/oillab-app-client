@@ -11,10 +11,10 @@ import { useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import {
-  DateInput,
+  DateInput3,
   DateFormatProps,
   TimePrecision
-} from '@blueprintjs/datetime'
+} from '@blueprintjs/datetime2'
 
 import { UploadFile, UploadFileValue } from '@components/UploadFile'
 import {
@@ -35,7 +35,7 @@ import {
 } from '@features/oil-type/components/Select'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DetailsForForm } from '@features/vehicle/components/DetailsForForm'
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import { useHasRole } from '@app/features/app/hooks/useHasRole'
 
@@ -112,7 +112,7 @@ export function CreatePage() {
         id: 'ROOT_QUERY',
         fieldName: 'reportPaginate'
       })
-      AppToaster.show({
+      await showToast({
         message: 'Отчет добавлен',
         intent: Intent.SUCCESS
       })
@@ -120,7 +120,7 @@ export function CreatePage() {
     }
 
     if (response.data?.reportCreate.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.reportCreate.error.message,
         intent: Intent.DANGER
       })
@@ -331,13 +331,13 @@ export function CreatePage() {
                 field: { ref, value, onChange, ...field },
                 fieldState: { error }
               }) => (
-                <DateInput
+                <DateInput3
                   formatDate={formatDate}
                   parseDate={parseDate}
                   placeholder={dateFnsFormat}
                   disabled={mutationState.loading}
                   className="w-full"
-                  value={value ? new Date(value) : undefined}
+                  value={value}
                   onChange={onChange}
                   rightElement={
                     !!error ? (
@@ -464,7 +464,7 @@ export function CreatePage() {
                   field: { value, ...field },
                   fieldState: { error }
                 }) => (
-                  <div className="bp4-html-select">
+                  <div className="bp5-html-select">
                     <select
                       {...field}
                       disabled={mutationState.loading}
@@ -475,7 +475,7 @@ export function CreatePage() {
                       <option value="Yellow">Желтый</option>
                       <option value="LightGreen">Светло зеленый</option>
                     </select>
-                    <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
+                    <span className="bp5-icon bp5-icon-double-caret-vertical"></span>
                   </div>
                 )}
               />

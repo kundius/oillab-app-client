@@ -8,8 +8,8 @@ export type UsersListPageItemFragment = { __typename?: 'User', id: number, name:
 export type UsersListPageUserPaginateQueryVariables = Types.Exact<{
   sort?: Types.InputMaybe<Array<Types.UserSort> | Types.UserSort>;
   filter?: Types.InputMaybe<Types.UserFilter>;
-  page?: Types.InputMaybe<Types.Scalars['Int']>;
-  perPage?: Types.InputMaybe<Types.Scalars['Int']>;
+  page?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  perPage?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 
@@ -66,6 +66,11 @@ export function useUsersListPageUserPaginateLazyQuery(baseOptions?: Apollo.LazyQ
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<UsersListPageUserPaginateQuery, UsersListPageUserPaginateQueryVariables>(UsersListPageUserPaginateDocument, options);
         }
+export function useUsersListPageUserPaginateSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<UsersListPageUserPaginateQuery, UsersListPageUserPaginateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UsersListPageUserPaginateQuery, UsersListPageUserPaginateQueryVariables>(UsersListPageUserPaginateDocument, options);
+        }
 export type UsersListPageUserPaginateQueryHookResult = ReturnType<typeof useUsersListPageUserPaginateQuery>;
 export type UsersListPageUserPaginateLazyQueryHookResult = ReturnType<typeof useUsersListPageUserPaginateLazyQuery>;
+export type UsersListPageUserPaginateSuspenseQueryHookResult = ReturnType<typeof useUsersListPageUserPaginateSuspenseQuery>;
 export type UsersListPageUserPaginateQueryResult = Apollo.QueryResult<UsersListPageUserPaginateQuery, UsersListPageUserPaginateQueryVariables>;

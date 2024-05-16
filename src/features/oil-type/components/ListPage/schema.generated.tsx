@@ -8,8 +8,8 @@ export type OilTypeListPageItemFragment = { __typename?: 'OilType', id: number, 
 export type OilTypeListPageOilTypePaginateQueryVariables = Types.Exact<{
   sort?: Types.InputMaybe<Array<Types.OilTypeSort> | Types.OilTypeSort>;
   filter?: Types.InputMaybe<Types.OilTypeFilter>;
-  page?: Types.InputMaybe<Types.Scalars['Int']>;
-  perPage?: Types.InputMaybe<Types.Scalars['Int']>;
+  page?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  perPage?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 
@@ -64,6 +64,11 @@ export function useOilTypeListPageOilTypePaginateLazyQuery(baseOptions?: Apollo.
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<OilTypeListPageOilTypePaginateQuery, OilTypeListPageOilTypePaginateQueryVariables>(OilTypeListPageOilTypePaginateDocument, options);
         }
+export function useOilTypeListPageOilTypePaginateSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<OilTypeListPageOilTypePaginateQuery, OilTypeListPageOilTypePaginateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<OilTypeListPageOilTypePaginateQuery, OilTypeListPageOilTypePaginateQueryVariables>(OilTypeListPageOilTypePaginateDocument, options);
+        }
 export type OilTypeListPageOilTypePaginateQueryHookResult = ReturnType<typeof useOilTypeListPageOilTypePaginateQuery>;
 export type OilTypeListPageOilTypePaginateLazyQueryHookResult = ReturnType<typeof useOilTypeListPageOilTypePaginateLazyQuery>;
+export type OilTypeListPageOilTypePaginateSuspenseQueryHookResult = ReturnType<typeof useOilTypeListPageOilTypePaginateSuspenseQuery>;
 export type OilTypeListPageOilTypePaginateQueryResult = Apollo.QueryResult<OilTypeListPageOilTypePaginateQuery, OilTypeListPageOilTypePaginateQueryVariables>;

@@ -17,12 +17,12 @@ import {
 } from '@blueprintjs/core'
 import classNames from 'classnames'
 import {
-  DateInput,
+  DateInput3,
   DateFormatProps,
   TimePrecision,
-  DateRangeInput,
+  DateRangeInput3,
   DateRange
-} from '@blueprintjs/datetime'
+} from '@blueprintjs/datetime2'
 
 import * as styles from './Title.module.css'
 
@@ -172,7 +172,7 @@ const FilterDate = ({
   return (
     <div>
       <div className="flex flex-col">
-        <DateRangeInput
+        <DateRangeInput3
           {...jsDateFormatter}
           onChange={handleRangeChange}
           value={[gt || null, lt || null]}
@@ -186,11 +186,11 @@ const FilterDate = ({
             placeholder: 'Начальная дата'
           }}
         />
-        <DateInput
+        <DateInput3
           {...jsDateFormatter}
           className="w-64 mb-4"
-          value={value?.eq}
-          onChange={setEq}
+          value={value?.eq?.toLocaleString()}
+          onChange={(str) => setEq(str ? new Date(str) : undefined)}
           placeholder="Точная дата"
         />
       </div>

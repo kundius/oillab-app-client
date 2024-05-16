@@ -6,14 +6,14 @@ const defaultOptions = {} as const;
 export type OilTypeResearchTableItemFragment = { __typename?: 'OilTypeResearch', id: number, name: string };
 
 export type OilTypeResearchTableListQueryVariables = Types.Exact<{
-  oilTypeId: Types.Scalars['Int'];
+  oilTypeId: Types.Scalars['Int']['input'];
 }>;
 
 
 export type OilTypeResearchTableListQuery = { __typename?: 'Query', oilTypeResearchList: { __typename?: 'OilTypeResearchListResponse', items: Array<{ __typename?: 'OilTypeResearch', id: number, name: string }> } };
 
 export type OilTypeResearchTableCreateMutationVariables = Types.Exact<{
-  oilTypeId: Types.Scalars['Int'];
+  oilTypeId: Types.Scalars['Int']['input'];
   input: Types.OilTypeResearchCreateInput;
 }>;
 
@@ -21,7 +21,7 @@ export type OilTypeResearchTableCreateMutationVariables = Types.Exact<{
 export type OilTypeResearchTableCreateMutation = { __typename?: 'Mutation', oilTypeResearchCreate: { __typename?: 'OilTypeResearchCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilTypeResearch', id: number, name: string } | null } };
 
 export type OilTypeResearchTableUpdateMutationVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
   input: Types.OilTypeResearchUpdateInput;
 }>;
 
@@ -29,7 +29,7 @@ export type OilTypeResearchTableUpdateMutationVariables = Types.Exact<{
 export type OilTypeResearchTableUpdateMutation = { __typename?: 'Mutation', oilTypeResearchUpdate: { __typename?: 'OilTypeResearchUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilTypeResearch', id: number, name: string } | null } };
 
 export type OilTypeResearchTableDeleteMutationVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
 }>;
 
 
@@ -67,7 +67,7 @@ export const OilTypeResearchTableListDocument = gql`
  *   },
  * });
  */
-export function useOilTypeResearchTableListQuery(baseOptions: Apollo.QueryHookOptions<OilTypeResearchTableListQuery, OilTypeResearchTableListQueryVariables>) {
+export function useOilTypeResearchTableListQuery(baseOptions: Apollo.QueryHookOptions<OilTypeResearchTableListQuery, OilTypeResearchTableListQueryVariables> & ({ variables: OilTypeResearchTableListQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<OilTypeResearchTableListQuery, OilTypeResearchTableListQueryVariables>(OilTypeResearchTableListDocument, options);
       }
@@ -75,8 +75,13 @@ export function useOilTypeResearchTableListLazyQuery(baseOptions?: Apollo.LazyQu
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<OilTypeResearchTableListQuery, OilTypeResearchTableListQueryVariables>(OilTypeResearchTableListDocument, options);
         }
+export function useOilTypeResearchTableListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<OilTypeResearchTableListQuery, OilTypeResearchTableListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<OilTypeResearchTableListQuery, OilTypeResearchTableListQueryVariables>(OilTypeResearchTableListDocument, options);
+        }
 export type OilTypeResearchTableListQueryHookResult = ReturnType<typeof useOilTypeResearchTableListQuery>;
 export type OilTypeResearchTableListLazyQueryHookResult = ReturnType<typeof useOilTypeResearchTableListLazyQuery>;
+export type OilTypeResearchTableListSuspenseQueryHookResult = ReturnType<typeof useOilTypeResearchTableListSuspenseQuery>;
 export type OilTypeResearchTableListQueryResult = Apollo.QueryResult<OilTypeResearchTableListQuery, OilTypeResearchTableListQueryVariables>;
 export const OilTypeResearchTableCreateDocument = gql`
     mutation OilTypeResearchTableCreate($oilTypeId: Int!, $input: OilTypeResearchCreateInput!) {

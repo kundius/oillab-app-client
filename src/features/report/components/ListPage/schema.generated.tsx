@@ -8,8 +8,8 @@ export type ReportListPageItemFragment = { __typename?: 'Report', id: number, nu
 export type ReportListPageReportPaginateQueryVariables = Types.Exact<{
   sort?: Types.InputMaybe<Array<Types.ReportSort> | Types.ReportSort>;
   filter?: Types.InputMaybe<Types.ReportFilter>;
-  page?: Types.InputMaybe<Types.Scalars['Int']>;
-  perPage?: Types.InputMaybe<Types.Scalars['Int']>;
+  page?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  perPage?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 
@@ -104,8 +104,13 @@ export function useReportListPageReportPaginateLazyQuery(baseOptions?: Apollo.La
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ReportListPageReportPaginateQuery, ReportListPageReportPaginateQueryVariables>(ReportListPageReportPaginateDocument, options);
         }
+export function useReportListPageReportPaginateSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ReportListPageReportPaginateQuery, ReportListPageReportPaginateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ReportListPageReportPaginateQuery, ReportListPageReportPaginateQueryVariables>(ReportListPageReportPaginateDocument, options);
+        }
 export type ReportListPageReportPaginateQueryHookResult = ReturnType<typeof useReportListPageReportPaginateQuery>;
 export type ReportListPageReportPaginateLazyQueryHookResult = ReturnType<typeof useReportListPageReportPaginateLazyQuery>;
+export type ReportListPageReportPaginateSuspenseQueryHookResult = ReturnType<typeof useReportListPageReportPaginateSuspenseQuery>;
 export type ReportListPageReportPaginateQueryResult = Apollo.QueryResult<ReportListPageReportPaginateQuery, ReportListPageReportPaginateQueryVariables>;
 export const ReportListPageReportGeneratePdfDocument = gql`
     mutation ReportListPageReportGeneratePdf($sort: [ReportSort!], $filter: ReportFilter) {

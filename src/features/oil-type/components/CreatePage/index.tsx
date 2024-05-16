@@ -16,7 +16,7 @@ import {
   SelectValue as SelectUserValue
 } from '@features/users/components/Select'
 import { MainTemplate } from '@features/app/components/MainTemplate'
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import { FormField } from '@components/FormField'
 
@@ -51,7 +51,7 @@ export function CreatePage() {
         id: 'ROOT_QUERY',
         fieldName: 'oiltypePaginate'
       })
-      AppToaster.show({
+      await showToast({
         message: 'Вид масла добавлен',
         intent: Intent.SUCCESS
       })
@@ -59,7 +59,7 @@ export function CreatePage() {
     }
 
     if (response.data?.oiltypeCreate.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.oiltypeCreate.error.message,
         intent: Intent.DANGER
       })

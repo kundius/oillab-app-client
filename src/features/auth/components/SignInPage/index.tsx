@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import Cookies from 'universal-cookie'
 
 import { AuthTemplate } from '@features/auth/components/AuthTemplate'
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, dismissToast, showToast } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 
 import * as styles from './styles.module.css'
@@ -20,7 +20,6 @@ export interface FormFields {
 export const SignInPage = () => {
   const client = useApolloClient()
   const router = useRouter()
-  const redirectToastId = useRef<string | undefined>()
   const [signIn, signInState] = schema.useAuthSignInPageMutation()
   const { handleSubmit, control, reset } = useForm<FormFields>()
 
@@ -41,30 +40,22 @@ export const SignInPage = () => {
       }
       await client.resetStore()
       reset()
-      redirectToastId.current = AppToaster.show({
-        message: 'Перенаправляем на главную страницу...',
-        intent: Intent.PRIMARY
-      })
-      AppToaster.show({
+      await showToast({
         message: 'Вы успешно авторизованы.',
         intent: Intent.SUCCESS
       })
-      router.push('/').then(() => {
-        if (redirectToastId.current) {
-          AppToaster.dismiss(redirectToastId.current)
-        }
-      })
+      router.push('/')
     }
 
     if (error) {
-      AppToaster.show({
+      await showToast({
         message: error.message,
         intent: Intent.DANGER
       })
     }
 
     if (!(success || error)) {
-      AppToaster.show({
+      await showToast({
         message: 'Возникла непредвиденная ошибка, обратитесь в техподдержку.',
         intent: Intent.DANGER
       })

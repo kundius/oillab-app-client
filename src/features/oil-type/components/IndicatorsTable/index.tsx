@@ -10,7 +10,7 @@ import {
 import { useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import { Wall } from '@app/components/Wall'
 import { Table } from '@app/components/Table'
@@ -63,7 +63,7 @@ export function IndicatorsTable({ oilTypeId }: IndicatorsTableProps) {
         id: `OilType:${response.data?.oilTypeIndicatorCreate.record?.oilType.id}`,
         fieldName: 'indicators'
       })
-      AppToaster.show({
+      await showToast({
         message: 'Параметр добавлен',
         intent: Intent.SUCCESS
       })
@@ -71,7 +71,7 @@ export function IndicatorsTable({ oilTypeId }: IndicatorsTableProps) {
     }
 
     if (response.data?.oilTypeIndicatorCreate.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.oilTypeIndicatorCreate.error.message,
         intent: Intent.DANGER
       })
@@ -93,7 +93,7 @@ export function IndicatorsTable({ oilTypeId }: IndicatorsTableProps) {
         id: 'ROOT_QUERY',
         fieldName: 'oilTypeIndicatorList'
       })
-      AppToaster.show({
+      await showToast({
         message: 'Параметр изменен',
         intent: Intent.SUCCESS
       })
@@ -102,7 +102,7 @@ export function IndicatorsTable({ oilTypeId }: IndicatorsTableProps) {
     }
 
     if (response.data?.oilTypeIndicatorUpdate.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.oilTypeIndicatorUpdate.error.message,
         intent: Intent.DANGER
       })
@@ -146,7 +146,7 @@ export function IndicatorsTable({ oilTypeId }: IndicatorsTableProps) {
           id: `OilType:${record.oilType.id}`,
           fieldName: 'indicators'
         })
-        AppToaster.show({
+        await showToast({
           message: 'Параметр удален',
           intent: Intent.SUCCESS
         })
@@ -154,7 +154,7 @@ export function IndicatorsTable({ oilTypeId }: IndicatorsTableProps) {
       }
 
       if (response.data?.oilTypeIndicatorDelete.error) {
-        AppToaster.show({
+        await showToast({
           message: response.data.oilTypeIndicatorDelete.error.message,
           intent: Intent.DANGER
         })

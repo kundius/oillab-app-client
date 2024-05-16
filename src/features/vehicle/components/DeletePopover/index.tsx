@@ -2,7 +2,7 @@ import React from 'react'
 import { useApolloClient } from '@apollo/client'
 import { Intent } from '@blueprintjs/core'
 
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { DeletePopover as BaseDeletePopover } from '@components/DeletePopover'
 
 import * as schema from './schema.generated'
@@ -40,14 +40,14 @@ export function DeletePopover ({
         id: 'ROOT_QUERY',
         fieldName: 'vehiclePaginate'
       })
-      AppToaster.show({
+      await showToast({
         message: 'Техника удалена',
         intent: Intent.SUCCESS
       })
     }
 
     if (response.data?.vehicleDelete.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.vehicleDelete.error.message,
         intent: Intent.DANGER
       })

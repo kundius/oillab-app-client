@@ -15,7 +15,7 @@ import { useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 
 import { MainTemplate } from '@features/app/components/MainTemplate'
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import { FormField } from '@components/FormField'
 
@@ -63,14 +63,14 @@ export function UpdatePage({ initialLubricant }: UpdatePageProps) {
         id: 'ROOT_QUERY',
         fieldName: 'lubricantPaginate'
       })
-      AppToaster.show({
+      await showToast({
         message: 'Смазочный материал изменен',
         intent: Intent.SUCCESS
       })
     }
 
     if (response.data?.lubricantUpdate.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.lubricantUpdate.error.message,
         intent: Intent.DANGER
       })
@@ -115,7 +115,7 @@ export function UpdatePage({ initialLubricant }: UpdatePageProps) {
                 field: { value, ...field },
                 fieldState: { error }
               }) => (
-                <div className="bp4-html-select">
+                <div className="bp5-html-select">
                   <select
                     {...field}
                     disabled={mutationState.loading}
@@ -126,7 +126,7 @@ export function UpdatePage({ initialLubricant }: UpdatePageProps) {
                     <option value="Oil">Масло</option>
                     <option value="Coolant">Охлаждающая жидкость</option>
                   </select>
-                  <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
+                  <span className="bp5-icon bp5-icon-double-caret-vertical"></span>
                 </div>
               )}
             />

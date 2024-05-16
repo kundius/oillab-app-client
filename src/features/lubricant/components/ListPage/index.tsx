@@ -49,7 +49,7 @@ export function ListPage() {
         }
       ]}
       extra={
-        <Link href="/lubricant/create" passHref>
+        <Link href="/lubricant/create" legacyBehavior passHref>
           <AnchorButton icon="add" intent="primary">
             Добавить
           </AnchorButton>
@@ -142,7 +142,7 @@ export function ListPage() {
             key="action"
             render={(record: schema.LubricantListPageItemFragment) => (
               <ButtonGroup minimal>
-                <Link href={`/lubricant/${record.id}`} passHref>
+                <Link href={`/lubricant/${record.id}`} legacyBehavior passHref>
                   <AnchorButton icon="edit" small />
                 </Link>
                 <Divider />

@@ -10,7 +10,7 @@ import {
 import { useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import { Wall } from '@app/components/Wall'
 import { Table } from '@app/components/Table'
@@ -59,7 +59,7 @@ export function ResearchTable({ oilTypeId }: ResearchTableProps) {
         id: 'ROOT_QUERY',
         fieldName: 'oilTypeResearchList'
       })
-      AppToaster.show({
+      await showToast({
         message: 'Параметр добавлен',
         intent: Intent.SUCCESS
       })
@@ -67,7 +67,7 @@ export function ResearchTable({ oilTypeId }: ResearchTableProps) {
     }
 
     if (response.data?.oilTypeResearchCreate.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.oilTypeResearchCreate.error.message,
         intent: Intent.DANGER
       })
@@ -89,7 +89,7 @@ export function ResearchTable({ oilTypeId }: ResearchTableProps) {
         id: 'ROOT_QUERY',
         fieldName: 'oilTypeResearchList'
       })
-      AppToaster.show({
+      await showToast({
         message: 'Параметр изменен',
         intent: Intent.SUCCESS
       })
@@ -98,7 +98,7 @@ export function ResearchTable({ oilTypeId }: ResearchTableProps) {
     }
 
     if (response.data?.oilTypeResearchUpdate.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.oilTypeResearchUpdate.error.message,
         intent: Intent.DANGER
       })
@@ -136,7 +136,7 @@ export function ResearchTable({ oilTypeId }: ResearchTableProps) {
           id: 'ROOT_QUERY',
           fieldName: 'oilTypeResearchList'
         })
-        AppToaster.show({
+        await showToast({
           message: 'Параметр удален',
           intent: Intent.SUCCESS
         })
@@ -144,7 +144,7 @@ export function ResearchTable({ oilTypeId }: ResearchTableProps) {
       }
 
       if (response.data?.oilTypeResearchDelete.error) {
-        AppToaster.show({
+        await showToast({
           message: response.data.oilTypeResearchDelete.error.message,
           intent: Intent.DANGER
         })

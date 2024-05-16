@@ -6,14 +6,14 @@ const defaultOptions = {} as const;
 export type OilTypeUpdatePageFragment = { __typename?: 'OilType', id: number, name: string, standard: boolean };
 
 export type OilTypeUpdatePageQueryVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
 }>;
 
 
 export type OilTypeUpdatePageQuery = { __typename?: 'Query', oiltype?: { __typename?: 'OilType', id: number, name: string, standard: boolean } | null };
 
 export type OilTypeUpdatePageMutationVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
   input: Types.OilTypeUpdateInput;
 }>;
 
@@ -51,7 +51,7 @@ export const OilTypeUpdatePageQueryDocument = gql`
  *   },
  * });
  */
-export function useOilTypeUpdatePageQuery(baseOptions: Apollo.QueryHookOptions<OilTypeUpdatePageQuery, OilTypeUpdatePageQueryVariables>) {
+export function useOilTypeUpdatePageQuery(baseOptions: Apollo.QueryHookOptions<OilTypeUpdatePageQuery, OilTypeUpdatePageQueryVariables> & ({ variables: OilTypeUpdatePageQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<OilTypeUpdatePageQuery, OilTypeUpdatePageQueryVariables>(OilTypeUpdatePageQueryDocument, options);
       }
@@ -59,8 +59,13 @@ export function useOilTypeUpdatePageQueryLazyQuery(baseOptions?: Apollo.LazyQuer
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<OilTypeUpdatePageQuery, OilTypeUpdatePageQueryVariables>(OilTypeUpdatePageQueryDocument, options);
         }
+export function useOilTypeUpdatePageQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<OilTypeUpdatePageQuery, OilTypeUpdatePageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<OilTypeUpdatePageQuery, OilTypeUpdatePageQueryVariables>(OilTypeUpdatePageQueryDocument, options);
+        }
 export type OilTypeUpdatePageQueryHookResult = ReturnType<typeof useOilTypeUpdatePageQuery>;
 export type OilTypeUpdatePageQueryLazyQueryHookResult = ReturnType<typeof useOilTypeUpdatePageQueryLazyQuery>;
+export type OilTypeUpdatePageQuerySuspenseQueryHookResult = ReturnType<typeof useOilTypeUpdatePageQuerySuspenseQuery>;
 export type OilTypeUpdatePageQueryQueryResult = Apollo.QueryResult<OilTypeUpdatePageQuery, OilTypeUpdatePageQueryVariables>;
 export const OilTypeUpdatePageMutationDocument = gql`
     mutation OilTypeUpdatePageMutation($id: Int!, $input: OilTypeUpdateInput!) {

@@ -41,6 +41,11 @@ export function useAuthWithPageGuardLazyQuery(baseOptions?: Apollo.LazyQueryHook
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<AuthWithPageGuardQuery, AuthWithPageGuardQueryVariables>(AuthWithPageGuardDocument, options);
         }
+export function useAuthWithPageGuardSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AuthWithPageGuardQuery, AuthWithPageGuardQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AuthWithPageGuardQuery, AuthWithPageGuardQueryVariables>(AuthWithPageGuardDocument, options);
+        }
 export type AuthWithPageGuardQueryHookResult = ReturnType<typeof useAuthWithPageGuardQuery>;
 export type AuthWithPageGuardLazyQueryHookResult = ReturnType<typeof useAuthWithPageGuardLazyQuery>;
+export type AuthWithPageGuardSuspenseQueryHookResult = ReturnType<typeof useAuthWithPageGuardSuspenseQuery>;
 export type AuthWithPageGuardQueryResult = Apollo.QueryResult<AuthWithPageGuardQuery, AuthWithPageGuardQueryVariables>;

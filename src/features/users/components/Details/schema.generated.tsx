@@ -6,7 +6,7 @@ const defaultOptions = {} as const;
 export type UsersDetailsFragment = { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, contactPerson?: string | null };
 
 export type UsersDetailsQueryVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
 }>;
 
 
@@ -45,7 +45,7 @@ export const UsersDetailsQueryDocument = gql`
  *   },
  * });
  */
-export function useUsersDetailsQuery(baseOptions: Apollo.QueryHookOptions<UsersDetailsQuery, UsersDetailsQueryVariables>) {
+export function useUsersDetailsQuery(baseOptions: Apollo.QueryHookOptions<UsersDetailsQuery, UsersDetailsQueryVariables> & ({ variables: UsersDetailsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<UsersDetailsQuery, UsersDetailsQueryVariables>(UsersDetailsQueryDocument, options);
       }
@@ -53,6 +53,11 @@ export function useUsersDetailsQueryLazyQuery(baseOptions?: Apollo.LazyQueryHook
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<UsersDetailsQuery, UsersDetailsQueryVariables>(UsersDetailsQueryDocument, options);
         }
+export function useUsersDetailsQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<UsersDetailsQuery, UsersDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UsersDetailsQuery, UsersDetailsQueryVariables>(UsersDetailsQueryDocument, options);
+        }
 export type UsersDetailsQueryHookResult = ReturnType<typeof useUsersDetailsQuery>;
 export type UsersDetailsQueryLazyQueryHookResult = ReturnType<typeof useUsersDetailsQueryLazyQuery>;
+export type UsersDetailsQuerySuspenseQueryHookResult = ReturnType<typeof useUsersDetailsQuerySuspenseQuery>;
 export type UsersDetailsQueryQueryResult = Apollo.QueryResult<UsersDetailsQuery, UsersDetailsQueryVariables>;

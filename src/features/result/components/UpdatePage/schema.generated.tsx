@@ -10,14 +10,14 @@ export type ResultUpdatePageOilTypeResearchFragment = { __typename?: 'OilTypeRes
 export type ResultUpdatePageFragment = { __typename?: 'Result', id: number, formNumber: string, interpretation?: string | null, oilType: { __typename?: 'OilType', id: number, name: string, standard: boolean, researches: Array<{ __typename?: 'OilTypeResearch', id: number, name: string } | null>, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, color?: Types.ResultIndicatorColor | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }>, researches: Array<{ __typename?: 'ResultResearch', id: number, value?: string | null, color?: Types.ResultResearchColor | null, oilTypeResearch: { __typename?: 'OilTypeResearch', id: number } }> };
 
 export type ResultUpdatePageQueryVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
 }>;
 
 
 export type ResultUpdatePageQuery = { __typename?: 'Query', result?: { __typename?: 'Result', id: number, formNumber: string, interpretation?: string | null, oilType: { __typename?: 'OilType', id: number, name: string, standard: boolean, researches: Array<{ __typename?: 'OilTypeResearch', id: number, name: string } | null>, indicators: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string } | null> }, indicators: Array<{ __typename?: 'ResultIndicator', id: number, value?: string | null, color?: Types.ResultIndicatorColor | null, oilTypeIndicator: { __typename?: 'OilTypeIndicator', id: number } }>, researches: Array<{ __typename?: 'ResultResearch', id: number, value?: string | null, color?: Types.ResultResearchColor | null, oilTypeResearch: { __typename?: 'OilTypeResearch', id: number } }> } | null };
 
 export type ResultUpdatePageMutationVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
   input: Types.ResultUpdateInput;
 }>;
 
@@ -97,7 +97,7 @@ export const ResultUpdatePageQueryDocument = gql`
  *   },
  * });
  */
-export function useResultUpdatePageQuery(baseOptions: Apollo.QueryHookOptions<ResultUpdatePageQuery, ResultUpdatePageQueryVariables>) {
+export function useResultUpdatePageQuery(baseOptions: Apollo.QueryHookOptions<ResultUpdatePageQuery, ResultUpdatePageQueryVariables> & ({ variables: ResultUpdatePageQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ResultUpdatePageQuery, ResultUpdatePageQueryVariables>(ResultUpdatePageQueryDocument, options);
       }
@@ -105,8 +105,13 @@ export function useResultUpdatePageQueryLazyQuery(baseOptions?: Apollo.LazyQuery
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ResultUpdatePageQuery, ResultUpdatePageQueryVariables>(ResultUpdatePageQueryDocument, options);
         }
+export function useResultUpdatePageQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ResultUpdatePageQuery, ResultUpdatePageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ResultUpdatePageQuery, ResultUpdatePageQueryVariables>(ResultUpdatePageQueryDocument, options);
+        }
 export type ResultUpdatePageQueryHookResult = ReturnType<typeof useResultUpdatePageQuery>;
 export type ResultUpdatePageQueryLazyQueryHookResult = ReturnType<typeof useResultUpdatePageQueryLazyQuery>;
+export type ResultUpdatePageQuerySuspenseQueryHookResult = ReturnType<typeof useResultUpdatePageQuerySuspenseQuery>;
 export type ResultUpdatePageQueryQueryResult = Apollo.QueryResult<ResultUpdatePageQuery, ResultUpdatePageQueryVariables>;
 export const ResultUpdatePageMutationDocument = gql`
     mutation ResultUpdatePageMutation($id: Int!, $input: ResultUpdateInput!) {

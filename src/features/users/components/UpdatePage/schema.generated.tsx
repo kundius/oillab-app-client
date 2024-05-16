@@ -6,14 +6,14 @@ const defaultOptions = {} as const;
 export type UsersUpdatePageFragment = { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, contactPerson?: string | null, role: Types.UserRole };
 
 export type UsersUpdatePageQueryVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
 }>;
 
 
 export type UsersUpdatePageQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, contactPerson?: string | null, role: Types.UserRole } | null };
 
 export type UsersUpdatePageMutationVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
   input: Types.UserUpdateInput;
 }>;
 
@@ -54,7 +54,7 @@ export const UsersUpdatePageQueryDocument = gql`
  *   },
  * });
  */
-export function useUsersUpdatePageQuery(baseOptions: Apollo.QueryHookOptions<UsersUpdatePageQuery, UsersUpdatePageQueryVariables>) {
+export function useUsersUpdatePageQuery(baseOptions: Apollo.QueryHookOptions<UsersUpdatePageQuery, UsersUpdatePageQueryVariables> & ({ variables: UsersUpdatePageQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<UsersUpdatePageQuery, UsersUpdatePageQueryVariables>(UsersUpdatePageQueryDocument, options);
       }
@@ -62,8 +62,13 @@ export function useUsersUpdatePageQueryLazyQuery(baseOptions?: Apollo.LazyQueryH
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<UsersUpdatePageQuery, UsersUpdatePageQueryVariables>(UsersUpdatePageQueryDocument, options);
         }
+export function useUsersUpdatePageQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<UsersUpdatePageQuery, UsersUpdatePageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UsersUpdatePageQuery, UsersUpdatePageQueryVariables>(UsersUpdatePageQueryDocument, options);
+        }
 export type UsersUpdatePageQueryHookResult = ReturnType<typeof useUsersUpdatePageQuery>;
 export type UsersUpdatePageQueryLazyQueryHookResult = ReturnType<typeof useUsersUpdatePageQueryLazyQuery>;
+export type UsersUpdatePageQuerySuspenseQueryHookResult = ReturnType<typeof useUsersUpdatePageQuerySuspenseQuery>;
 export type UsersUpdatePageQueryQueryResult = Apollo.QueryResult<UsersUpdatePageQuery, UsersUpdatePageQueryVariables>;
 export const UsersUpdatePageMutationDocument = gql`
     mutation UsersUpdatePageMutation($id: Int!, $input: UserUpdateInput!) {

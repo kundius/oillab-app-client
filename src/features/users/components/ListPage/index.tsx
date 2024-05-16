@@ -49,7 +49,7 @@ export function ListPage() {
         }
       ]}
       extra={
-        <Link href="/users/create" passHref>
+        <Link href="/users/create" legacyBehavior passHref>
           <AnchorButton icon="add" intent="primary">
             Добавить пользователя
           </AnchorButton>
@@ -127,7 +127,7 @@ export function ListPage() {
             key="action"
             render={(record: schema.UsersListPageItemFragment) => (
               <ButtonGroup minimal>
-                <Link href={`/users/${record.id}`} passHref>
+                <Link href={`/users/${record.id}`} legacyBehavior passHref>
                   <AnchorButton icon="edit" small />
                 </Link>
                 <Divider />

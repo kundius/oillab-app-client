@@ -3,7 +3,7 @@ import { Button, InputGroup, TextArea, Intent, MenuItem } from '@blueprintjs/cor
 import { ItemPredicate, ItemRenderer, Select } from "@blueprintjs/select"
 
 import { MainTemplate } from '@features/app/components/MainTemplate'
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { FormField } from '@components/FormField'
 
 import * as schema from './schema.generated'
@@ -196,20 +196,20 @@ export function UpdatePage({ initialResult }: UpdatePageProps) {
       })
   
       if (response.data?.resultUpdate.success) {
-        AppToaster.show({
+        await showToast({
           message: 'Результаты изменены',
           intent: Intent.SUCCESS
         })
       }
   
       if (response.data?.resultUpdate.error) {
-        AppToaster.show({
+        await showToast({
           message: response.data.resultUpdate.error.message,
           intent: Intent.DANGER
         })
       }
     } catch (e) {
-      AppToaster.show({
+      await showToast({
         message: e?.message || 'Возникла непредвиденная ошибка',
         intent: Intent.DANGER
       })

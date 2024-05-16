@@ -98,10 +98,10 @@ export function Select ({ value, onChange }: SelectProps) {
             ))}
           </div>
           <div className="flex justify-between items-center">
-            <div className="bp4-input-group">
-              <span className="bp4-icon bp4-icon-search" />
+            <div className="bp5-input-group">
+              <span className="bp5-icon bp5-icon-search" />
               <input
-                className="bp4-input"
+                className="bp5-input"
                 placeholder="Поиск по названию"
                 dir="auto"
                 onChange={onSearch}

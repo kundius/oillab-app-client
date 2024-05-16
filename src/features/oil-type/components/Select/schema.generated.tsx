@@ -6,8 +6,8 @@ const defaultOptions = {} as const;
 export type OilTypeSelectFragment = { __typename?: 'OilType', id: number, name: string };
 
 export type OilTypeSelectQueryVariables = Types.Exact<{
-  page: Types.Scalars['Int'];
-  perPage: Types.Scalars['Int'];
+  page: Types.Scalars['Int']['input'];
+  perPage: Types.Scalars['Int']['input'];
   filter?: Types.InputMaybe<Types.OilTypeFilter>;
 }>;
 
@@ -53,7 +53,7 @@ export const OilTypeSelectQueryDocument = gql`
  *   },
  * });
  */
-export function useOilTypeSelectQuery(baseOptions: Apollo.QueryHookOptions<OilTypeSelectQuery, OilTypeSelectQueryVariables>) {
+export function useOilTypeSelectQuery(baseOptions: Apollo.QueryHookOptions<OilTypeSelectQuery, OilTypeSelectQueryVariables> & ({ variables: OilTypeSelectQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<OilTypeSelectQuery, OilTypeSelectQueryVariables>(OilTypeSelectQueryDocument, options);
       }
@@ -61,6 +61,11 @@ export function useOilTypeSelectQueryLazyQuery(baseOptions?: Apollo.LazyQueryHoo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<OilTypeSelectQuery, OilTypeSelectQueryVariables>(OilTypeSelectQueryDocument, options);
         }
+export function useOilTypeSelectQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<OilTypeSelectQuery, OilTypeSelectQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<OilTypeSelectQuery, OilTypeSelectQueryVariables>(OilTypeSelectQueryDocument, options);
+        }
 export type OilTypeSelectQueryHookResult = ReturnType<typeof useOilTypeSelectQuery>;
 export type OilTypeSelectQueryLazyQueryHookResult = ReturnType<typeof useOilTypeSelectQueryLazyQuery>;
+export type OilTypeSelectQuerySuspenseQueryHookResult = ReturnType<typeof useOilTypeSelectQuerySuspenseQuery>;
 export type OilTypeSelectQueryQueryResult = Apollo.QueryResult<OilTypeSelectQuery, OilTypeSelectQueryVariables>;

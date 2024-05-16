@@ -52,16 +52,16 @@
   border-top-color: #5c7080;
 }
 
-:global(.bp4-button.bp4-small).filterButton {
+:global(.bp5-button.bp5-small).filterButton {
   min-height: 20px;
   min-width: 20px;
 }
 
-:global(.bp4-button.bp4-small).filterButton svg {
+:global(.bp5-button.bp5-small).filterButton svg {
   width: 14px;
   height: 14px;
 }
 
-.rangeInput :global(.bp4-input-group) {
+.rangeInput :global(.bp5-input-group) {
   width: 8rem;
 }

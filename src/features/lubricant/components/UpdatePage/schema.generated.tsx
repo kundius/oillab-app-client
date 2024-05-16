@@ -6,14 +6,14 @@ const defaultOptions = {} as const;
 export type LubricantUpdatePageFragment = { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity?: string | null, productType?: Types.ProductType | null };
 
 export type LubricantUpdatePageQueryVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
 }>;
 
 
 export type LubricantUpdatePageQuery = { __typename?: 'Query', lubricant?: { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity?: string | null, productType?: Types.ProductType | null } | null };
 
 export type LubricantUpdatePageMutationVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
   input: Types.LubricantUpdateInput;
 }>;
 
@@ -53,7 +53,7 @@ export const LubricantUpdatePageQueryDocument = gql`
  *   },
  * });
  */
-export function useLubricantUpdatePageQuery(baseOptions: Apollo.QueryHookOptions<LubricantUpdatePageQuery, LubricantUpdatePageQueryVariables>) {
+export function useLubricantUpdatePageQuery(baseOptions: Apollo.QueryHookOptions<LubricantUpdatePageQuery, LubricantUpdatePageQueryVariables> & ({ variables: LubricantUpdatePageQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<LubricantUpdatePageQuery, LubricantUpdatePageQueryVariables>(LubricantUpdatePageQueryDocument, options);
       }
@@ -61,8 +61,13 @@ export function useLubricantUpdatePageQueryLazyQuery(baseOptions?: Apollo.LazyQu
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<LubricantUpdatePageQuery, LubricantUpdatePageQueryVariables>(LubricantUpdatePageQueryDocument, options);
         }
+export function useLubricantUpdatePageQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<LubricantUpdatePageQuery, LubricantUpdatePageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<LubricantUpdatePageQuery, LubricantUpdatePageQueryVariables>(LubricantUpdatePageQueryDocument, options);
+        }
 export type LubricantUpdatePageQueryHookResult = ReturnType<typeof useLubricantUpdatePageQuery>;
 export type LubricantUpdatePageQueryLazyQueryHookResult = ReturnType<typeof useLubricantUpdatePageQueryLazyQuery>;
+export type LubricantUpdatePageQuerySuspenseQueryHookResult = ReturnType<typeof useLubricantUpdatePageQuerySuspenseQuery>;
 export type LubricantUpdatePageQueryQueryResult = Apollo.QueryResult<LubricantUpdatePageQuery, LubricantUpdatePageQueryVariables>;
 export const LubricantUpdatePageMutationDocument = gql`
     mutation LubricantUpdatePageMutation($id: Int!, $input: LubricantUpdateInput!) {

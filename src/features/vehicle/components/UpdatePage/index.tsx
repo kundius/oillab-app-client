@@ -15,7 +15,7 @@ import { useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 
 import { MainTemplate } from '@features/app/components/MainTemplate'
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import { FormField } from '@components/FormField'
 import {
@@ -79,14 +79,14 @@ export function UpdatePage({ initialVehicle }: UpdatePageProps) {
         id: 'ROOT_QUERY',
         fieldName: 'vehiclePaginate'
       })
-      AppToaster.show({
+      await showToast({
         message: 'Техника изменена',
         intent: Intent.SUCCESS
       })
     }
 
     if (response.data?.vehicleUpdate.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.vehicleUpdate.error.message,
         intent: Intent.DANGER
       })

@@ -42,6 +42,11 @@ export function useAppHeaderCurrentUserLazyQuery(baseOptions?: Apollo.LazyQueryH
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<AppHeaderCurrentUserQuery, AppHeaderCurrentUserQueryVariables>(AppHeaderCurrentUserDocument, options);
         }
+export function useAppHeaderCurrentUserSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AppHeaderCurrentUserQuery, AppHeaderCurrentUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AppHeaderCurrentUserQuery, AppHeaderCurrentUserQueryVariables>(AppHeaderCurrentUserDocument, options);
+        }
 export type AppHeaderCurrentUserQueryHookResult = ReturnType<typeof useAppHeaderCurrentUserQuery>;
 export type AppHeaderCurrentUserLazyQueryHookResult = ReturnType<typeof useAppHeaderCurrentUserLazyQuery>;
+export type AppHeaderCurrentUserSuspenseQueryHookResult = ReturnType<typeof useAppHeaderCurrentUserSuspenseQuery>;
 export type AppHeaderCurrentUserQueryResult = Apollo.QueryResult<AppHeaderCurrentUserQuery, AppHeaderCurrentUserQueryVariables>;

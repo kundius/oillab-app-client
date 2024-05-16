@@ -6,9 +6,9 @@ const defaultOptions = {} as const;
 export type UsersSelectFragment = { __typename?: 'User', id: number, name: string };
 
 export type UsersSelectQueryVariables = Types.Exact<{
-  search?: Types.InputMaybe<Types.Scalars['String']>;
-  page: Types.Scalars['Int'];
-  perPage: Types.Scalars['Int'];
+  search?: Types.InputMaybe<Types.Scalars['String']['input']>;
+  page: Types.Scalars['Int']['input'];
+  perPage: Types.Scalars['Int']['input'];
 }>;
 
 
@@ -57,7 +57,7 @@ export const UsersSelectQueryDocument = gql`
  *   },
  * });
  */
-export function useUsersSelectQuery(baseOptions: Apollo.QueryHookOptions<UsersSelectQuery, UsersSelectQueryVariables>) {
+export function useUsersSelectQuery(baseOptions: Apollo.QueryHookOptions<UsersSelectQuery, UsersSelectQueryVariables> & ({ variables: UsersSelectQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<UsersSelectQuery, UsersSelectQueryVariables>(UsersSelectQueryDocument, options);
       }
@@ -65,6 +65,11 @@ export function useUsersSelectQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookO
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<UsersSelectQuery, UsersSelectQueryVariables>(UsersSelectQueryDocument, options);
         }
+export function useUsersSelectQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<UsersSelectQuery, UsersSelectQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UsersSelectQuery, UsersSelectQueryVariables>(UsersSelectQueryDocument, options);
+        }
 export type UsersSelectQueryHookResult = ReturnType<typeof useUsersSelectQuery>;
 export type UsersSelectQueryLazyQueryHookResult = ReturnType<typeof useUsersSelectQueryLazyQuery>;
+export type UsersSelectQuerySuspenseQueryHookResult = ReturnType<typeof useUsersSelectQuerySuspenseQuery>;
 export type UsersSelectQueryQueryResult = Apollo.QueryResult<UsersSelectQuery, UsersSelectQueryVariables>;

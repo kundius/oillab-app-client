@@ -8,8 +8,8 @@ export type LubricantListPageItemFragment = { __typename?: 'Lubricant', id: numb
 export type LubricantListPageLubricantPaginateQueryVariables = Types.Exact<{
   sort?: Types.InputMaybe<Array<Types.LubricantSort> | Types.LubricantSort>;
   filter?: Types.InputMaybe<Types.LubricantFilter>;
-  page?: Types.InputMaybe<Types.Scalars['Int']>;
-  perPage?: Types.InputMaybe<Types.Scalars['Int']>;
+  page?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  perPage?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 
@@ -65,6 +65,11 @@ export function useLubricantListPageLubricantPaginateLazyQuery(baseOptions?: Apo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<LubricantListPageLubricantPaginateQuery, LubricantListPageLubricantPaginateQueryVariables>(LubricantListPageLubricantPaginateDocument, options);
         }
+export function useLubricantListPageLubricantPaginateSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<LubricantListPageLubricantPaginateQuery, LubricantListPageLubricantPaginateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<LubricantListPageLubricantPaginateQuery, LubricantListPageLubricantPaginateQueryVariables>(LubricantListPageLubricantPaginateDocument, options);
+        }
 export type LubricantListPageLubricantPaginateQueryHookResult = ReturnType<typeof useLubricantListPageLubricantPaginateQuery>;
 export type LubricantListPageLubricantPaginateLazyQueryHookResult = ReturnType<typeof useLubricantListPageLubricantPaginateLazyQuery>;
+export type LubricantListPageLubricantPaginateSuspenseQueryHookResult = ReturnType<typeof useLubricantListPageLubricantPaginateSuspenseQuery>;
 export type LubricantListPageLubricantPaginateQueryResult = Apollo.QueryResult<LubricantListPageLubricantPaginateQuery, LubricantListPageLubricantPaginateQueryVariables>;

@@ -6,7 +6,7 @@ const defaultOptions = {} as const;
 export type LubricantDetailsFragment = { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity?: string | null };
 
 export type LubricantDetailsQueryVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
 }>;
 
 
@@ -44,7 +44,7 @@ export const LubricantDetailsQueryDocument = gql`
  *   },
  * });
  */
-export function useLubricantDetailsQuery(baseOptions: Apollo.QueryHookOptions<LubricantDetailsQuery, LubricantDetailsQueryVariables>) {
+export function useLubricantDetailsQuery(baseOptions: Apollo.QueryHookOptions<LubricantDetailsQuery, LubricantDetailsQueryVariables> & ({ variables: LubricantDetailsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<LubricantDetailsQuery, LubricantDetailsQueryVariables>(LubricantDetailsQueryDocument, options);
       }
@@ -52,6 +52,11 @@ export function useLubricantDetailsQueryLazyQuery(baseOptions?: Apollo.LazyQuery
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<LubricantDetailsQuery, LubricantDetailsQueryVariables>(LubricantDetailsQueryDocument, options);
         }
+export function useLubricantDetailsQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<LubricantDetailsQuery, LubricantDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<LubricantDetailsQuery, LubricantDetailsQueryVariables>(LubricantDetailsQueryDocument, options);
+        }
 export type LubricantDetailsQueryHookResult = ReturnType<typeof useLubricantDetailsQuery>;
 export type LubricantDetailsQueryLazyQueryHookResult = ReturnType<typeof useLubricantDetailsQueryLazyQuery>;
+export type LubricantDetailsQuerySuspenseQueryHookResult = ReturnType<typeof useLubricantDetailsQuerySuspenseQuery>;
 export type LubricantDetailsQueryQueryResult = Apollo.QueryResult<LubricantDetailsQuery, LubricantDetailsQueryVariables>;

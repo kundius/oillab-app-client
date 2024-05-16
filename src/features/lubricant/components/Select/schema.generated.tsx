@@ -6,8 +6,8 @@ const defaultOptions = {} as const;
 export type LubricantSelectFragment = { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity?: string | null };
 
 export type LubricantSelectQueryVariables = Types.Exact<{
-  page: Types.Scalars['Int'];
-  perPage: Types.Scalars['Int'];
+  page: Types.Scalars['Int']['input'];
+  perPage: Types.Scalars['Int']['input'];
   filter?: Types.InputMaybe<Types.LubricantFilter>;
 }>;
 
@@ -55,7 +55,7 @@ export const LubricantSelectQueryDocument = gql`
  *   },
  * });
  */
-export function useLubricantSelectQuery(baseOptions: Apollo.QueryHookOptions<LubricantSelectQuery, LubricantSelectQueryVariables>) {
+export function useLubricantSelectQuery(baseOptions: Apollo.QueryHookOptions<LubricantSelectQuery, LubricantSelectQueryVariables> & ({ variables: LubricantSelectQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<LubricantSelectQuery, LubricantSelectQueryVariables>(LubricantSelectQueryDocument, options);
       }
@@ -63,6 +63,11 @@ export function useLubricantSelectQueryLazyQuery(baseOptions?: Apollo.LazyQueryH
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<LubricantSelectQuery, LubricantSelectQueryVariables>(LubricantSelectQueryDocument, options);
         }
+export function useLubricantSelectQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<LubricantSelectQuery, LubricantSelectQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<LubricantSelectQuery, LubricantSelectQueryVariables>(LubricantSelectQueryDocument, options);
+        }
 export type LubricantSelectQueryHookResult = ReturnType<typeof useLubricantSelectQuery>;
 export type LubricantSelectQueryLazyQueryHookResult = ReturnType<typeof useLubricantSelectQueryLazyQuery>;
+export type LubricantSelectQuerySuspenseQueryHookResult = ReturnType<typeof useLubricantSelectQuerySuspenseQuery>;
 export type LubricantSelectQueryQueryResult = Apollo.QueryResult<LubricantSelectQuery, LubricantSelectQueryVariables>;

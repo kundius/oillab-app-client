@@ -41,6 +41,11 @@ export function useAppUseCurrentRoleLazyQuery(baseOptions?: Apollo.LazyQueryHook
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<AppUseCurrentRoleQuery, AppUseCurrentRoleQueryVariables>(AppUseCurrentRoleDocument, options);
         }
+export function useAppUseCurrentRoleSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AppUseCurrentRoleQuery, AppUseCurrentRoleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AppUseCurrentRoleQuery, AppUseCurrentRoleQueryVariables>(AppUseCurrentRoleDocument, options);
+        }
 export type AppUseCurrentRoleQueryHookResult = ReturnType<typeof useAppUseCurrentRoleQuery>;
 export type AppUseCurrentRoleLazyQueryHookResult = ReturnType<typeof useAppUseCurrentRoleLazyQuery>;
+export type AppUseCurrentRoleSuspenseQueryHookResult = ReturnType<typeof useAppUseCurrentRoleSuspenseQuery>;
 export type AppUseCurrentRoleQueryResult = Apollo.QueryResult<AppUseCurrentRoleQuery, AppUseCurrentRoleQueryVariables>;

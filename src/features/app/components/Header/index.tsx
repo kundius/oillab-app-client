@@ -21,99 +21,90 @@ export const Header = () => {
     <div className={styles.wrapper}>
       <Container>
         <div className={styles.inner}>
-          <Link href="/" passHref>
-            <a className="flex items-center hover:no-underline hover:text-current">
-              <Icon icon="database" size={40} />
-              <span className="flex flex-col ml-2">
-                <span className="font-bold text-xl leading-6">
-                  ООО "ОЙЛ-ЛАБ"
-                </span>
-                <span className="italic opacity-80 tracking-wider">
-                  База данных
-                </span>
+          <Link
+            href="/"
+            className="flex items-center hover:no-underline hover:text-current"
+          >
+            <Icon icon="database" size={40} />
+            <span className="flex flex-col ml-2">
+              <span className="font-bold text-xl leading-6">ООО "ОЙЛ-ЛАБ"</span>
+              <span className="italic opacity-80 tracking-wider">
+                База данных
               </span>
-            </a>
+            </span>
           </Link>
           <div className="mr-auto ml-12">
             <ul className="flex space-x-4">
               <li>
-                <Link href="/report" passHref>
-                  <a
-                    className={classNames(styles.link, {
-                      [styles.linkActive]: router.pathname.startsWith('/report')
-                    })}
-                  >
-                    Отчеты
-                  </a>
+                <Link
+                  href="/report"
+                  className={classNames(styles.link, {
+                    [styles.linkActive]: router.pathname.startsWith('/report')
+                  })}
+                >
+                  Отчеты
                 </Link>
               </li>
               {isAdministrator && (
                 <li>
-                  <Link href="/users" passHref>
-                    <a
-                      className={classNames(styles.link, {
-                        [styles.linkActive]:
-                          router.pathname.startsWith('/users')
-                      })}
-                    >
-                      Пользователи
-                    </a>
+                  <Link
+                    href="/users"
+                    className={classNames(styles.link, {
+                      [styles.linkActive]: router.pathname.startsWith('/users')
+                    })}
+                  >
+                    Пользователи
                   </Link>
                 </li>
               )}
               {isAdministrator && (
                 <li>
-                  <Link href="/vehicle" passHref>
-                    <a
-                      className={classNames(styles.link, {
-                        [styles.linkActive]:
-                          router.pathname.startsWith('/vehicle')
-                      })}
-                    >
-                      Техника
-                    </a>
+                  <Link
+                    href="/vehicle"
+                    className={classNames(styles.link, {
+                      [styles.linkActive]:
+                        router.pathname.startsWith('/vehicle')
+                    })}
+                  >
+                    Техника
                   </Link>
                 </li>
               )}
               {isAdministrator && (
                 <li>
-                  <Link href="/lubricant" passHref>
-                    <a
-                      className={classNames(styles.link, {
-                        [styles.linkActive]:
-                          router.pathname.startsWith('/lubricant')
-                      })}
-                    >
-                      Смазочный материал
-                    </a>
+                  <Link
+                    href="/lubricant"
+                    className={classNames(styles.link, {
+                      [styles.linkActive]:
+                        router.pathname.startsWith('/lubricant')
+                    })}
+                  >
+                    Смазочный материал
                   </Link>
                 </li>
               )}
               {isAdministrator && (
                 <li>
-                  <Link href="/result" passHref>
-                    <a
-                      className={classNames(styles.link, {
-                        [styles.linkActive]:
-                          router.pathname.startsWith('/result')
-                      })}
-                    >
-                      Внести результат
-                    </a>
+                  <Link
+                    href="/result"
+                    className={classNames(styles.link, {
+                      [styles.linkActive]: router.pathname.startsWith('/result')
+                    })}
+                  >
+                    Внести результат
                   </Link>
                 </li>
               )}
               {isAdministrator && (
                 <li>
-                  <Link href="/oil-type" passHref>
-                    <a
-                      className={classNames(styles.link, {
-                        [styles.linkActive]:
-                          router.pathname.startsWith('/oil-type')
-                      })}
-                    >
-                      Вид масел
-                    </a>
+                  <Link
+                    href="/oil-type"
+                    className={classNames(styles.link, {
+                      [styles.linkActive]:
+                        router.pathname.startsWith('/oil-type')
+                    })}
+                  >
+                    Вид масел
                   </Link>
                 </li>
               )}

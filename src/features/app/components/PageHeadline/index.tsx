@@ -11,16 +11,12 @@ export interface PageHeadlineProps {
   }[]
 }
 
-export const PageHeadline = ({
-  items
-}: PageHeadlineProps) => {
-  const nodes = items.map(item => {
+export const PageHeadline = ({ items }: PageHeadlineProps) => {
+  const nodes = items.map((item) => {
     if (item.href) {
       return (
-        <Link href={item.href} passHref>
-          <a className={styles.headlineLink}>
-            {item.title}
-          </a>
+        <Link href={item.href} className={styles.headlineLink}>
+          {item.title}
         </Link>
       )
     }
@@ -31,11 +27,11 @@ export const PageHeadline = ({
       {nodes.reduce((result, item, index, array) => {
         result.push(<div key={`item-${index}`}>{item}</div>)
         if (index !== array.length - 1) {
-          result.push((
+          result.push(
             <span className={styles.headlineChevron} key={`chevron-${index}`}>
               <Icon icon="chevron-right" />
             </span>
-          ))
+          )
         }
         return result
       }, [] as React.ReactNode[])}

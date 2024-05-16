@@ -9,7 +9,7 @@ import {
   SelectValue as SelectUserValue
 } from '@features/users/components/Select'
 import { MainTemplate } from '@features/app/components/MainTemplate'
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 
 import * as schema from './schema.generated'
@@ -46,7 +46,7 @@ export function CreatePage() {
         id: 'ROOT_QUERY',
         fieldName: 'vehiclePaginate'
       })
-      AppToaster.show({
+      await showToast({
         message: 'Техника добавлена',
         intent: Intent.SUCCESS
       })
@@ -54,7 +54,7 @@ export function CreatePage() {
     }
 
     if (response.data?.vehicleCreate.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.vehicleCreate.error.message,
         intent: Intent.DANGER
       })

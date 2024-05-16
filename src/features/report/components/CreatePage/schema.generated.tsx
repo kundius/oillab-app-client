@@ -48,8 +48,13 @@ export function useReportCreatePageQueryLazyQuery(baseOptions?: Apollo.LazyQuery
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ReportCreatePageQuery, ReportCreatePageQueryVariables>(ReportCreatePageQueryDocument, options);
         }
+export function useReportCreatePageQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ReportCreatePageQuery, ReportCreatePageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ReportCreatePageQuery, ReportCreatePageQueryVariables>(ReportCreatePageQueryDocument, options);
+        }
 export type ReportCreatePageQueryHookResult = ReturnType<typeof useReportCreatePageQuery>;
 export type ReportCreatePageQueryLazyQueryHookResult = ReturnType<typeof useReportCreatePageQueryLazyQuery>;
+export type ReportCreatePageQuerySuspenseQueryHookResult = ReturnType<typeof useReportCreatePageQuerySuspenseQuery>;
 export type ReportCreatePageQueryQueryResult = Apollo.QueryResult<ReportCreatePageQuery, ReportCreatePageQueryVariables>;
 export const ReportCreatePageMutationDocument = gql`
     mutation ReportCreatePageMutation($input: ReportCreateInput!) {

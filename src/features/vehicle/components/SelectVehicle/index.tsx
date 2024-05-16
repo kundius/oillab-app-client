@@ -102,10 +102,10 @@ export function SelectVehicle ({ ownerId, value, onChange }: SelectVehicleProps)
             ))}
           </div>
           <div className="flex justify-between items-center">
-            <div className="bp4-input-group">
-              <span className="bp4-icon bp4-icon-search" />
+            <div className="bp5-input-group">
+              <span className="bp5-icon bp5-icon-search" />
               <input
-                className="bp4-input"
+                className="bp5-input"
                 placeholder="Поиск по имени"
                 dir="auto"
                 onChange={onSearch}

@@ -5,7 +5,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { useRouter } from 'next/router'
 
 import { MainTemplate } from '@features/app/components/MainTemplate'
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import { FormField } from '@components/FormField'
 import {
@@ -42,7 +42,7 @@ export function CreatePage() {
         id: 'ROOT_QUERY',
         fieldName: 'resultPaginate'
       })
-      AppToaster.show({
+      await showToast({
         message: 'Результат добавлен',
         intent: Intent.SUCCESS
       })
@@ -50,7 +50,7 @@ export function CreatePage() {
     }
 
     if (response.data?.resultCreate.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.resultCreate.error.message,
         intent: Intent.DANGER
       })

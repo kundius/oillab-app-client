@@ -6,14 +6,14 @@ const defaultOptions = {} as const;
 export type OilTypeIndicatorsTableItemFragment = { __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string, oilType: { __typename?: 'OilType', id: number } };
 
 export type OilTypeIndicatorsTableListQueryVariables = Types.Exact<{
-  oilTypeId: Types.Scalars['Int'];
+  oilTypeId: Types.Scalars['Int']['input'];
 }>;
 
 
 export type OilTypeIndicatorsTableListQuery = { __typename?: 'Query', oilTypeIndicatorList: { __typename?: 'OilTypeIndicatorListResponse', items: Array<{ __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string, oilType: { __typename?: 'OilType', id: number } }> } };
 
 export type OilTypeIndicatorsTableCreateMutationVariables = Types.Exact<{
-  oilTypeId: Types.Scalars['Int'];
+  oilTypeId: Types.Scalars['Int']['input'];
   input: Types.OilTypeIndicatorCreateInput;
 }>;
 
@@ -21,7 +21,7 @@ export type OilTypeIndicatorsTableCreateMutationVariables = Types.Exact<{
 export type OilTypeIndicatorsTableCreateMutation = { __typename?: 'Mutation', oilTypeIndicatorCreate: { __typename?: 'OilTypeIndicatorCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string, oilType: { __typename?: 'OilType', id: number } } | null } };
 
 export type OilTypeIndicatorsTableUpdateMutationVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
   input: Types.OilTypeIndicatorUpdateInput;
 }>;
 
@@ -29,7 +29,7 @@ export type OilTypeIndicatorsTableUpdateMutationVariables = Types.Exact<{
 export type OilTypeIndicatorsTableUpdateMutation = { __typename?: 'Mutation', oilTypeIndicatorUpdate: { __typename?: 'OilTypeIndicatorUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilTypeIndicator', id: number, name: string, ntd: string, units: string, oilType: { __typename?: 'OilType', id: number } } | null } };
 
 export type OilTypeIndicatorsTableDeleteMutationVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
 }>;
 
 
@@ -72,7 +72,7 @@ export const OilTypeIndicatorsTableListDocument = gql`
  *   },
  * });
  */
-export function useOilTypeIndicatorsTableListQuery(baseOptions: Apollo.QueryHookOptions<OilTypeIndicatorsTableListQuery, OilTypeIndicatorsTableListQueryVariables>) {
+export function useOilTypeIndicatorsTableListQuery(baseOptions: Apollo.QueryHookOptions<OilTypeIndicatorsTableListQuery, OilTypeIndicatorsTableListQueryVariables> & ({ variables: OilTypeIndicatorsTableListQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<OilTypeIndicatorsTableListQuery, OilTypeIndicatorsTableListQueryVariables>(OilTypeIndicatorsTableListDocument, options);
       }
@@ -80,8 +80,13 @@ export function useOilTypeIndicatorsTableListLazyQuery(baseOptions?: Apollo.Lazy
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<OilTypeIndicatorsTableListQuery, OilTypeIndicatorsTableListQueryVariables>(OilTypeIndicatorsTableListDocument, options);
         }
+export function useOilTypeIndicatorsTableListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<OilTypeIndicatorsTableListQuery, OilTypeIndicatorsTableListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<OilTypeIndicatorsTableListQuery, OilTypeIndicatorsTableListQueryVariables>(OilTypeIndicatorsTableListDocument, options);
+        }
 export type OilTypeIndicatorsTableListQueryHookResult = ReturnType<typeof useOilTypeIndicatorsTableListQuery>;
 export type OilTypeIndicatorsTableListLazyQueryHookResult = ReturnType<typeof useOilTypeIndicatorsTableListLazyQuery>;
+export type OilTypeIndicatorsTableListSuspenseQueryHookResult = ReturnType<typeof useOilTypeIndicatorsTableListSuspenseQuery>;
 export type OilTypeIndicatorsTableListQueryResult = Apollo.QueryResult<OilTypeIndicatorsTableListQuery, OilTypeIndicatorsTableListQueryVariables>;
 export const OilTypeIndicatorsTableCreateDocument = gql`
     mutation OilTypeIndicatorsTableCreate($oilTypeId: Int!, $input: OilTypeIndicatorCreateInput!) {

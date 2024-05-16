@@ -8,8 +8,8 @@ export type VehicleListPageItemFragment = { __typename?: 'Vehicle', id: number, 
 export type VehicleListPageVehiclePaginateQueryVariables = Types.Exact<{
   sort?: Types.InputMaybe<Array<Types.VehicleSort> | Types.VehicleSort>;
   filter?: Types.InputMaybe<Types.VehicleFilter>;
-  page?: Types.InputMaybe<Types.Scalars['Int']>;
-  perPage?: Types.InputMaybe<Types.Scalars['Int']>;
+  page?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  perPage?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 
@@ -70,6 +70,11 @@ export function useVehicleListPageVehiclePaginateLazyQuery(baseOptions?: Apollo.
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<VehicleListPageVehiclePaginateQuery, VehicleListPageVehiclePaginateQueryVariables>(VehicleListPageVehiclePaginateDocument, options);
         }
+export function useVehicleListPageVehiclePaginateSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<VehicleListPageVehiclePaginateQuery, VehicleListPageVehiclePaginateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<VehicleListPageVehiclePaginateQuery, VehicleListPageVehiclePaginateQueryVariables>(VehicleListPageVehiclePaginateDocument, options);
+        }
 export type VehicleListPageVehiclePaginateQueryHookResult = ReturnType<typeof useVehicleListPageVehiclePaginateQuery>;
 export type VehicleListPageVehiclePaginateLazyQueryHookResult = ReturnType<typeof useVehicleListPageVehiclePaginateLazyQuery>;
+export type VehicleListPageVehiclePaginateSuspenseQueryHookResult = ReturnType<typeof useVehicleListPageVehiclePaginateSuspenseQuery>;
 export type VehicleListPageVehiclePaginateQueryResult = Apollo.QueryResult<VehicleListPageVehiclePaginateQuery, VehicleListPageVehiclePaginateQueryVariables>;

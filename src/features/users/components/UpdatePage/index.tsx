@@ -4,7 +4,7 @@ import { useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 
 import { MainTemplate } from '@features/app/components/MainTemplate'
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { FormField } from '@components/FormField'
 import * as types from '@app/types'
 
@@ -47,14 +47,14 @@ export function UpdatePage ({ user }: UpdatePageProps) {
         fieldName: 'userPaginate'
       })
       resetField("password")
-      AppToaster.show({
+      await showToast({
         message: 'Пользователь изменен',
         intent: Intent.SUCCESS
       })
     }
 
     if (response.data?.userUpdate.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.userUpdate.error.message,
         intent: Intent.DANGER
       })
@@ -215,14 +215,14 @@ export function UpdatePage ({ user }: UpdatePageProps) {
                 field: { value, ...field },
                 fieldState: { error }
               }) => (
-                <div className="bp4-html-select">
+                <div className="bp5-html-select">
                   <select {...field}>
                     <option value="" selected={!value}>Выбрать роль...</option>
                     <option value="Member" selected={value === 'Member'}>Member</option>
                     <option value="Administrator" selected={value === 'Administrator'}>Administrator</option>
                     <option value="Manager" selected={value === 'Manager'}>Manager</option>
                   </select>
-                  <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
+                  <span className="bp5-icon bp5-icon-double-caret-vertical"></span>
                 </div>
               )}
             />

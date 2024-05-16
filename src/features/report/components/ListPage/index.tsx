@@ -12,8 +12,8 @@ import {
   InputGroup
 } from '@blueprintjs/core'
 import { format, parse } from 'date-fns'
-import { DateFormatProps, DateInput } from '@blueprintjs/datetime'
-import { Tooltip } from "@blueprintjs/core";
+import { DateFormatProps, DateInput3 } from '@blueprintjs/datetime2'
+import { Tooltip } from '@blueprintjs/core'
 import getRuntimeConfig from '@app/utils/getRuntimeConfig'
 
 import { Table } from '@components/Table'
@@ -23,7 +23,7 @@ import { useHasRole } from '@features/app/hooks/useHasRole'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DeletePopover } from '@features/report/components/DeletePopover'
 import { FilterPopover as LubricantFilterPopover } from '@features/lubricant/components/FilterPopover'
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { useToken } from '@app/features/app/hooks/useToken'
 
 import * as schema from './schema.generated'
@@ -54,23 +54,21 @@ const renderColor = (value: types.ReportColor) => {
 const renderFile = (value: Pick<types.File, 'id' | 'url'>) => {
   if (!value) return
   return (
-    <a href={value.url} target="_blank">
-      <AnchorButton icon="cloud-download" small minimal />
-    </a>
+    <AnchorButton
+      href={value.url}
+      target="_blank"
+      icon="cloud-download"
+      small
+      minimal
+    />
   )
 }
 
 const renderTooltip = (value: string) => {
   if (!value) return
   return (
-    <Tooltip
-      content={value}
-    >
-      <AnchorButton
-        icon="comment"
-        small
-        minimal
-      />
+    <Tooltip content={value}>
+      <AnchorButton icon="comment" small minimal />
     </Tooltip>
   )
 }
@@ -105,9 +103,14 @@ export function ListPage() {
     total: 0
   }
   const dateFnsFormat = 'dd.MM.yyyy'
-  const formatDate = useCallback((date: Date) => format(date, dateFnsFormat), [])
-  const parseDate = useCallback((date: string) => parse(date, dateFnsFormat, new Date()), [])
-
+  const formatDate = useCallback(
+    (date: Date) => format(date, dateFnsFormat),
+    []
+  )
+  const parseDate = useCallback(
+    (date: string) => parse(date, dateFnsFormat, new Date()),
+    []
+  )
 
   const handleGeneratePdf = async () => {
     const response = await generatePdf({
@@ -122,7 +125,7 @@ export function ListPage() {
     }
 
     if (response.data?.reportGeneratePdf.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.reportGeneratePdf.error.message,
         intent: Intent.DANGER
       })
@@ -147,7 +150,7 @@ export function ListPage() {
             Печатать
           </Button>
           {isAdministrator && (
-            <Link href="/report/create" passHref>
+            <Link href="/report/create" legacyBehavior passHref>
               <AnchorButton icon="add" intent="primary">
                 Добавить отчет
               </AnchorButton>
@@ -291,18 +294,20 @@ export function ListPage() {
                 <Table.Summary.Cell index={7}>
                   <LubricantFilterPopover
                     value={filter.lubricantEntity}
-                    onChange={(value) => setFilter((prev) => ({
-                      ...prev,
-                      lubricantEntity: value
-                    }))}
+                    onChange={(value) =>
+                      setFilter((prev) => ({
+                        ...prev,
+                        lubricantEntity: value
+                      }))
+                    }
                   />
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={8}>
-                  <DateInput
+                  <DateInput3
                     formatDate={formatDate}
                     parseDate={parseDate}
                     placeholder={dateFnsFormat}
-                    value={filter.sampledAt?.eq ? new Date(filter.sampledAt.eq) : undefined}
+                    value={filter.sampledAt?.eq?.toLocaleString()}
                     onChange={(value) =>
                       setFilter((prev) => ({
                         ...prev,
@@ -316,7 +321,7 @@ export function ListPage() {
                 <Table.Summary.Cell index={9} />
                 {(isManager || isAdministrator) && (
                   <Table.Summary.Cell index={10}>
-                    <div className="bp4-html-select">
+                    <div className="bp5-html-select">
                       <select
                         value={filter.color?.contains || undefined}
                         onChange={(e) =>
@@ -335,7 +340,7 @@ export function ListPage() {
                         <option value="Yellow">Желтый</option>
                         <option value="LightGreen">Светло зеленый</option>
                       </select>
-                      <span className="bp4-icon bp4-icon-double-caret-vertical" />
+                      <span className="bp5-icon bp5-icon-double-caret-vertical" />
                     </div>
                   </Table.Summary.Cell>
                 )}
@@ -424,7 +429,9 @@ export function ListPage() {
           <Table.Column
             title="Смазочный материал"
             dataIndex="lubricantEntity"
-            render={(lubricantEntity) => `${lubricantEntity?.brand} / ${lubricantEntity?.model} / ${lubricantEntity?.viscosity}`}
+            render={(lubricantEntity) =>
+              `${lubricantEntity?.brand} / ${lubricantEntity?.model} / ${lubricantEntity?.viscosity}`
+            }
           />
           <Table.Column
             title={
@@ -478,12 +485,12 @@ export function ListPage() {
                 width={84}
                 render={(record: schema.ReportListPageItemFragment) => (
                   <ButtonGroup minimal>
-                    <a
+                    <AnchorButton
                       href={`${publicRuntimeConfig.API_URL}/report/${record.id}/applicationform?token=${token}`}
                       target="_blank"
-                    >
-                      <AnchorButton icon="cloud-download" small />
-                    </a>
+                      icon="cloud-download"
+                      small
+                    />
                   </ButtonGroup>
                 )}
               />
@@ -493,12 +500,13 @@ export function ListPage() {
                 align="center"
                 width={84}
                 render={(record: schema.ReportListPageItemFragment) => (
-                  <a
+                  <AnchorButton
                     href={`${publicRuntimeConfig.API_URL}/report/${record.id}/registrationsticker?token=${token}`}
                     target="_blank"
-                  >
-                    <AnchorButton icon="cloud-download" small minimal />
-                  </a>
+                    icon="cloud-download"
+                    small
+                    minimal
+                  />
                 )}
               />
               <Table.Column
@@ -508,7 +516,7 @@ export function ListPage() {
                 width={84}
                 render={(record: schema.ReportListPageItemFragment) => (
                   <ButtonGroup minimal>
-                    <Link href={`/report/${record.id}`} passHref>
+                    <Link href={`/report/${record.id}`} legacyBehavior passHref>
                       <AnchorButton icon="edit" small />
                     </Link>
                     <Divider />

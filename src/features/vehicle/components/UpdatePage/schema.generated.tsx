@@ -6,14 +6,14 @@ const defaultOptions = {} as const;
 export type VehicleUpdatePageFragment = { __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string, liquidVolume?: string | null, owner: { __typename?: 'User', id: number, name: string } };
 
 export type VehicleUpdatePageQueryVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
 }>;
 
 
 export type VehicleUpdatePageQuery = { __typename?: 'Query', vehicle?: { __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string, liquidVolume?: string | null, owner: { __typename?: 'User', id: number, name: string } } | null };
 
 export type VehicleUpdatePageMutationVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
   input: Types.VehicleUpdateInput;
 }>;
 
@@ -58,7 +58,7 @@ export const VehicleUpdatePageQueryDocument = gql`
  *   },
  * });
  */
-export function useVehicleUpdatePageQuery(baseOptions: Apollo.QueryHookOptions<VehicleUpdatePageQuery, VehicleUpdatePageQueryVariables>) {
+export function useVehicleUpdatePageQuery(baseOptions: Apollo.QueryHookOptions<VehicleUpdatePageQuery, VehicleUpdatePageQueryVariables> & ({ variables: VehicleUpdatePageQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<VehicleUpdatePageQuery, VehicleUpdatePageQueryVariables>(VehicleUpdatePageQueryDocument, options);
       }
@@ -66,8 +66,13 @@ export function useVehicleUpdatePageQueryLazyQuery(baseOptions?: Apollo.LazyQuer
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<VehicleUpdatePageQuery, VehicleUpdatePageQueryVariables>(VehicleUpdatePageQueryDocument, options);
         }
+export function useVehicleUpdatePageQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<VehicleUpdatePageQuery, VehicleUpdatePageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<VehicleUpdatePageQuery, VehicleUpdatePageQueryVariables>(VehicleUpdatePageQueryDocument, options);
+        }
 export type VehicleUpdatePageQueryHookResult = ReturnType<typeof useVehicleUpdatePageQuery>;
 export type VehicleUpdatePageQueryLazyQueryHookResult = ReturnType<typeof useVehicleUpdatePageQueryLazyQuery>;
+export type VehicleUpdatePageQuerySuspenseQueryHookResult = ReturnType<typeof useVehicleUpdatePageQuerySuspenseQuery>;
 export type VehicleUpdatePageQueryQueryResult = Apollo.QueryResult<VehicleUpdatePageQuery, VehicleUpdatePageQueryVariables>;
 export const VehicleUpdatePageMutationDocument = gql`
     mutation VehicleUpdatePageMutation($id: Int!, $input: VehicleUpdateInput!) {

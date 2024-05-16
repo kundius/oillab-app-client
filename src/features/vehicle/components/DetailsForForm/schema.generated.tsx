@@ -6,7 +6,7 @@ const defaultOptions = {} as const;
 export type VehicleDetailsForFormFragment = { __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string };
 
 export type VehicleDetailsForFormQueryVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
 }>;
 
 
@@ -45,7 +45,7 @@ export const VehicleDetailsForFormQueryDocument = gql`
  *   },
  * });
  */
-export function useVehicleDetailsForFormQuery(baseOptions: Apollo.QueryHookOptions<VehicleDetailsForFormQuery, VehicleDetailsForFormQueryVariables>) {
+export function useVehicleDetailsForFormQuery(baseOptions: Apollo.QueryHookOptions<VehicleDetailsForFormQuery, VehicleDetailsForFormQueryVariables> & ({ variables: VehicleDetailsForFormQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<VehicleDetailsForFormQuery, VehicleDetailsForFormQueryVariables>(VehicleDetailsForFormQueryDocument, options);
       }
@@ -53,6 +53,11 @@ export function useVehicleDetailsForFormQueryLazyQuery(baseOptions?: Apollo.Lazy
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<VehicleDetailsForFormQuery, VehicleDetailsForFormQueryVariables>(VehicleDetailsForFormQueryDocument, options);
         }
+export function useVehicleDetailsForFormQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<VehicleDetailsForFormQuery, VehicleDetailsForFormQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<VehicleDetailsForFormQuery, VehicleDetailsForFormQueryVariables>(VehicleDetailsForFormQueryDocument, options);
+        }
 export type VehicleDetailsForFormQueryHookResult = ReturnType<typeof useVehicleDetailsForFormQuery>;
 export type VehicleDetailsForFormQueryLazyQueryHookResult = ReturnType<typeof useVehicleDetailsForFormQueryLazyQuery>;
+export type VehicleDetailsForFormQuerySuspenseQueryHookResult = ReturnType<typeof useVehicleDetailsForFormQuerySuspenseQuery>;
 export type VehicleDetailsForFormQueryQueryResult = Apollo.QueryResult<VehicleDetailsForFormQuery, VehicleDetailsForFormQueryVariables>;

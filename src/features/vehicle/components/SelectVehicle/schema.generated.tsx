@@ -6,8 +6,8 @@ const defaultOptions = {} as const;
 export type VehicleSelectVehicleFragment = { __typename?: 'Vehicle', id: number, model: string, stateNumber: string };
 
 export type VehicleSelectVehicleQueryVariables = Types.Exact<{
-  page: Types.Scalars['Int'];
-  perPage: Types.Scalars['Int'];
+  page: Types.Scalars['Int']['input'];
+  perPage: Types.Scalars['Int']['input'];
   filter?: Types.InputMaybe<Types.VehicleFilter>;
 }>;
 
@@ -54,7 +54,7 @@ export const VehicleSelectVehicleQueryDocument = gql`
  *   },
  * });
  */
-export function useVehicleSelectVehicleQuery(baseOptions: Apollo.QueryHookOptions<VehicleSelectVehicleQuery, VehicleSelectVehicleQueryVariables>) {
+export function useVehicleSelectVehicleQuery(baseOptions: Apollo.QueryHookOptions<VehicleSelectVehicleQuery, VehicleSelectVehicleQueryVariables> & ({ variables: VehicleSelectVehicleQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<VehicleSelectVehicleQuery, VehicleSelectVehicleQueryVariables>(VehicleSelectVehicleQueryDocument, options);
       }
@@ -62,6 +62,11 @@ export function useVehicleSelectVehicleQueryLazyQuery(baseOptions?: Apollo.LazyQ
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<VehicleSelectVehicleQuery, VehicleSelectVehicleQueryVariables>(VehicleSelectVehicleQueryDocument, options);
         }
+export function useVehicleSelectVehicleQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<VehicleSelectVehicleQuery, VehicleSelectVehicleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<VehicleSelectVehicleQuery, VehicleSelectVehicleQueryVariables>(VehicleSelectVehicleQueryDocument, options);
+        }
 export type VehicleSelectVehicleQueryHookResult = ReturnType<typeof useVehicleSelectVehicleQuery>;
 export type VehicleSelectVehicleQueryLazyQueryHookResult = ReturnType<typeof useVehicleSelectVehicleQueryLazyQuery>;
+export type VehicleSelectVehicleQuerySuspenseQueryHookResult = ReturnType<typeof useVehicleSelectVehicleQuerySuspenseQuery>;
 export type VehicleSelectVehicleQueryQueryResult = Apollo.QueryResult<VehicleSelectVehicleQuery, VehicleSelectVehicleQueryVariables>;

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, ButtonGroup, FileInput, Intent } from '@blueprintjs/core'
 
 import { uploadFile } from '@app/utils/uploadFile'
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 
 export interface UploadFileValue {
   id: number
@@ -35,7 +35,7 @@ export const UploadFile = ({
     if (uploadResponse.success) {
       onChange?.(uploadResponse.file)
     } else {
-      AppToaster.show({
+      await showToast({
         message: 'Не удалось загрузить файл',
         intent: Intent.DANGER
       })

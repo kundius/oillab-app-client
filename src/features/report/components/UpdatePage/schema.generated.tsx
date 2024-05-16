@@ -6,14 +6,14 @@ const defaultOptions = {} as const;
 export type ReportUpdatePageFragment = { __typename?: 'Report', id: number, number?: number | null, formNumber?: string | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, vehicleToppingUpLubricant?: string | null, lubricantState?: string | null, selectionVolume?: string | null, note?: string | null, color?: Types.ReportColor | null, sampledAt: any, expressLaboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, laboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, client?: { __typename?: 'User', id: number, name: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string } | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, brand: string, model: string, viscosity?: string | null } | null, oilType?: { __typename?: 'OilType', id: number, name: string } | null };
 
 export type ReportUpdatePageQueryVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
 }>;
 
 
 export type ReportUpdatePageQuery = { __typename?: 'Query', report?: { __typename?: 'Report', id: number, number?: number | null, formNumber?: string | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, vehicleToppingUpLubricant?: string | null, lubricantState?: string | null, selectionVolume?: string | null, note?: string | null, color?: Types.ReportColor | null, sampledAt: any, expressLaboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, laboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, client?: { __typename?: 'User', id: number, name: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, stateNumber: string, releaseYear: string, engineModel: string } | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, brand: string, model: string, viscosity?: string | null } | null, oilType?: { __typename?: 'OilType', id: number, name: string } | null } | null, currentUser?: { __typename?: 'User', id: number, role: Types.UserRole } | null };
 
 export type ReportUpdatePageMutationVariables = Types.Exact<{
-  id: Types.Scalars['Int'];
+  id: Types.Scalars['Int']['input'];
   input: Types.ReportUpdateInput;
 }>;
 
@@ -95,7 +95,7 @@ export const ReportUpdatePageQueryDocument = gql`
  *   },
  * });
  */
-export function useReportUpdatePageQuery(baseOptions: Apollo.QueryHookOptions<ReportUpdatePageQuery, ReportUpdatePageQueryVariables>) {
+export function useReportUpdatePageQuery(baseOptions: Apollo.QueryHookOptions<ReportUpdatePageQuery, ReportUpdatePageQueryVariables> & ({ variables: ReportUpdatePageQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ReportUpdatePageQuery, ReportUpdatePageQueryVariables>(ReportUpdatePageQueryDocument, options);
       }
@@ -103,8 +103,13 @@ export function useReportUpdatePageQueryLazyQuery(baseOptions?: Apollo.LazyQuery
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ReportUpdatePageQuery, ReportUpdatePageQueryVariables>(ReportUpdatePageQueryDocument, options);
         }
+export function useReportUpdatePageQuerySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ReportUpdatePageQuery, ReportUpdatePageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ReportUpdatePageQuery, ReportUpdatePageQueryVariables>(ReportUpdatePageQueryDocument, options);
+        }
 export type ReportUpdatePageQueryHookResult = ReturnType<typeof useReportUpdatePageQuery>;
 export type ReportUpdatePageQueryLazyQueryHookResult = ReturnType<typeof useReportUpdatePageQueryLazyQuery>;
+export type ReportUpdatePageQuerySuspenseQueryHookResult = ReturnType<typeof useReportUpdatePageQuerySuspenseQuery>;
 export type ReportUpdatePageQueryQueryResult = Apollo.QueryResult<ReportUpdatePageQuery, ReportUpdatePageQueryVariables>;
 export const ReportUpdatePageMutationDocument = gql`
     mutation ReportUpdatePageMutation($id: Int!, $input: ReportUpdateInput!) {

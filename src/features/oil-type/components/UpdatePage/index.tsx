@@ -15,7 +15,7 @@ import { useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
 
 import { MainTemplate } from '@features/app/components/MainTemplate'
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import { FormField } from '@components/FormField'
 
@@ -58,14 +58,14 @@ export function UpdatePage({ initialOiltype }: UpdatePageProps) {
         id: 'ROOT_QUERY',
         fieldName: 'oiltypePaginate'
       })
-      AppToaster.show({
+      await showToast({
         message: 'Вид масла изменен',
         intent: Intent.SUCCESS
       })
     }
 
     if (response.data?.oiltypeUpdate.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.oiltypeUpdate.error.message,
         intent: Intent.DANGER
       })

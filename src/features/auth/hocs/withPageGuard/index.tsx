@@ -68,7 +68,7 @@ export function withPageGuard<
               </div>
               <div className="flex items-center justify-between">
                 {(router.pathname !== '/report' && router.pathname !== '/') && (
-                  <Link href="/">
+                  <Link href="/" legacyBehavior passHref>
                     <AnchorButton className="ml-auto mr-auto">
                       На главную
                     </AnchorButton>

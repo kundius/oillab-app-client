@@ -13,7 +13,7 @@ import {
 import { format, parse } from 'date-fns'
 import { useApolloClient } from '@apollo/client'
 import { useForm, Controller } from 'react-hook-form'
-import { DateInput, DateFormatProps } from '@blueprintjs/datetime'
+import { DateInput3, DateFormatProps } from '@blueprintjs/datetime2'
 import Link from 'next/link'
 
 import { FormField } from '@components/FormField'
@@ -21,7 +21,7 @@ import getRuntimeConfig from '@app/utils/getRuntimeConfig'
 import { UploadFile, UploadFileValue } from '@components/UploadFile'
 import { MainTemplate } from '@features/app/components/MainTemplate'
 import { DetailsForForm } from '@features/vehicle/components/DetailsForForm'
-import { AppToaster } from '@components/AppToaster'
+import { AppToaster, showToast } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import {
   Select as SelectUser,
@@ -84,7 +84,8 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
       formNumber: initialReport.formNumber || undefined,
       lubricantMileage: initialReport.lubricantMileage || undefined,
       samplingNodes: initialReport.samplingNodes || undefined,
-      vehicleToppingUpLubricant: initialReport.vehicleToppingUpLubricant || undefined,
+      vehicleToppingUpLubricant:
+        initialReport.vehicleToppingUpLubricant || undefined,
       lubricantState: initialReport.lubricantState || undefined,
       selectionVolume: initialReport.selectionVolume || undefined,
       note: initialReport.note || undefined,
@@ -120,8 +121,14 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
   })
   const token = useToken()
   const dateFnsFormat = 'dd.MM.yyyy'
-  const formatDate = useCallback((date: Date) => format(date, dateFnsFormat), [])
-  const parseDate = useCallback((date: string) => parse(date, dateFnsFormat, new Date()), [])
+  const formatDate = useCallback(
+    (date: Date) => format(date, dateFnsFormat),
+    []
+  )
+  const parseDate = useCallback(
+    (date: string) => parse(date, dateFnsFormat, new Date()),
+    []
+  )
 
   const watchClient = watch('clientEntity')
   const watchVehicle = watch('vehicleEntity')
@@ -145,8 +152,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
             vehicleEntity === null ? vehicleEntity : vehicleEntity?.value,
           lubricantEntityId:
             lubricantEntity === null ? lubricantEntity : lubricantEntity?.value,
-          oilTypeId:
-            oilType === null ? oilType : oilType?.value,
+          oilTypeId: oilType === null ? oilType : oilType?.value,
           laboratoryResult:
             laboratoryResultFile === null
               ? laboratoryResultFile
@@ -164,14 +170,14 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
         id: 'ROOT_QUERY',
         fieldName: 'reportPaginate'
       })
-      AppToaster.show({
+      await showToast({
         message: 'Отчет изменен',
         intent: Intent.SUCCESS
       })
     }
 
     if (response.data?.reportUpdate.error) {
-      AppToaster.show({
+      await showToast({
         message: response.data.reportUpdate.error.message,
         intent: Intent.DANGER
       })
@@ -256,9 +262,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                 render={({
                   field: { ref, ...field },
                   fieldState: { error }
-                }) => (
-                  <SelectVehicle ownerId={watchClient.value} {...field} />
-                )}
+                }) => <SelectVehicle ownerId={watchClient.value} {...field} />}
               />
             </FormField>
           )}
@@ -271,7 +275,8 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                 required: 'Номер бланка не может быть пустым',
                 pattern: {
                   value: /^[^0\s]\S*$/,
-                  message: "Номер бланка не может начинаться с 0 или содержать пробелы."
+                  message:
+                    'Номер бланка не может начинаться с 0 или содержать пробелы.'
                 }
               }}
               render={({
@@ -387,20 +392,18 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
             <Controller
               name="lubricantEntity"
               control={control}
-              render={({
-                field: { ref, ...field },
-                fieldState: { error }
-              }) => <SelectLubricant {...field} />}
+              render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                <SelectLubricant {...field} />
+              )}
             />
           </FormField>
           <FormField label="Вид масла:">
             <Controller
               name="oilType"
               control={control}
-              render={({
-                field: { ref, ...field },
-                fieldState: { error }
-              }) => <SelectOilType {...field} />}
+              render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                <SelectOilType {...field} />
+              )}
             />
           </FormField>
           <FormField label="Дата забора пробы/образца:">
@@ -414,13 +417,13 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                 field: { ref, value, onChange, ...field },
                 fieldState: { error }
               }) => (
-                <DateInput
+                <DateInput3
                   formatDate={formatDate}
                   parseDate={parseDate}
                   placeholder={dateFnsFormat}
                   disabled={mutationState.loading}
                   className="w-full"
-                  value={value ? new Date(value) : undefined}
+                  value={value}
                   onChange={onChange}
                   rightElement={
                     !!error ? (
@@ -547,7 +550,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                   field: { value, ...field },
                   fieldState: { error }
                 }) => (
-                  <div className="bp4-html-select">
+                  <div className="bp5-html-select">
                     <select
                       {...field}
                       disabled={mutationState.loading}
@@ -558,7 +561,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
                       <option value="Yellow">Желтый</option>
                       <option value="LightGreen">Светло зеленый</option>
                     </select>
-                    <span className="bp4-icon bp4-icon-double-caret-vertical"></span>
+                    <span className="bp5-icon bp5-icon-double-caret-vertical"></span>
                   </div>
                 )}
               />
