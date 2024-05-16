@@ -1,38 +1,33 @@
-import React, { useState, useCallback } from 'react'
-import Link from 'next/link'
+import getRuntimeConfig from '@app/utils/getRuntimeConfig'
 import {
-  ButtonGroup,
-  Button,
   AnchorButton,
+  Button,
+  ButtonGroup,
   Divider,
+  InputGroup,
   Intent,
   NonIdealState,
   Spinner,
-  Icon,
-  InputGroup
+  Tooltip
 } from '@blueprintjs/core'
+import { DateInput3, TimePrecision } from '@blueprintjs/datetime2'
 import { format, parse } from 'date-fns'
 import ruRU from 'date-fns/locale/ru'
-import {
-  DateFormatProps,
-  DateInput3,
-  TimePrecision
-} from '@blueprintjs/datetime2'
-import { Tooltip } from '@blueprintjs/core'
-import getRuntimeConfig from '@app/utils/getRuntimeConfig'
+import Link from 'next/link'
+import { useCallback, useState } from 'react'
 
-import { Table } from '@components/Table'
-import { Pagination } from '@components/Pagination'
-import { Wall } from '@components/Wall'
-import { useHasRole } from '@features/app/hooks/useHasRole'
-import { MainTemplate } from '@features/app/components/MainTemplate'
-import { DeletePopover } from '@features/report/components/DeletePopover'
-import { FilterPopover as LubricantFilterPopover } from '@features/lubricant/components/FilterPopover'
-import { AppToaster, showToast } from '@components/AppToaster'
 import { useToken } from '@app/features/app/hooks/useToken'
+import { showToast } from '@components/AppToaster'
+import { Pagination } from '@components/Pagination'
+import { Table } from '@components/Table'
+import { Wall } from '@components/Wall'
+import { MainTemplate } from '@features/app/components/MainTemplate'
+import { useHasRole } from '@features/app/hooks/useHasRole'
+import { FilterPopover as LubricantFilterPopover } from '@features/lubricant/components/FilterPopover'
+import { DeletePopover } from '@features/report/components/DeletePopover'
 
-import * as schema from './schema.generated'
 import * as types from '@app/types'
+import * as schema from './schema.generated'
 
 const { publicRuntimeConfig } = getRuntimeConfig()
 
@@ -102,15 +97,6 @@ export function ListPage() {
     perPage,
     total: 0
   }
-  const dateFnsFormat = 'dd.MM.yyyy'
-  const formatDate = useCallback(
-    (date: Date) => format(date, dateFnsFormat),
-    []
-  )
-  const parseDate = useCallback(
-    (date: string) => parse(date, dateFnsFormat, new Date()),
-    []
-  )
 
   const handleGeneratePdf = async () => {
     const response = await generatePdf({
@@ -308,7 +294,7 @@ export function ListPage() {
                     timePrecision={TimePrecision.MINUTE}
                     showTimezoneSelect={false}
                     locale={ruRU}
-                    dateFnsFormat={dateFnsFormat}
+                    dateFnsFormat={'dd.MM.yyyy'}
                     value={filter.sampledAt?.eq || null}
                     onChange={(date) => {
                       setFilter((prev) => ({

@@ -23,6 +23,7 @@ import * as schema from './schema.generated'
 import * as types from '@app/types'
 import { IndicatorsTable } from '../IndicatorsTable'
 import { ResearchTable } from '../ResearchTable'
+import { Wall } from '@app/components/Wall'
 
 export interface UpdatePageProps {
   initialOiltype: schema.OilTypeUpdatePageFragment
@@ -100,63 +101,65 @@ export function UpdatePage({ initialOiltype }: UpdatePageProps) {
         </Button>
       }
     >
-      <div className="space-y-16">
-        <form onSubmit={handlerSubmit}>
-          <div
-            className="space-y-8 max-w-full ml-auto mr-auto"
-            style={{ width: 800 }}
-          >
-            <FormField label="Вид масла">
-              <Controller
-                name="name"
-                control={updateForm.control}
-                rules={{
-                  required: 'Значение обязательно'
-                }}
-                render={({
-                  field: { ref, value, ...field },
-                  fieldState: { error }
-                }) => (
-                  <InputGroup
-                    className="w-full"
-                    disabled={mutationState.loading}
-                    rightElement={
-                      !!error ? (
-                        <ErrorIcon
-                          message={error.message}
-                          loading={mutationState.loading}
-                        />
-                      ) : undefined
-                    }
-                    inputRef={ref}
-                    value={value || undefined}
-                    {...field}
-                  />
-                )}
-              />
-            </FormField>
-            <FormField label="Стандартное">
-              <Controller
-                name="standard"
-                control={updateForm.control}
-                render={({
-                  field: { ref, value, onChange, ...field },
-                  fieldState: { error }
-                }) => (
-                  <Checkbox
-                    checked={value || false}
-                    onChange={onChange}
-                    inputRef={ref}
-                    large
-                    className="m-0"
-                    disabled={mutationState.loading}
-                    {...field}
-                  />
-                )}
-              />
-            </FormField>
-          </div>
-        </form>
+      <div className="space-y-8">
+        <Wall>
+          <form onSubmit={handlerSubmit}>
+            <div
+              className="space-y-8 max-w-full ml-auto mr-auto"
+              style={{ width: 800 }}
+            >
+              <FormField label="Вид масла">
+                <Controller
+                  name="name"
+                  control={updateForm.control}
+                  rules={{
+                    required: 'Значение обязательно'
+                  }}
+                  render={({
+                    field: { ref, value, ...field },
+                    fieldState: { error }
+                  }) => (
+                    <InputGroup
+                      className="w-full"
+                      disabled={mutationState.loading}
+                      rightElement={
+                        !!error ? (
+                          <ErrorIcon
+                            message={error.message}
+                            loading={mutationState.loading}
+                          />
+                        ) : undefined
+                      }
+                      inputRef={ref}
+                      value={value || undefined}
+                      {...field}
+                    />
+                  )}
+                />
+              </FormField>
+              <FormField label="Стандартное">
+                <Controller
+                  name="standard"
+                  control={updateForm.control}
+                  render={({
+                    field: { ref, value, onChange, ...field },
+                    fieldState: { error }
+                  }) => (
+                    <Checkbox
+                      checked={value || false}
+                      onChange={onChange}
+                      inputRef={ref}
+                      large
+                      className="m-0"
+                      disabled={mutationState.loading}
+                      {...field}
+                    />
+                  )}
+                />
+              </FormField>
+            </div>
+          </form>
+        </Wall>
 
         <IndicatorsTable oilTypeId={initialOiltype.id} />
 

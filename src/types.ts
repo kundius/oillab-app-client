@@ -457,6 +457,7 @@ export type Query = {
   oiltype?: Maybe<OilType>;
   oiltypePaginate: OilTypePaginateResponse;
   report?: Maybe<Report>;
+  reportByFormNumber?: Maybe<Report>;
   reportPaginate: ReportPaginateResponse;
   result?: Maybe<Result>;
   resultPaginate: ResultPaginateResponse;
@@ -520,6 +521,11 @@ export type QueryOiltypePaginateArgs = {
 
 export type QueryReportArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type QueryReportByFormNumberArgs = {
+  formNumber: Scalars['String']['input'];
 };
 
 

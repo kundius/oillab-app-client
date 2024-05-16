@@ -22,6 +22,7 @@ import { FormField } from '@components/FormField'
 
 import * as schema from './schema.generated'
 import * as types from '@app/types'
+import { Wall } from '@app/components/Wall'
 
 export function CreatePage() {
   const apollo = useApolloClient()
@@ -66,85 +67,90 @@ export function CreatePage() {
     }
   }
 
+  const handlerSubmit = handleSubmit(onSubmit)
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <MainTemplate
-        title="Добавление / Вид масел"
-        headline={[
-          {
-            href: '/oil-type',
-            title: 'Вид масел'
-          },
-          {
-            title: 'Добавление'
-          }
-        ]}
-        extra={
-          <Button
-            intent={Intent.PRIMARY}
-            type="submit"
-            loading={mutationState.loading}
-            disabled={mutationState.loading}
-          >
-            Сохранить
-          </Button>
+    <MainTemplate
+      title="Добавление / Вид масел"
+      headline={[
+        {
+          href: '/oil-type',
+          title: 'Вид масел'
+        },
+        {
+          title: 'Добавление'
         }
-      >
-        <div
-          className="space-y-8 max-w-full ml-auto mr-auto"
-          style={{ width: 800 }}
+      ]}
+      extra={
+        <Button
+          intent={Intent.PRIMARY}
+          type="button"
+          onClick={handlerSubmit}
+          loading={mutationState.loading}
+          disabled={mutationState.loading}
         >
-          <FormField label="Вид масла">
-            <Controller
-              name="name"
-              control={control}
-              rules={{
-                required: 'Значение обязательно'
-              }}
-              render={({
-                field: { ref, value, ...field },
-                fieldState: { error }
-              }) => (
-                <InputGroup
-                  className="w-full"
-                  disabled={mutationState.loading}
-                  rightElement={
-                    !!error ? (
-                      <ErrorIcon
-                        message={error.message}
-                        loading={mutationState.loading}
-                      />
-                    ) : undefined
-                  }
-                  inputRef={ref}
-                  value={value || undefined}
-                  {...field}
-                />
-              )}
-            />
-          </FormField>
-          <FormField label="Стандартное">
-            <Controller
-              name="standard"
-              control={control}
-              render={({
-                field: { ref, value, onChange, ...field },
-                fieldState: { error }
-              }) => (
-                <Checkbox
-                  checked={value}
-                  onChange={onChange}
-                  inputRef={ref}
-                  large
-                  className="m-0"
-                  disabled={mutationState.loading}
-                  {...field}
-                />
-              )}
-            />
-          </FormField>
-        </div>
-      </MainTemplate>
-    </form>
+          Сохранить
+        </Button>
+      }
+    >
+      <Wall>
+        <form onSubmit={handlerSubmit}>
+          <div
+            className="space-y-8 max-w-full ml-auto mr-auto"
+            style={{ width: 800 }}
+          >
+            <FormField label="Вид масла">
+              <Controller
+                name="name"
+                control={control}
+                rules={{
+                  required: 'Значение обязательно'
+                }}
+                render={({
+                  field: { ref, value, ...field },
+                  fieldState: { error }
+                }) => (
+                  <InputGroup
+                    className="w-full"
+                    disabled={mutationState.loading}
+                    rightElement={
+                      !!error ? (
+                        <ErrorIcon
+                          message={error.message}
+                          loading={mutationState.loading}
+                        />
+                      ) : undefined
+                    }
+                    inputRef={ref}
+                    value={value || undefined}
+                    {...field}
+                  />
+                )}
+              />
+            </FormField>
+            <FormField label="Стандартное">
+              <Controller
+                name="standard"
+                control={control}
+                render={({
+                  field: { ref, value, onChange, ...field },
+                  fieldState: { error }
+                }) => (
+                  <Checkbox
+                    checked={value}
+                    onChange={onChange}
+                    inputRef={ref}
+                    large
+                    className="m-0"
+                    disabled={mutationState.loading}
+                    {...field}
+                  />
+                )}
+              />
+            </FormField>
+          </div>
+        </form>
+      </Wall>
+    </MainTemplate>
   )
 }

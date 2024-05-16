@@ -1,0 +1,29 @@
+fragment Result_ReportInfo_ReportFragment on Report {
+    id
+    totalMileage
+    lubricantMileage
+    vehicleToppingUpLubricant
+    samplingNodes
+    lubricantState
+    note
+    vehicle {
+			id
+      model
+      engineModel
+      stateNumber
+      liquidVolume
+      releaseYear
+    }
+    lubricantEntity {
+      id
+      brand
+      model
+      viscosity
+    }
+}
+
+query Result_ReportInfo_Query($formNumber: String!) {
+  reportByFormNumber(formNumber: $formNumber) {
+    ...Result_ReportInfo_ReportFragment
+  }
+}
