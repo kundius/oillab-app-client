@@ -12,7 +12,12 @@ import {
   InputGroup
 } from '@blueprintjs/core'
 import { format, parse } from 'date-fns'
-import { DateFormatProps, DateInput3 } from '@blueprintjs/datetime2'
+import ruRU from 'date-fns/locale/ru'
+import {
+  DateFormatProps,
+  DateInput3,
+  TimePrecision
+} from '@blueprintjs/datetime2'
 import { Tooltip } from '@blueprintjs/core'
 import getRuntimeConfig from '@app/utils/getRuntimeConfig'
 
@@ -30,11 +35,6 @@ import * as schema from './schema.generated'
 import * as types from '@app/types'
 
 const { publicRuntimeConfig } = getRuntimeConfig()
-
-const jsDateFormatter: DateFormatProps = {
-  formatDate: (date) => date.toLocaleDateString(),
-  parseDate: (str) => new Date(str)
-}
 
 const renderColor = (value: types.ReportColor) => {
   if (!value) return null
@@ -304,18 +304,22 @@ export function ListPage() {
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={8}>
                   <DateInput3
-                    formatDate={formatDate}
-                    parseDate={parseDate}
-                    placeholder={dateFnsFormat}
-                    value={filter.sampledAt?.eq?.toLocaleString()}
-                    onChange={(value) =>
+                    timePickerProps={{ className: 'hidden' }}
+                    timePrecision={TimePrecision.MINUTE}
+                    showTimezoneSelect={false}
+                    locale={ruRU}
+                    dateFnsFormat={dateFnsFormat}
+                    value={filter.sampledAt?.eq || null}
+                    onChange={(date) => {
                       setFilter((prev) => ({
                         ...prev,
-                        sampledAt: {
-                          eq: value
-                        }
+                        sampledAt: date
+                          ? {
+                              eq: date
+                            }
+                          : undefined
                       }))
-                    }
+                    }}
                   />
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={9} />

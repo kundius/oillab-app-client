@@ -189,7 +189,7 @@ const FilterDate = ({
         <DateInput3
           {...jsDateFormatter}
           className="w-64 mb-4"
-          value={value?.eq?.toLocaleString()}
+          value={value?.eq?.toISOString()}
           onChange={(str) => setEq(str ? new Date(str) : undefined)}
           placeholder="Точная дата"
         />
