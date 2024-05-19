@@ -1,7 +1,10 @@
 fragment LubricantListPageItem on Lubricant {
   id
   model
-  brand
+  brandEntity {
+    id
+    name
+  }
   viscosity
 }
 

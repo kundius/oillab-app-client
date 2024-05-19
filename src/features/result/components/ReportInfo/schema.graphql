@@ -16,7 +16,10 @@ fragment Result_ReportInfo_ReportFragment on Report {
     }
     lubricantEntity {
       id
-      brand
+      brandEntity {
+        id
+        name
+      }
       model
       viscosity
     }

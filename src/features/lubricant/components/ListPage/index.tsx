@@ -90,9 +90,9 @@ export function ListPage() {
               <Table.Title
                 text="Бренд"
                 filter="string"
-                filterValue={filter.brand || undefined}
-                onFilterChange={(brand) =>
-                  setFilter((prev) => ({ ...prev, brand }))
+                filterValue={filter.brandEntity?.name || undefined}
+                onFilterChange={(name) =>
+                  setFilter((prev) => ({ ...prev, brandEntity: { name } }))
                 }
                 sortAsc={types.LubricantSort.BrandAsc}
                 sortDesc={types.LubricantSort.BrandDesc}
@@ -100,7 +100,7 @@ export function ListPage() {
                 onSortChange={setSort}
               />
             }
-            dataIndex="brand"
+            dataIndex={['brandEntity', 'name']}
           />
           <Table.Column
             title={

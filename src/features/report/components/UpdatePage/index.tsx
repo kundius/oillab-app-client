@@ -105,7 +105,7 @@ export function UpdatePage({ initialReport }: UpdatePageProps) {
         : undefined,
       lubricantEntity: initialReport.lubricantEntity
         ? {
-            label: `${initialReport.lubricantEntity.brand} / ${initialReport.lubricantEntity.model} / ${initialReport.lubricantEntity.viscosity}`,
+            label: `${initialReport.lubricantEntity.brandEntity?.name} / ${initialReport.lubricantEntity.model} / ${initialReport.lubricantEntity.viscosity}`,
             value: initialReport.lubricantEntity.id
           }
         : undefined,

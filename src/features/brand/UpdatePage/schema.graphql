@@ -1,0 +1,25 @@
+fragment Brand_UpdatePage_Fragment on Brand {
+  id
+  name
+}
+
+query Brand_UpdatePage_Query($id: Int!) {
+  brand(id: $id) {
+    ...Brand_UpdatePage_Fragment
+  }
+}
+
+mutation Brand_UpdatePage_Mutation($id: Int!, $input: BrandUpdateInput!) {
+  brandUpdate(
+    id: $id
+    input: $input
+  ) {
+    success
+    error {
+      message
+    }
+    record {
+      ...Brand_UpdatePage_Fragment
+    }
+  }
+}

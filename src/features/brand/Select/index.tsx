@@ -21,29 +21,22 @@ export function Select ({ value, onChange }: SelectProps) {
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
 
-  const query = schema.useLubricantSelectQuery({
+  const query = schema.useBrand_Select_Query({
     variables: {
       page,
       perPage,
-      filter: {
-        // brand: {
-        //   contains: search || undefined
-        // },
-        model: {
-          contains: search || undefined
-        }
-      }
+      search
     },
     notifyOnNetworkStatusChange: true
   })
 
   const handleOpen = () => setIsOpen(true)
   const handleClose = () => setIsOpen(false)
-  const handleSelect = (record: schema.LubricantSelectFragment) => {
+  const handleSelect = (record: schema.Brand_Select_Fragment) => {
     handleClose()
     onChange?.({
       value: record.id,
-      label: `${record.brandEntity?.name} / ${record.model} / ${record.viscosity}`
+      label: record.name
     })
   }
   const onPaginate = (page: number, pageSize: number) => setPage(page)
@@ -55,27 +48,25 @@ export function Select ({ value, onChange }: SelectProps) {
 
   return (
     <>
-      <div className="inline-flex space-x-2">
-        <ButtonGroup>
+      <ButtonGroup>
+        <Button
+          icon="bookmark"
+          onClick={handleOpen}
+        >
+          {value ? value.label : 'Выбрать бренд'}
+        </Button>
+        {value && (
           <Button
-            icon="new-layer"
-            onClick={handleOpen}
-          >
-            {value ? value.label : 'Выбрать смазочный материал'}
-          </Button>
-          {value && (
-            <Button
-              icon="cross"
-              onClick={() => onChange?.(null)}
-            />
-          )}
-        </ButtonGroup>
-      </div>
+            icon="cross"
+            onClick={() => onChange?.(null)}
+          />
+        )}
+      </ButtonGroup>
       <Dialog
         isOpen={isOpen}
-        icon="new-layer"
+        icon="bookmark"
         onClose={handleClose}
-        title="Выбрать смазочный материал"
+        title="Выбрать бренд"
         style={{ paddingBottom: 0 }}
       >
         <div className={Classes.DIALOG_BODY}>
@@ -85,12 +76,12 @@ export function Select ({ value, onChange }: SelectProps) {
             </div>
           )}
           <div className="space-y-2 mb-4">
-            {query.data?.lubricantPaginate.items.map((record) => (
+            {query.data?.brandPaginate.items.map((record) => (
               <div
                 className="flex justify-between items-center font-medium bg-white border rounded p-2"
                 key={record.id}
               >
-                {record.brandEntity?.name} / {record.model} / {record.viscosity}
+                {record.name}
                 <Button
                   small
                   onClick={() => handleSelect(record)}
@@ -105,7 +96,7 @@ export function Select ({ value, onChange }: SelectProps) {
               <span className="bp5-icon bp5-icon-search" />
               <input
                 className="bp5-input"
-                placeholder="Поиск по модели"
+                placeholder="Поиск по названию"
                 dir="auto"
                 onChange={onSearch}
                 value={search}
@@ -116,7 +107,7 @@ export function Select ({ value, onChange }: SelectProps) {
               onChange={onPaginate}
               current={page}
               pageSize={perPage}
-              total={query.data?.lubricantPaginate.pageInfo.total}
+              total={query.data?.brandPaginate.pageInfo.total}
             />
           </div>
         </div>

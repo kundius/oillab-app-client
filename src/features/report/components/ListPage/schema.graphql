@@ -9,7 +9,10 @@ fragment ReportListPageItem on Report {
   sampledAt
   lubricantEntity {
     id
-    brand
+    brandEntity {
+      id
+      name
+    }
     model
     viscosity
   }

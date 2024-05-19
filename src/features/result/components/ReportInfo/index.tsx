@@ -129,7 +129,7 @@ export function ReportInfo({ formNumber }: ReportInfoProps) {
               <div className={styles['field']}>
                 <div className={styles['field__label']}>Бренд СМ</div>
                 <div className={styles['field__input']}>
-                  {lubricant?.brand || ''}
+                  {lubricant?.brandEntity?.name || ''}
                 </div>
               </div>
             </td>

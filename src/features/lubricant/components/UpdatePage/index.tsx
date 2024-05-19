@@ -1,29 +1,23 @@
-import React, { useState, useEffect } from 'react'
-import {
-  Alert,
-  Button,
-  Classes,
-  Dialog,
-  Icon,
-  InputGroup,
-  Intent,
-  Position,
-  Switch,
-  Tooltip
-} from '@blueprintjs/core'
 import { useApolloClient } from '@apollo/client'
-import { useForm, Controller } from 'react-hook-form'
-
-import { MainTemplate } from '@features/app/components/MainTemplate'
-import { AppToaster, showToast } from '@components/AppToaster'
+import * as types from '@app/types'
+import { Button, InputGroup, Intent } from '@blueprintjs/core'
+import { showToast } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import { FormField } from '@components/FormField'
-
+import { MainTemplate } from '@features/app/components/MainTemplate'
+import {
+  Select as SelectBrand,
+  SelectValue as SelectBrandValue
+} from '@features/brand/Select'
+import { Controller, useForm } from 'react-hook-form'
 import * as schema from './schema.generated'
-import * as types from '@app/types'
 
 export interface UpdatePageProps {
   initialLubricant: schema.LubricantUpdatePageFragment
+}
+
+export interface FormFields extends types.LubricantUpdateInput {
+  brandEntity: SelectBrandValue
 }
 
 export function UpdatePage({ initialLubricant }: UpdatePageProps) {
@@ -41,20 +35,28 @@ export function UpdatePage({ initialLubricant }: UpdatePageProps) {
     setValue,
     reset,
     formState: { isDirty }
-  } = useForm<types.LubricantUpdateInput>({
+  } = useForm<FormFields>({
     defaultValues: {
       model: initialLubricant.model || undefined,
-      brand: initialLubricant.brand || undefined,
+      brandEntity: initialLubricant.brandEntity
+        ? {
+            label: initialLubricant.brandEntity.name,
+            value: initialLubricant.brandEntity.id
+          }
+        : undefined,
       viscosity: initialLubricant.viscosity || undefined,
       productType: initialLubricant.productType || undefined
     }
   })
 
-  const onSubmit = async (input: types.LubricantUpdateInput) => {
+  const onSubmit = async ({ brandEntity, ...input }: FormFields) => {
     const response = await mutation({
       variables: {
         id: initialLubricant.id,
-        input
+        input: {
+          ...input,
+          brandId: brandEntity.value
+        }
       }
     })
 
@@ -133,30 +135,21 @@ export function UpdatePage({ initialLubricant }: UpdatePageProps) {
           </FormField>
           <FormField label="Бренд">
             <Controller
-              name="brand"
+              name="brandEntity"
               control={control}
               rules={{
-                required: 'Значение обязательно'
+                required: true
               }}
-              render={({
-                field: { ref, value, ...field },
-                fieldState: { error }
-              }) => (
-                <InputGroup
-                  className="w-full"
-                  disabled={mutationState.loading}
-                  rightElement={
-                    !!error ? (
-                      <ErrorIcon
-                        message={error.message}
-                        loading={mutationState.loading}
-                      />
-                    ) : undefined
-                  }
-                  inputRef={ref}
-                  value={value || undefined}
-                  {...field}
-                />
+              render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                <div className="inline-flex space-x-2">
+                  <SelectBrand {...field} />
+                  {!!error && (
+                    <ErrorIcon
+                      message="Укажите бренд"
+                      loading={mutationState.loading}
+                    />
+                  )}
+                </div>
               )}
             />
           </FormField>

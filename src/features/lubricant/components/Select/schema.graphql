@@ -1,7 +1,10 @@
 fragment LubricantSelectFragment on Lubricant {
   id
   model
-  brand
+  brandEntity {
+    id
+    name
+  }
   viscosity
 }
 

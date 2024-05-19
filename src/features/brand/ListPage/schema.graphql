@@ -1,0 +1,27 @@
+fragment Brand_ListPage_Fragment on Brand {
+  id
+  name
+}
+
+query Brand_ListPage_Query(
+  $sort: [BrandSort!]
+  $filter: BrandFilter
+  $page: Int
+  $perPage: Int
+) {
+  brandPaginate(
+    sort: $sort
+    filter: $filter
+    page: $page
+    perPage: $perPage
+  ) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
+    items {
+      ...Brand_ListPage_Fragment
+    }
+  }
+}

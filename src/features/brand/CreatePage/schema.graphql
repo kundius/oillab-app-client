@@ -1,0 +1,11 @@
+mutation Brand_CreatePage_Mutation($input: BrandCreateInput!) {
+  brandCreate(input: $input) {
+    success
+    error {
+      message
+    }
+    record {
+      id
+    }
+  }
+}

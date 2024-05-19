@@ -20,6 +20,54 @@ export type AuthenticationError = DefaultError & {
   message: Scalars['String']['output'];
 };
 
+export type Brand = {
+  __typename?: 'Brand';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['Float']['output'];
+  lubricants: Array<Maybe<Lubricant>>;
+  name: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type BrandCreateInput = {
+  name: Scalars['String']['input'];
+};
+
+export type BrandCreateResponse = {
+  __typename?: 'BrandCreateResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<Brand>;
+  success: Scalars['Boolean']['output'];
+};
+
+export type BrandFilter = {
+  name?: InputMaybe<StringFilterOperator>;
+};
+
+export type BrandPaginateResponse = {
+  __typename?: 'BrandPaginateResponse';
+  items: Array<Brand>;
+  pageInfo: PageInfo;
+};
+
+export enum BrandSort {
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  NameAsc = 'NAME_ASC',
+  NameDesc = 'NAME_DESC'
+}
+
+export type BrandUpdateInput = {
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type BrandUpdateResponse = {
+  __typename?: 'BrandUpdateResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<Brand>;
+  success: Scalars['Boolean']['output'];
+};
+
 export type DateFilterOperator = {
   eq?: InputMaybe<Scalars['DateTime']['input']>;
   gt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -56,7 +104,7 @@ export type IdFilterOperator = {
 
 export type Lubricant = {
   __typename?: 'Lubricant';
-  brand: Scalars['String']['output'];
+  brandEntity?: Maybe<Brand>;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['Float']['output'];
   model: Scalars['String']['output'];
@@ -67,7 +115,7 @@ export type Lubricant = {
 };
 
 export type LubricantCreateInput = {
-  brand: Scalars['String']['input'];
+  brandId: Scalars['Int']['input'];
   model: Scalars['String']['input'];
   productType?: InputMaybe<Scalars['String']['input']>;
   viscosity?: InputMaybe<Scalars['String']['input']>;
@@ -81,7 +129,7 @@ export type LubricantCreateResponse = {
 };
 
 export type LubricantFilter = {
-  brand?: InputMaybe<StringFilterOperator>;
+  brandEntity?: InputMaybe<BrandFilter>;
   model?: InputMaybe<StringFilterOperator>;
   viscosity?: InputMaybe<StringFilterOperator>;
 };
@@ -102,7 +150,7 @@ export enum LubricantSort {
 }
 
 export type LubricantUpdateInput = {
-  brand?: InputMaybe<Scalars['String']['input']>;
+  brandId?: InputMaybe<Scalars['Int']['input']>;
   model?: InputMaybe<Scalars['String']['input']>;
   productType?: InputMaybe<Scalars['String']['input']>;
   viscosity?: InputMaybe<Scalars['String']['input']>;
@@ -117,6 +165,9 @@ export type LubricantUpdateResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  brandCreate: BrandCreateResponse;
+  brandDelete: DefaultMutationResponse;
+  brandUpdate: BrandUpdateResponse;
   lubricantCreate: LubricantCreateResponse;
   lubricantDelete: DefaultMutationResponse;
   lubricantUpdate: LubricantUpdateResponse;
@@ -143,6 +194,22 @@ export type Mutation = {
   vehicleCreate: VehicleCreateResponse;
   vehicleDelete: DefaultMutationResponse;
   vehicleUpdate: VehicleUpdateResponse;
+};
+
+
+export type MutationBrandCreateArgs = {
+  input: BrandCreateInput;
+};
+
+
+export type MutationBrandDeleteArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationBrandUpdateArgs = {
+  id: Scalars['Int']['input'];
+  input: BrandUpdateInput;
 };
 
 
@@ -446,6 +513,8 @@ export enum ProductType {
 
 export type Query = {
   __typename?: 'Query';
+  brand?: Maybe<Brand>;
+  brandPaginate: BrandPaginateResponse;
   currentUser?: Maybe<User>;
   file?: Maybe<File>;
   lubricant?: Maybe<Lubricant>;
@@ -465,6 +534,19 @@ export type Query = {
   userPaginate: UserPaginateResponse;
   vehicle?: Maybe<Vehicle>;
   vehiclePaginate: VehiclePaginateResponse;
+};
+
+
+export type QueryBrandArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryBrandPaginateArgs = {
+  filter?: InputMaybe<BrandFilter>;
+  page?: Scalars['Int']['input'];
+  perPage?: Scalars['Int']['input'];
+  sort?: InputMaybe<Array<BrandSort>>;
 };
 
 

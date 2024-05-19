@@ -1,0 +1,29 @@
+fragment Brand_Select_Fragment on Brand {
+  id
+  name
+}
+
+query Brand_Select_Query (
+  $search: String
+  $page: Int!
+  $perPage: Int!
+) {
+  brandPaginate(
+    filter: {
+      name: {
+        contains: $search
+      }
+    }
+    page: $page
+    perPage: $perPage
+  ) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
+    items {
+      ...Brand_Select_Fragment
+    }
+  }
+}

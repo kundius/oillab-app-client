@@ -1,7 +1,10 @@
 fragment LubricantUpdatePageFragment on Lubricant {
   id
   model
-  brand
+  brandEntity {
+    id
+    name
+  }
   viscosity
   productType
 }

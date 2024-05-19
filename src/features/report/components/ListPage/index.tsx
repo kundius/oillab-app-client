@@ -420,7 +420,7 @@ export function ListPage() {
             title="Смазочный материал"
             dataIndex="lubricantEntity"
             render={(lubricantEntity) =>
-              `${lubricantEntity?.brand} / ${lubricantEntity?.model} / ${lubricantEntity?.viscosity}`
+              `${lubricantEntity?.brandEntity?.name} / ${lubricantEntity?.model} / ${lubricantEntity?.viscosity}`
             }
           />
           <Table.Column

@@ -34,7 +34,10 @@ fragment ReportUpdatePageFragment on Report {
   }
   lubricantEntity {
     id
-    brand
+    brandEntity {
+      id
+      name
+    }
     model
     viscosity
   }

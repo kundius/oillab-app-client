@@ -1,0 +1,8 @@
+mutation Brand_DeletePopover_Mutation($id: Int!) {
+  brandDelete(id: $id) {
+    success
+    error {
+      message
+    }
+  }
+}

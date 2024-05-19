@@ -3,7 +3,7 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type LubricantListPageItemFragment = { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity?: string | null };
+export type LubricantListPageItemFragment = { __typename?: 'Lubricant', id: number, model: string, viscosity?: string | null, brandEntity?: { __typename?: 'Brand', id: number, name: string } | null };
 
 export type LubricantListPageLubricantPaginateQueryVariables = Types.Exact<{
   sort?: Types.InputMaybe<Array<Types.LubricantSort> | Types.LubricantSort>;
@@ -13,13 +13,16 @@ export type LubricantListPageLubricantPaginateQueryVariables = Types.Exact<{
 }>;
 
 
-export type LubricantListPageLubricantPaginateQuery = { __typename?: 'Query', lubricantPaginate: { __typename?: 'LubricantPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity?: string | null }> } };
+export type LubricantListPageLubricantPaginateQuery = { __typename?: 'Query', lubricantPaginate: { __typename?: 'LubricantPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Lubricant', id: number, model: string, viscosity?: string | null, brandEntity?: { __typename?: 'Brand', id: number, name: string } | null }> } };
 
 export const LubricantListPageItemFragmentDoc = gql`
     fragment LubricantListPageItem on Lubricant {
   id
   model
-  brand
+  brandEntity {
+    id
+    name
+  }
   viscosity
 }
     `;

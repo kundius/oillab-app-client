@@ -86,6 +86,19 @@ export const Header = () => {
               {isAdministrator && (
                 <li>
                   <Link
+                    href="/brand"
+                    className={classNames(styles.link, {
+                      [styles.linkActive]:
+                        router.pathname.startsWith('/brand')
+                    })}
+                  >
+                    Бренд
+                  </Link>
+                </li>
+              )}
+              {isAdministrator && (
+                <li>
+                  <Link
                     href="/result"
                     className={classNames(styles.link, {
                       [styles.linkActive]: router.pathname.startsWith('/result')

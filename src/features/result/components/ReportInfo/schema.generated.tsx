@@ -3,14 +3,14 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type Result_ReportInfo_ReportFragment = { __typename?: 'Report', id: number, totalMileage: string, lubricantMileage: string, vehicleToppingUpLubricant?: string | null, samplingNodes: string, lubricantState?: string | null, note?: string | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, engineModel: string, stateNumber: string, liquidVolume?: string | null, releaseYear: string } | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, brand: string, model: string, viscosity?: string | null } | null };
+export type Result_ReportInfo_ReportFragment = { __typename?: 'Report', id: number, totalMileage: string, lubricantMileage: string, vehicleToppingUpLubricant?: string | null, samplingNodes: string, lubricantState?: string | null, note?: string | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, engineModel: string, stateNumber: string, liquidVolume?: string | null, releaseYear: string } | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, model: string, viscosity?: string | null, brandEntity?: { __typename?: 'Brand', id: number, name: string } | null } | null };
 
 export type Result_ReportInfo_QueryVariables = Types.Exact<{
   formNumber: Types.Scalars['String']['input'];
 }>;
 
 
-export type Result_ReportInfo_Query = { __typename?: 'Query', reportByFormNumber?: { __typename?: 'Report', id: number, totalMileage: string, lubricantMileage: string, vehicleToppingUpLubricant?: string | null, samplingNodes: string, lubricantState?: string | null, note?: string | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, engineModel: string, stateNumber: string, liquidVolume?: string | null, releaseYear: string } | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, brand: string, model: string, viscosity?: string | null } | null } | null };
+export type Result_ReportInfo_Query = { __typename?: 'Query', reportByFormNumber?: { __typename?: 'Report', id: number, totalMileage: string, lubricantMileage: string, vehicleToppingUpLubricant?: string | null, samplingNodes: string, lubricantState?: string | null, note?: string | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, engineModel: string, stateNumber: string, liquidVolume?: string | null, releaseYear: string } | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, model: string, viscosity?: string | null, brandEntity?: { __typename?: 'Brand', id: number, name: string } | null } | null } | null };
 
 export const Result_ReportInfo_ReportFragmentDoc = gql`
     fragment Result_ReportInfo_ReportFragment on Report {
@@ -31,7 +31,10 @@ export const Result_ReportInfo_ReportFragmentDoc = gql`
   }
   lubricantEntity {
     id
-    brand
+    brandEntity {
+      id
+      name
+    }
     model
     viscosity
   }

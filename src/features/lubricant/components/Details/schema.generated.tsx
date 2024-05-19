@@ -3,20 +3,23 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type LubricantDetailsFragment = { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity?: string | null };
+export type LubricantDetailsFragment = { __typename?: 'Lubricant', id: number, model: string, viscosity?: string | null, brandEntity?: { __typename?: 'Brand', id: number, name: string } | null };
 
 export type LubricantDetailsQueryVariables = Types.Exact<{
   id: Types.Scalars['Int']['input'];
 }>;
 
 
-export type LubricantDetailsQuery = { __typename?: 'Query', lubricant?: { __typename?: 'Lubricant', id: number, model: string, brand: string, viscosity?: string | null } | null };
+export type LubricantDetailsQuery = { __typename?: 'Query', lubricant?: { __typename?: 'Lubricant', id: number, model: string, viscosity?: string | null, brandEntity?: { __typename?: 'Brand', id: number, name: string } | null } | null };
 
 export const LubricantDetailsFragmentDoc = gql`
     fragment LubricantDetailsFragment on Lubricant {
   id
   model
-  brand
+  brandEntity {
+    id
+    name
+  }
   viscosity
 }
     `;

@@ -1,26 +1,21 @@
-import React from 'react'
-import {
-  Button,
-  InputGroup,
-  Intent,
-  Position,
-  Tooltip
-} from '@blueprintjs/core'
 import { useApolloClient } from '@apollo/client'
-import { useForm, Controller } from 'react-hook-form'
-import { useRouter } from 'next/router'
-
-import {
-  Select as SelectUser,
-  SelectValue as SelectUserValue
-} from '@features/users/components/Select'
-import { MainTemplate } from '@features/app/components/MainTemplate'
-import { AppToaster, showToast } from '@components/AppToaster'
+import * as types from '@app/types'
+import { Button, InputGroup, Intent } from '@blueprintjs/core'
+import { showToast } from '@components/AppToaster'
 import { ErrorIcon } from '@components/ErrorIcon'
 import { FormField } from '@components/FormField'
-
+import { MainTemplate } from '@features/app/components/MainTemplate'
+import {
+  Select as SelectBrand,
+  SelectValue as SelectBrandValue
+} from '@features/brand/Select'
+import { useRouter } from 'next/router'
+import { Controller, useForm } from 'react-hook-form'
 import * as schema from './schema.generated'
-import * as types from '@app/types'
+
+export interface FormFields extends types.LubricantCreateInput {
+  brandEntity: SelectBrandValue
+}
 
 export function CreatePage() {
   const apollo = useApolloClient()
@@ -32,12 +27,15 @@ export function CreatePage() {
     control,
     reset,
     formState: { isDirty }
-  } = useForm<types.LubricantCreateInput>()
+  } = useForm<FormFields>()
 
-  const onSubmit = async (input: types.LubricantCreateInput) => {
+  const onSubmit = async ({ brandEntity, ...input }: FormFields) => {
     const response = await mutation({
       variables: {
-        input
+        input: {
+          ...input,
+          brandId: brandEntity.value
+        }
       }
     })
 
@@ -115,30 +113,21 @@ export function CreatePage() {
           </FormField>
           <FormField label="Бренд">
             <Controller
-              name="brand"
+              name="brandEntity"
               control={control}
               rules={{
-                required: 'Значение обязательно'
+                required: true
               }}
-              render={({
-                field: { ref, value, ...field },
-                fieldState: { error }
-              }) => (
-                <InputGroup
-                  className="w-full"
-                  disabled={mutationState.loading}
-                  rightElement={
-                    !!error ? (
-                      <ErrorIcon
-                        message={error.message}
-                        loading={mutationState.loading}
-                      />
-                    ) : undefined
-                  }
-                  inputRef={ref}
-                  value={value || undefined}
-                  {...field}
-                />
+              render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                <div className="inline-flex space-x-2">
+                  <SelectBrand {...field} />
+                  {!!error && (
+                    <ErrorIcon
+                      message="Укажите бренд"
+                      loading={mutationState.loading}
+                    />
+                  )}
+                </div>
               )}
             />
           </FormField>
