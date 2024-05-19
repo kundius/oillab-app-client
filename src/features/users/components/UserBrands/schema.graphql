@@ -1,0 +1,37 @@
+fragment Users_UserBrands_Fragment on User {
+  id
+  brands {
+    id
+    name
+  }
+}
+
+query Users_UserBrands_Query($id: Int!) {
+  user(id: $id) {
+    ...Users_UserBrands_Fragment
+  }
+}
+
+mutation Users_UserBrands_AddMutation($userId: Int!, $brandId: Int!) {
+  userAddBrand(userId: $userId, brandId: $brandId) {
+    success
+    error {
+      message
+    }
+    record {
+      ...Users_UserBrands_Fragment
+    }
+  }
+}
+
+mutation Users_UserBrands_RemoveMutation($userId: Int!, $brandId: Int!) {
+  userRemoveBrand(userId: $userId, brandId: $brandId) {
+    success
+    error {
+      message
+    }
+    record {
+      ...Users_UserBrands_Fragment
+    }
+  }
+}

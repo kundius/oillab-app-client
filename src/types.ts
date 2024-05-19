@@ -27,6 +27,7 @@ export type Brand = {
   lubricants: Array<Maybe<Lubricant>>;
   name: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
+  users: Array<Maybe<User>>;
 };
 
 export type BrandCreateInput = {
@@ -188,8 +189,10 @@ export type Mutation = {
   resultDelete: DefaultMutationResponse;
   resultUpdate: ResultUpdateResponse;
   signIn: SignInResponse;
+  userAddBrand: UserAddBrandResponse;
   userCreate: UserCreateResponse;
   userDelete: DefaultMutationResponse;
+  userRemoveBrand: UserRemoveBrandResponse;
   userUpdate: UserUpdateResponse;
   vehicleCreate: VehicleCreateResponse;
   vehicleDelete: DefaultMutationResponse;
@@ -322,6 +325,12 @@ export type MutationSignInArgs = {
 };
 
 
+export type MutationUserAddBrandArgs = {
+  brandId: Scalars['Int']['input'];
+  userId: Scalars['Int']['input'];
+};
+
+
 export type MutationUserCreateArgs = {
   input: UserCreateInput;
 };
@@ -329,6 +338,12 @@ export type MutationUserCreateArgs = {
 
 export type MutationUserDeleteArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type MutationUserRemoveBrandArgs = {
+  brandId: Scalars['Int']['input'];
+  userId: Scalars['Int']['input'];
 };
 
 
@@ -899,6 +914,7 @@ export type StringFilterOperator = {
 
 export type User = {
   __typename?: 'User';
+  brands: Array<Brand>;
   contactPerson?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
   email: Scalars['String']['output'];
@@ -913,6 +929,13 @@ export type User = {
   role: UserRole;
   updatedAt: Scalars['DateTime']['output'];
   vehicles: Array<Maybe<Vehicle>>;
+};
+
+export type UserAddBrandResponse = {
+  __typename?: 'UserAddBrandResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<User>;
+  success: Scalars['Boolean']['output'];
 };
 
 export type UserCreateInput = {
@@ -942,6 +965,13 @@ export type UserPaginateResponse = {
   __typename?: 'UserPaginateResponse';
   items: Array<User>;
   pageInfo: PageInfo;
+};
+
+export type UserRemoveBrandResponse = {
+  __typename?: 'UserRemoveBrandResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<User>;
+  success: Scalars['Boolean']['output'];
 };
 
 export enum UserRole {
