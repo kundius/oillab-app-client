@@ -1,0 +1,58 @@
+query MailingIndexPageUserQuery($id: Int!) {
+  user(id: $id) {
+    id
+    name
+    email
+  }
+}
+
+query MailingIndexPageReportQuery($id: Int!) {
+  report(id: $id) {
+    id
+    formNumber
+    client {
+      id
+      name
+    }
+    vehicle {
+      id
+      model
+    }
+    laboratoryResult {
+      id
+    }
+    expressLaboratoryResult {
+      id
+    }
+  }
+}
+
+query MailingIndexPageReportByFormNumberQuery($formNumber: String!) {
+  reportByFormNumber(formNumber: $formNumber) {
+    id
+    formNumber
+    client {
+      id
+      name
+    }
+    vehicle {
+      id
+      model
+    }
+    laboratoryResult {
+      id
+    }
+    expressLaboratoryResult {
+      id
+    }
+  }
+}
+
+mutation MailingIndexPageReportSendMutation($input: ReportSendInput!) {
+  reportSend(input: $input) {
+    success
+    error {
+      message
+    }
+  }
+}

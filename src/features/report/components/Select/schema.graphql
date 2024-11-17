@@ -1,0 +1,37 @@
+fragment ReportSelectFragment on Report {
+  id
+  formNumber
+  client {
+    id
+    name
+  }
+  vehicle {
+    id
+    model
+  }
+}
+
+query ReportSelectQuery (
+  $search: String
+  $page: Int!
+  $perPage: Int!
+) {
+  reportPaginate(
+    filter: {
+      formNumber: {
+        contains: $search
+      }
+    }
+    page: $page
+    perPage: $perPage
+  ) {
+    pageInfo {
+      total
+      page
+      perPage
+    }
+    items {
+      ...ReportSelectFragment
+    }
+  }
+}

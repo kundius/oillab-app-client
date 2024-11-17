@@ -184,6 +184,7 @@ export type Mutation = {
   reportCreate: ReportCreateResponse;
   reportDelete: DefaultMutationResponse;
   reportGeneratePdf: ReportGeneratePdfResponse;
+  reportSend: ReportSendResponse;
   reportUpdate: ReportUpdateResponse;
   resultCreate: ResultCreateResponse;
   resultDelete: DefaultMutationResponse;
@@ -295,6 +296,11 @@ export type MutationReportDeleteArgs = {
 export type MutationReportGeneratePdfArgs = {
   filter?: InputMaybe<ReportFilter>;
   sort?: InputMaybe<Array<ReportSort>>;
+};
+
+
+export type MutationReportSendArgs = {
+  input: ReportSendInput;
 };
 
 
@@ -731,6 +737,7 @@ export type ReportCreateResponse = {
 export type ReportFilter = {
   client?: InputMaybe<UserFilter>;
   color?: InputMaybe<StringFilterOperator>;
+  formNumber?: InputMaybe<StringFilterOperator>;
   id?: InputMaybe<NumberFilterOperator>;
   lubricantEntity?: InputMaybe<LubricantFilter>;
   lubricantMileage?: InputMaybe<StringFilterOperator>;
@@ -751,6 +758,28 @@ export type ReportPaginateResponse = {
   __typename?: 'ReportPaginateResponse';
   items: Array<Report>;
   pageInfo: PageInfo;
+};
+
+export type ReportSendInput = {
+  recipients: Array<ReportSendInputRecipient>;
+  reports: Array<ReportSendInputReport>;
+};
+
+export type ReportSendInputRecipient = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type ReportSendInputReport = {
+  extended: Scalars['Boolean']['input'];
+  formNumber?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type ReportSendResponse = {
+  __typename?: 'ReportSendResponse';
+  error?: Maybe<DefaultError>;
+  success: Scalars['Boolean']['output'];
 };
 
 export enum ReportSort {

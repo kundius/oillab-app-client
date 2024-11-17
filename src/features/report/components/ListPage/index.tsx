@@ -128,6 +128,9 @@ export function ListPage() {
       ]}
       extra={
         <div className="flex gap-2">
+          <Link href="/mailing">
+            <Button>Отправка писем</Button>
+          </Link>
           <Button
             onClick={handleGeneratePdf}
             disabled={generatePdfState.loading}
