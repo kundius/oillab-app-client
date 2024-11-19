@@ -3,7 +3,7 @@ import * as Types from '../../../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type ReportListPageItemFragment = { __typename?: 'Report', id: number, number?: number | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: string | null, color?: Types.ReportColor | null, sampledAt: any, lubricantEntity?: { __typename?: 'Lubricant', id: number, model: string, viscosity?: string | null, brandEntity?: { __typename?: 'Brand', id: number, name: string } | null } | null, expressLaboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, laboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, client?: { __typename?: 'User', id: number, name: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string } | null };
+export type ReportListPageItemFragment = { __typename?: 'Report', id: number, number?: number | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: string | null, color?: Types.ReportColor | null, sampledAt: any, formNumber?: string | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, model: string, viscosity?: string | null, brandEntity?: { __typename?: 'Brand', id: number, name: string } | null } | null, expressLaboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, laboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, client?: { __typename?: 'User', id: number, name: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string } | null };
 
 export type ReportListPageReportPaginateQueryVariables = Types.Exact<{
   sort?: Types.InputMaybe<Array<Types.ReportSort> | Types.ReportSort>;
@@ -13,7 +13,7 @@ export type ReportListPageReportPaginateQueryVariables = Types.Exact<{
 }>;
 
 
-export type ReportListPageReportPaginateQuery = { __typename?: 'Query', reportPaginate: { __typename?: 'ReportPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Report', id: number, number?: number | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: string | null, color?: Types.ReportColor | null, sampledAt: any, lubricantEntity?: { __typename?: 'Lubricant', id: number, model: string, viscosity?: string | null, brandEntity?: { __typename?: 'Brand', id: number, name: string } | null } | null, expressLaboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, laboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, client?: { __typename?: 'User', id: number, name: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string } | null }> } };
+export type ReportListPageReportPaginateQuery = { __typename?: 'Query', reportPaginate: { __typename?: 'ReportPaginateResponse', pageInfo: { __typename?: 'PageInfo', total: number, page: number, perPage: number }, items: Array<{ __typename?: 'Report', id: number, number?: number | null, totalMileage: string, lubricantMileage: string, samplingNodes: string, note?: string | null, color?: Types.ReportColor | null, sampledAt: any, formNumber?: string | null, lubricantEntity?: { __typename?: 'Lubricant', id: number, model: string, viscosity?: string | null, brandEntity?: { __typename?: 'Brand', id: number, name: string } | null } | null, expressLaboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, laboratoryResult?: { __typename?: 'File', id: number, name: string, url: string } | null, client?: { __typename?: 'User', id: number, name: string } | null, vehicle?: { __typename?: 'Vehicle', id: number, model: string, releaseYear: string, stateNumber: string, engineModel: string } | null }> } };
 
 export type ReportListPageReportGeneratePdfMutationVariables = Types.Exact<{
   sort?: Types.InputMaybe<Array<Types.ReportSort> | Types.ReportSort>;
@@ -33,6 +33,7 @@ export const ReportListPageItemFragmentDoc = gql`
   note
   color
   sampledAt
+  formNumber
   lubricantEntity {
     id
     brandEntity {

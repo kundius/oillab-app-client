@@ -479,7 +479,7 @@ export function ListPage() {
                 render={(record: schema.ReportListPageItemFragment) => (
                   <ButtonGroup minimal>
                     <AnchorButton
-                      href={`${publicRuntimeConfig.API_URL}/report/${record.id}/applicationform?token=${token}`}
+                      href={`${publicRuntimeConfig.API_URL}/report/${record.id}/applicationform/${record.formNumber}. Бланк отбора пробы_${record.vehicle?.stateNumber || ''}_${record.lubricantEntity?.brandEntity?.name || ''} ${record.lubricantEntity?.model || ''}.pdf?token=${token}`}
                       target="_blank"
                       icon="cloud-download"
                       small
