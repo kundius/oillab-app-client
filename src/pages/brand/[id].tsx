@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next/types/custom'
 
 import { createApolloClient } from '@app/lib/apolloClient'
-import { UpdatePage, UpdatePageProps } from '@app/features/brand/UpdatePage'
-import { Brand_UpdatePage_Query, Brand_UpdatePage_QueryVariables, Brand_UpdatePage_QueryDocument } from '@app/features/brand/UpdatePage/schema.generated'
+import { UpdatePage, UpdatePageProps } from '@app/features/brand/components/UpdatePage'
+import { Brand_UpdatePage_Query, Brand_UpdatePage_QueryVariables, Brand_UpdatePage_QueryDocument } from '@app/features/brand/components/UpdatePage/schema.generated'
 import { withPageGuard } from '@app/features/auth/hocs/withPageGuard'
 
 export const getServerSideProps: GetServerSideProps<UpdatePageProps> = async (context) => {
