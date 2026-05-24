@@ -17,12 +17,17 @@ fragment ReportListPageItem on Report {
     model
     viscosity
   }
+  laboratoryResult {
+    id
+    name
+    url
+  }
   expressLaboratoryResult {
     id
     name
     url
   }
-  laboratoryResult {
+  consolidatedLaboratoryResult {
     id
     name
     url
@@ -37,6 +42,18 @@ fragment ReportListPageItem on Report {
     releaseYear
     stateNumber
     engineModel
+  }
+}
+
+query ReportListPageReportByFormNumber($formNumber: String!) {
+  reportByFormNumber(formNumber: $formNumber) {
+    ...ReportListPageItem
+  }
+}
+
+query ReportListPageReportByStateNumber($stateNumber: String!) {
+  reportByStateNumber(stateNumber: $stateNumber) {
+    ...ReportListPageItem
   }
 }
 
@@ -78,6 +95,24 @@ mutation ReportListPageReportGeneratePdf(
     record {
       id
       url
+    }
+  }
+}
+
+mutation ReportListPageReportConsolidate(
+  $id: Int!
+  $input: ReportConsolidateInput!
+) {
+  reportConsolidate(
+    id: $id
+    input: $input
+  ) {
+    success
+    error {
+      message
+    }
+    record {
+      ...ReportListPageItem
     }
   }
 }

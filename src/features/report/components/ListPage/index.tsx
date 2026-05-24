@@ -25,6 +25,7 @@ import { MainTemplate } from '@features/app/components/MainTemplate'
 import { useHasRole } from '@features/app/hooks/useHasRole'
 import { FilterPopover as LubricantFilterPopover } from '@features/lubricant/components/FilterPopover'
 import { DeletePopover } from '@features/report/components/DeletePopover'
+import { ConsolidateModal } from './ConsolidateModal' // Добавляем импорт компонента
 
 import * as types from '@app/types'
 import * as schema from './schema.generated'
@@ -80,8 +81,17 @@ export function ListPage() {
   const isAdministrator = useHasRole(types.UserRole.Administrator)
   const isManager = useHasRole(types.UserRole.Manager)
   const [filter, setFilter] = useState<types.ReportFilter>({})
+  
+  // Добавляем состояния для модального окна объединения
+  const [isConsolidateModalOpen, setIsConsolidateModalOpen] = useState(false)
+  const [selectedReport, setSelectedReport] = useState<schema.ReportListPageItemFragment | null>(null)
+  
   const [generatePdf, generatePdfState] =
     schema.useReportListPageReportGeneratePdfMutation()
+    
+  // Добавляем мутацию для объединения отчетов
+  const [consolidateReport, { loading: consolidateLoading }] = schema.useReportListPageReportConsolidateMutation()
+
   const manyQuery = schema.useReportListPageReportPaginateQuery({
     variables: {
       sort,
@@ -91,6 +101,7 @@ export function ListPage() {
     },
     notifyOnNetworkStatusChange: true
   })
+  
   const items = manyQuery?.data?.reportPaginate?.items || []
   const pageInfo = manyQuery?.data?.reportPaginate?.pageInfo || {
     page,
@@ -113,6 +124,48 @@ export function ListPage() {
     if (response.data?.reportGeneratePdf.error) {
       await showToast({
         message: response.data.reportGeneratePdf.error.message,
+        intent: Intent.DANGER
+      })
+    }
+  }
+  
+  // Функция для открытия модального окна объединения
+  const handleConsolidateClick = (report: schema.ReportListPageItemFragment) => {
+    setSelectedReport(report)
+    setIsConsolidateModalOpen(true)
+  }
+
+  // Функция для отправки объединения
+  const handleConsolidateSubmit = async (input: { stateNumbers?: string[], formNumbers?: string[] }) => {
+    if (!selectedReport) return
+
+    try {
+      const result = await consolidateReport({
+        variables: {
+          id: selectedReport.id,
+          input: {
+            stateNumbers: input.stateNumbers,
+            formNumbers: input.formNumbers
+          }
+        }
+      })
+
+      if (result.data?.reportConsolidate.success) {
+        setIsConsolidateModalOpen(false)
+        manyQuery.refetch() // Обновляем данные после успешного объединения
+        showToast({
+          message: 'Отчеты успешно объединены',
+          intent: Intent.SUCCESS
+        })
+      } else {
+        showToast({
+          message: result.data?.reportConsolidate.error?.message || 'Ошибка при объединении отчетов',
+          intent: Intent.DANGER
+        })
+      }
+    } catch (error) {
+      showToast({
+        message: 'Ошибка при объединении отчетов',
         intent: Intent.DANGER
       })
     }
@@ -469,6 +522,13 @@ export function ListPage() {
             width={84}
             render={renderFile}
           />
+          <Table.Column
+            title="Составной результат лаборатории"
+            dataIndex="consolidatedLaboratoryResult"
+            align="center"
+            width={84}
+            render={renderFile}
+          />
           {isAdministrator && (
             <>
               <Table.Column
@@ -506,12 +566,20 @@ export function ListPage() {
                 title="Действия"
                 align="center"
                 key="action"
-                width={84}
+                width={120} // Увеличиваем ширину для размещения новой кнопки
                 render={(record: schema.ReportListPageItemFragment) => (
                   <ButtonGroup minimal>
                     <Link href={`/report/${record.id}`} legacyBehavior passHref>
                       <AnchorButton icon="edit" small />
                     </Link>
+                    <Divider />
+                    <AnchorButton
+                      icon="merge-links"
+                      small
+                      minimal
+                      onClick={() => handleConsolidateClick(record)}
+                      title="Объединить отчеты"
+                    />
                     <Divider />
                     <DeletePopover id={record.id}>
                       {({ isLoading }) => (
@@ -530,6 +598,16 @@ export function ListPage() {
           )}
         </Table>
       </Wall>
+      
+      {/* Модальное окно для объединения отчетов */}
+      {selectedReport && (
+        <ConsolidateModal
+          isOpen={isConsolidateModalOpen}
+          onClose={() => setIsConsolidateModalOpen(false)}
+          onSubmit={handleConsolidateSubmit}
+          report={selectedReport}
+        />
+      )}
     </MainTemplate>
   )
 }

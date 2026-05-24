@@ -181,6 +181,7 @@ export type Mutation = {
   oiltypeCreate: OilTypeCreateResponse;
   oiltypeDelete: DefaultMutationResponse;
   oiltypeUpdate: OilTypeUpdateResponse;
+  reportConsolidate: ReportConsolidateResponse;
   reportCreate: ReportCreateResponse;
   reportDelete: DefaultMutationResponse;
   reportGeneratePdf: ReportGeneratePdfResponse;
@@ -280,6 +281,12 @@ export type MutationOiltypeDeleteArgs = {
 export type MutationOiltypeUpdateArgs = {
   id: Scalars['Int']['input'];
   input: OilTypeUpdateInput;
+};
+
+
+export type MutationReportConsolidateArgs = {
+  id: Scalars['Int']['input'];
+  input: ReportConsolidateInput;
 };
 
 
@@ -548,6 +555,7 @@ export type Query = {
   oiltypePaginate: OilTypePaginateResponse;
   report?: Maybe<Report>;
   reportByFormNumber?: Maybe<Report>;
+  reportByStateNumber?: Maybe<Report>;
   reportPaginate: ReportPaginateResponse;
   result?: Maybe<Result>;
   resultPaginate: ResultPaginateResponse;
@@ -632,6 +640,11 @@ export type QueryReportByFormNumberArgs = {
 };
 
 
+export type QueryReportByStateNumberArgs = {
+  stateNumber: Scalars['String']['input'];
+};
+
+
 export type QueryReportPaginateArgs = {
   filter?: InputMaybe<ReportFilter>;
   page?: Scalars['Int']['input'];
@@ -682,6 +695,7 @@ export type Report = {
   __typename?: 'Report';
   client?: Maybe<User>;
   color?: Maybe<ReportColor>;
+  consolidatedLaboratoryResult?: Maybe<File>;
   createdAt: Scalars['DateTime']['output'];
   expressLaboratoryResult?: Maybe<File>;
   formNumber?: Maybe<Scalars['String']['output']>;
@@ -707,6 +721,18 @@ export enum ReportColor {
   Red = 'Red',
   Yellow = 'Yellow'
 }
+
+export type ReportConsolidateInput = {
+  formNumbers?: InputMaybe<Array<Scalars['String']['input']>>;
+  stateNumbers?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export type ReportConsolidateResponse = {
+  __typename?: 'ReportConsolidateResponse';
+  error?: Maybe<DefaultError>;
+  record?: Maybe<Report>;
+  success: Scalars['Boolean']['output'];
+};
 
 export type ReportCreateInput = {
   client?: InputMaybe<Scalars['Int']['input']>;
