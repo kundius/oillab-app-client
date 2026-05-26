@@ -723,8 +723,7 @@ export enum ReportColor {
 }
 
 export type ReportConsolidateInput = {
-  formNumbers?: InputMaybe<Array<Scalars['String']['input']>>;
-  stateNumbers?: InputMaybe<Array<Scalars['String']['input']>>;
+  reportIds?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
 export type ReportConsolidateResponse = {
