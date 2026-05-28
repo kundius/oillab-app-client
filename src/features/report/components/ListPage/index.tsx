@@ -89,9 +89,6 @@ export function ListPage() {
   const [generatePdf, generatePdfState] =
     schema.useReportListPageReportGeneratePdfMutation()
     
-  // Добавляем мутацию для объединения отчетов
-  const [consolidateReport, { loading: consolidateLoading }] = schema.useReportListPageReportConsolidateMutation()
-
   const manyQuery = schema.useReportListPageReportPaginateQuery({
     variables: {
       sort,
@@ -133,42 +130,6 @@ export function ListPage() {
   const handleConsolidateClick = (report: schema.ReportListPageItemFragment) => {
     setSelectedReport(report)
     setIsConsolidateModalOpen(true)
-  }
-
-  // Функция для отправки объединения
-  const handleConsolidateSubmit = async (input: { stateNumbers?: string[], formNumbers?: string[] }) => {
-    if (!selectedReport) return
-
-    try {
-      const result = await consolidateReport({
-        variables: {
-          id: selectedReport.id,
-          input: {
-            stateNumbers: input.stateNumbers,
-            formNumbers: input.formNumbers
-          }
-        }
-      })
-
-      if (result.data?.reportConsolidate.success) {
-        setIsConsolidateModalOpen(false)
-        manyQuery.refetch() // Обновляем данные после успешного объединения
-        showToast({
-          message: 'Отчеты успешно объединены',
-          intent: Intent.SUCCESS
-        })
-      } else {
-        showToast({
-          message: result.data?.reportConsolidate.error?.message || 'Ошибка при объединении отчетов',
-          intent: Intent.DANGER
-        })
-      }
-    } catch (error) {
-      showToast({
-        message: 'Ошибка при объединении отчетов',
-        intent: Intent.DANGER
-      })
-    }
   }
 
   return (
@@ -604,7 +565,7 @@ export function ListPage() {
         <ConsolidateModal
           isOpen={isConsolidateModalOpen}
           onClose={() => setIsConsolidateModalOpen(false)}
-          onSubmit={handleConsolidateSubmit}
+          onSuccess={() => manyQuery.refetch()}
           report={selectedReport}
         />
       )}

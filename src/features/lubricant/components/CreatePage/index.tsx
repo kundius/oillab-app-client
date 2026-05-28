@@ -8,7 +8,7 @@ import { MainTemplate } from '@features/app/components/MainTemplate'
 import {
   Select as SelectBrand,
   SelectValue as SelectBrandValue
-} from '@features/brand/Select'
+} from '@features/brand/components/Select'
 import { useRouter } from 'next/router'
 import { Controller, useForm } from 'react-hook-form'
 import * as schema from './schema.generated'

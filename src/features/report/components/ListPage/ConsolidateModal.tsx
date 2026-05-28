@@ -12,16 +12,18 @@ import {
   RadioGroup,
   Radio
 } from '@blueprintjs/core'
+import { showToast } from '@components/AppToaster'
 import { 
   ReportListPageItemFragment, 
   useReportListPageReportByFormNumberQuery, 
-  useReportListPageReportByStateNumberQuery 
+  useReportListPageReportByStateNumberQuery,
+  useReportListPageReportConsolidateMutation
 } from './schema.generated'
 
 interface ConsolidateModalProps {
   isOpen: boolean
   onClose: () => void
-  onSubmit: (input: { reportIds?: number[] }) => void
+  onSuccess?: () => void
   report: ReportListPageItemFragment
 }
 
@@ -35,7 +37,7 @@ interface ReportItem {
 export const ConsolidateModal: React.FC<ConsolidateModalProps> = ({
   isOpen,
   onClose,
-  onSubmit,
+  onSuccess,
   report
 }) => {
   const [reports, setReports] = useState<ReportItem[]>([])
@@ -44,6 +46,8 @@ export const ConsolidateModal: React.FC<ConsolidateModalProps> = ({
     'stateNumber' | 'formNumber'
   >('stateNumber')
   const [error, setError] = useState<string>('')
+
+  const [consolidateReport, { loading }] = useReportListPageReportConsolidateMutation()
 
   // Сбрасываем состояние при открытии модального окна
   useEffect(() => {
@@ -128,13 +132,38 @@ export const ConsolidateModal: React.FC<ConsolidateModalProps> = ({
     setReports(reports.filter((r) => r.id !== id))
   }
 
-  const handleSubmit = () => {
-    // Извлекаем ID отчетов для передачи бэкенду
+  const handleSubmit = async () => {
     const reportIds = reports.map((r) => r.reportId)
 
-    onSubmit({
-      reportIds: reportIds.length > 0 ? reportIds : undefined
-    })
+    try {
+      const result = await consolidateReport({
+        variables: {
+          id: report.id,
+          input: {
+            reportIds: reportIds.length > 0 ? reportIds : undefined
+          }
+        }
+      })
+
+      if (result.data?.reportConsolidate.success) {
+        onClose()
+        onSuccess?.()
+        showToast({
+          message: 'Отчеты успешно объединены',
+          intent: Intent.SUCCESS
+        })
+      } else {
+        showToast({
+          message: result.data?.reportConsolidate.error?.message || 'Ошибка при объединении отчетов',
+          intent: Intent.DANGER
+        })
+      }
+    } catch {
+      showToast({
+        message: 'Ошибка при объединении отчетов',
+        intent: Intent.DANGER
+      })
+    }
   }
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -233,14 +262,15 @@ export const ConsolidateModal: React.FC<ConsolidateModalProps> = ({
       </DialogBody>
       <DialogFooter
         actions={[
-          <Button key="cancel" onClick={onClose}>
+          <Button key="cancel" onClick={onClose} disabled={loading}>
             Отмена
           </Button>,
           <Button
             key="submit"
             intent={Intent.PRIMARY}
             onClick={handleSubmit}
-            disabled={reports.length === 0}
+            disabled={reports.length === 0 || loading}
+            loading={loading}
           >
             Объединить
           </Button>

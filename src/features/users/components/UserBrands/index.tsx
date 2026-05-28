@@ -17,7 +17,7 @@ import * as schema from './schema.generated'
 import {
   Select as SelectBrand,
   SelectValue as SelectBrandValue
-} from '@features/brand/Select'
+} from '@features/brand/components/Select'
 import { useState } from 'react'
 
 export interface UserBrandsProps {
@@ -119,7 +119,10 @@ export function UserBrands({ id }: UserBrandsProps) {
       {query.data?.user.brands.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-2">
           {query.data?.user.brands.map((item) => (
-            <div key={item.id} className="flex items-center gap-2 rounded-md p-1.5 bg-gray-200">
+            <div
+              key={item.id}
+              className="flex items-center gap-2 rounded-md p-1.5 bg-gray-200"
+            >
               {item.name}
               <Button
                 icon="cross"
