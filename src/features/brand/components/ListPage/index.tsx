@@ -14,7 +14,7 @@ import { Pagination } from '@components/Pagination'
 import { Table } from '@components/Table'
 import { Wall } from '@components/Wall'
 import { MainTemplate } from '@features/app/components/MainTemplate'
-import { DeletePopover } from '@features/brand/DeletePopover'
+import { DeletePopover } from '@features/brand/components/DeletePopover'
 
 import * as types from '@app/types'
 import * as schema from './schema.generated'
