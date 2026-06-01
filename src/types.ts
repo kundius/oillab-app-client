@@ -285,7 +285,6 @@ export type MutationOiltypeUpdateArgs = {
 
 
 export type MutationReportConsolidateArgs = {
-  id: Scalars['Int']['input'];
   input: ReportConsolidateInput;
 };
 
@@ -557,8 +556,11 @@ export type Query = {
   reportByFormNumber?: Maybe<Report>;
   reportByStateNumber?: Maybe<Report>;
   reportPaginate: ReportPaginateResponse;
+  reportsByFormNumber: Array<Report>;
+  reportsByStateNumber: Array<Report>;
   result?: Maybe<Result>;
   resultPaginate: ResultPaginateResponse;
+  resultsByFormNumber: Array<Result>;
   user?: Maybe<User>;
   userPaginate: UserPaginateResponse;
   vehicle?: Maybe<Vehicle>;
@@ -653,6 +655,16 @@ export type QueryReportPaginateArgs = {
 };
 
 
+export type QueryReportsByFormNumberArgs = {
+  formNumber: Scalars['String']['input'];
+};
+
+
+export type QueryReportsByStateNumberArgs = {
+  stateNumber: Scalars['String']['input'];
+};
+
+
 export type QueryResultArgs = {
   id: Scalars['Int']['input'];
 };
@@ -663,6 +675,11 @@ export type QueryResultPaginateArgs = {
   page?: Scalars['Int']['input'];
   perPage?: Scalars['Int']['input'];
   sort?: InputMaybe<Array<ResultSort>>;
+};
+
+
+export type QueryResultsByFormNumberArgs = {
+  formNumber: Scalars['String']['input'];
 };
 
 
@@ -723,7 +740,14 @@ export enum ReportColor {
 }
 
 export type ReportConsolidateInput = {
-  reportIds?: InputMaybe<Array<Scalars['Int']['input']>>;
+  items?: InputMaybe<Array<ReportConsolidateItemInput>>;
+  mainReportId: Scalars['Int']['input'];
+  mainResultId: Scalars['Int']['input'];
+};
+
+export type ReportConsolidateItemInput = {
+  reportId: Scalars['Int']['input'];
+  resultId: Scalars['Int']['input'];
 };
 
 export type ReportConsolidateResponse = {

@@ -45,8 +45,30 @@ fragment ReportListPageItem on Report {
   }
 }
 
+fragment ConsolidateModalResultItem on Result {
+  id
+  formNumber
+  oilType {
+    id
+    name
+    standard
+  }
+}
+
+query ConsolidateModalResultsByFormNumber($formNumber: String!) {
+  resultsByFormNumber(formNumber: $formNumber) {
+    ...ConsolidateModalResultItem
+  }
+}
+
 query ReportListPageReportByFormNumber($formNumber: String!) {
   reportByFormNumber(formNumber: $formNumber) {
+    ...ReportListPageItem
+  }
+}
+
+query ReportListPageReportsByFormNumber($formNumber: String!) {
+  reportsByFormNumber(formNumber: $formNumber) {
     ...ReportListPageItem
   }
 }
@@ -57,18 +79,19 @@ query ReportListPageReportByStateNumber($stateNumber: String!) {
   }
 }
 
+query ReportListPageReportsByStateNumber($stateNumber: String!) {
+  reportsByStateNumber(stateNumber: $stateNumber) {
+    ...ReportListPageItem
+  }
+}
+
 query ReportListPageReportPaginate(
   $sort: [ReportSort!]
   $filter: ReportFilter
   $page: Int
   $perPage: Int
 ) {
-  reportPaginate(
-    sort: $sort
-    filter: $filter
-    page: $page
-    perPage: $perPage
-  ) {
+  reportPaginate(sort: $sort, filter: $filter, page: $page, perPage: $perPage) {
     pageInfo {
       total
       page
@@ -84,10 +107,7 @@ mutation ReportListPageReportGeneratePdf(
   $sort: [ReportSort!]
   $filter: ReportFilter
 ) {
-  reportGeneratePdf(
-    sort: $sort
-    filter: $filter
-  ) {
+  reportGeneratePdf(sort: $sort, filter: $filter) {
     success
     error {
       message
@@ -99,14 +119,8 @@ mutation ReportListPageReportGeneratePdf(
   }
 }
 
-mutation ReportListPageReportConsolidate(
-  $id: Int!
-  $input: ReportConsolidateInput!
-) {
-  reportConsolidate(
-    id: $id
-    input: $input
-  ) {
+mutation ReportListPageReportConsolidate($input: ReportConsolidateInput!) {
+  reportConsolidate(input: $input) {
     success
     error {
       message
