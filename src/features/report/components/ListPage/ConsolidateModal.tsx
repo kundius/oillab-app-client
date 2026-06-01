@@ -249,7 +249,7 @@ export const ConsolidateModal: React.FC<ConsolidateModalProps> = ({
     return {
       isOpen,
       onClose,
-      title: `Объединить отчет №${report.id}`,
+      title: `Объединить отчет`,
       canOutsideClickClose: true,
       style: { width: '600px' }
     }

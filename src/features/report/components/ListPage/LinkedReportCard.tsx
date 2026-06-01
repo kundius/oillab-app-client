@@ -24,11 +24,8 @@ export const LinkedReportCard: React.FC<LinkedReportCardProps> = ({
     <div className="flex gap-2 justify-between items-start p-2 bg-white border">
       <div className="flex flex-col gap-1 flex-1">
         <span>
-          {report.value}{' '}
-          <em className="text-gray-400">
-            ({report.type === 'stateNumber' ? 'гос. номер' : 'номер бланка'}) -
-            ID: {report.reportId}
-          </em>
+          {report.type === 'stateNumber' ? 'Гос. номер:' : 'Номер бланка:'}{' '}
+          {report.value}
         </span>
         <RadioGroup
           selectedValue={report.selectedResultId.toString()}
