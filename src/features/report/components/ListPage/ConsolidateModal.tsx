@@ -61,9 +61,12 @@ export const ConsolidateModal: React.FC<ConsolidateModalProps> = ({
     skip: !isOpen || !report.formNumber
   })
 
-  const [fetchLinkedResults] = useConsolidateModalResultsByFormNumberLazyQuery()
-  const [fetchByFormNumber] = useReportListPageReportsByFormNumberLazyQuery()
-  const [fetchByStateNumber] = useReportListPageReportsByStateNumberLazyQuery()
+  const [fetchLinkedResults, fetchLinkedResultsState] =
+    useConsolidateModalResultsByFormNumberLazyQuery()
+  const [fetchByFormNumber, fetchByFormNumberState] =
+    useReportListPageReportsByFormNumberLazyQuery()
+  const [fetchByStateNumber, fetchByStateNumberState] =
+    useReportListPageReportsByStateNumberLazyQuery()
 
   const results = resultsData?.resultsByFormNumber ?? []
 
@@ -118,8 +121,7 @@ export const ConsolidateModal: React.FC<ConsolidateModalProps> = ({
 
     const reportsToAdd = reportsData.filter(
       (r) =>
-        r.id !== report.id &&
-        !relatedReports.some((rr) => rr.reportId === r.id)
+        r.id !== report.id && !relatedReports.some((rr) => rr.reportId === r.id)
     )
 
     if (reportsToAdd.length === 0) {
@@ -338,8 +340,19 @@ export const ConsolidateModal: React.FC<ConsolidateModalProps> = ({
             <Button
               icon="plus"
               minimal
+              loading={
+                fetchLinkedResultsState.loading ||
+                fetchByFormNumberState.loading ||
+                fetchByStateNumberState.loading
+              }
               onClick={handleAddReport}
-              disabled={!newReportValue.trim() || !selectedMainResult}
+              disabled={
+                !newReportValue.trim() ||
+                !selectedMainResult ||
+                fetchLinkedResultsState.loading ||
+                fetchByFormNumberState.loading ||
+                fetchByStateNumberState.loading
+              }
               style={{ marginLeft: '8px' }}
             />
           </div>
