@@ -95,20 +95,6 @@ export const ConsolidateModal: React.FC<ConsolidateModalProps> = ({
       return
     }
 
-    if (relatedReports.length >= 4) {
-      setError('Можно добавить не более 4 отчетов')
-      return
-    }
-
-    if (
-      relatedReports.some(
-        (r) => r.value.toLowerCase() === newReportValue.trim().toLowerCase()
-      )
-    ) {
-      setError('Этот отчет уже добавлен')
-      return
-    }
-
     let reportsData: ReportListPageItemFragment[] = []
 
     if (newReportType === 'formNumber') {
@@ -130,56 +116,50 @@ export const ConsolidateModal: React.FC<ConsolidateModalProps> = ({
       return
     }
 
-    if (reportsData.length > 1) {
-      setError(
-        `Найдено несколько отчетов с таким ${newReportType === 'formNumber' ? 'номером бланка' : 'государственным номером'}. Уточните поиск.`
-      )
-      return
-    }
-
-    const reportData = reportsData[0]
-
-    if (reportData.id === report.id) {
-      setError('Нельзя добавить основной отчет в список для объединения')
-      return
-    }
-
-    if (relatedReports.some((r) => r.reportId === reportData.id)) {
-      setError('Этот отчет уже добавлен')
-      return
-    }
-
-    const reportFormNumber = reportData.formNumber
-    if (!reportFormNumber) {
-      setError('У выбранного отчета нет номера бланка')
-      return
-    }
-
-    const resultQuery = await fetchLinkedResults({
-      variables: { formNumber: reportFormNumber }
-    })
-    const linkedResults = resultQuery.data?.resultsByFormNumber ?? []
-    const matchingResults = linkedResults.filter(
-      (r) => r.oilType.standard === selectedMainResult.oilType.standard
+    const reportsToAdd = reportsData.filter(
+      (r) =>
+        r.id !== report.id &&
+        !relatedReports.some((rr) => rr.reportId === r.id)
     )
 
-    if (matchingResults.length === 0) {
+    if (reportsToAdd.length === 0) {
+      setError('Все найденные отчеты уже добавлены')
+      return
+    }
+
+    const newReports: ReportItem[] = []
+    for (const reportData of reportsToAdd) {
+      const reportFormNumber = reportData.formNumber
+      if (!reportFormNumber) continue
+
+      const resultQuery = await fetchLinkedResults({
+        variables: { formNumber: reportFormNumber }
+      })
+      const linkedResults = resultQuery.data?.resultsByFormNumber ?? []
+      const matchingResults = linkedResults.filter(
+        (r) => r.oilType.standard === selectedMainResult.oilType.standard
+      )
+
+      if (matchingResults.length === 0) continue
+
+      newReports.push({
+        id: `${Date.now()}-${reportData.id}`,
+        type: newReportType,
+        value: newReportValue.trim(),
+        reportId: reportData.id,
+        results: matchingResults,
+        selectedResultId: matchingResults[0].id
+      })
+    }
+
+    if (newReports.length === 0) {
       setError(
-        `Отчет "${newReportValue.trim()}" не имеет результата типа "${selectedMainResult.oilType.standard ? 'стандартный' : 'расширенный'}"`
+        `Отчеты по "${newReportValue.trim()}" не имеют результата типа "${selectedMainResult.oilType.standard ? 'стандартный' : 'расширенный'}"`
       )
       return
     }
 
-    const newReport: ReportItem = {
-      id: Date.now().toString(),
-      type: newReportType,
-      value: newReportValue.trim(),
-      reportId: reportData.id,
-      results: matchingResults,
-      selectedResultId: matchingResults[0].id
-    }
-
-    setRelatedReports([...relatedReports, newReport])
+    setRelatedReports([...relatedReports, ...newReports])
     setNewReportValue('')
     setError('')
   }
@@ -340,7 +320,7 @@ export const ConsolidateModal: React.FC<ConsolidateModalProps> = ({
               )
             }
             inline={true}
-            disabled={!selectedMainResult || relatedReports.length >= 4}
+            disabled={!selectedMainResult}
           >
             <Radio label="Гос. номер" value="stateNumber" />
             <Radio label="Номер бланка" value="formNumber" />
@@ -353,17 +333,13 @@ export const ConsolidateModal: React.FC<ConsolidateModalProps> = ({
               placeholder="Введите значение..."
               onKeyDown={handleKeyPress}
               fill
-              disabled={!selectedMainResult || relatedReports.length >= 4}
+              disabled={!selectedMainResult}
             />
             <Button
               icon="plus"
               minimal
               onClick={handleAddReport}
-              disabled={
-                !newReportValue.trim() ||
-                relatedReports.length >= 4 ||
-                !selectedMainResult
-              }
+              disabled={!newReportValue.trim() || !selectedMainResult}
               style={{ marginLeft: '8px' }}
             />
           </div>
@@ -375,7 +351,7 @@ export const ConsolidateModal: React.FC<ConsolidateModalProps> = ({
 
         <FormGroup
           label="Отчеты для объединения"
-          helperText={`Выбрано: ${relatedReports.length}/4`}
+          helperText={`Выбрано: ${relatedReports.length}`}
         >
           <div className="flex gap-1.5 flex-col">
             {relatedReports.length > 0 ? (
