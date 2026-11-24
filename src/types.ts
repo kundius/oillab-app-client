@@ -972,6 +972,11 @@ export type ResultUpdateResponse = {
   success: Scalars['Boolean']['output'];
 };
 
+export type ServerError = DefaultError & {
+  __typename?: 'ServerError';
+  message: Scalars['String']['output'];
+};
+
 export type SignInInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];

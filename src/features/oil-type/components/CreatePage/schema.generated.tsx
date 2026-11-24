@@ -8,7 +8,7 @@ export type OilTypeCreatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type OilTypeCreatePageMutation = { __typename?: 'Mutation', oiltypeCreate: { __typename?: 'OilTypeCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilType', id: number } | null } };
+export type OilTypeCreatePageMutation = { __typename?: 'Mutation', oiltypeCreate: { __typename?: 'OilTypeCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilType', id: number } | null } };
 
 
 export const OilTypeCreatePageDocument = gql`

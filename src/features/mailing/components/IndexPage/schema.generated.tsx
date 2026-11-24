@@ -29,7 +29,7 @@ export type MailingIndexPageReportSendMutationVariables = Types.Exact<{
 }>;
 
 
-export type MailingIndexPageReportSendMutation = { __typename?: 'Mutation', reportSend: { __typename?: 'ReportSendResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null } };
+export type MailingIndexPageReportSendMutation = { __typename?: 'Mutation', reportSend: { __typename?: 'ReportSendResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null } };
 
 
 export const MailingIndexPageUserQueryDocument = gql`

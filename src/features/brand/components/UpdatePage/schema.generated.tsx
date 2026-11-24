@@ -18,7 +18,7 @@ export type Brand_UpdatePage_MutationVariables = Types.Exact<{
 }>;
 
 
-export type Brand_UpdatePage_Mutation = { __typename?: 'Mutation', brandUpdate: { __typename?: 'BrandUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Brand', id: number, name: string } | null } };
+export type Brand_UpdatePage_Mutation = { __typename?: 'Mutation', brandUpdate: { __typename?: 'BrandUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Brand', id: number, name: string } | null } };
 
 export const Brand_UpdatePage_FragmentDoc = gql`
     fragment Brand_UpdatePage_Fragment on Brand {

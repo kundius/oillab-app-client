@@ -8,7 +8,7 @@ export type LubricantCreatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type LubricantCreatePageMutation = { __typename?: 'Mutation', lubricantCreate: { __typename?: 'LubricantCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Lubricant', id: number } | null } };
+export type LubricantCreatePageMutation = { __typename?: 'Mutation', lubricantCreate: { __typename?: 'LubricantCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Lubricant', id: number } | null } };
 
 
 export const LubricantCreatePageDocument = gql`

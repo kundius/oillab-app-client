@@ -18,7 +18,7 @@ export type LubricantUpdatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type LubricantUpdatePageMutation = { __typename?: 'Mutation', lubricantUpdate: { __typename?: 'LubricantUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Lubricant', id: number, model: string, viscosity?: string | null, productType?: Types.ProductType | null, brandEntity?: { __typename?: 'Brand', id: number, name: string } | null } | null } };
+export type LubricantUpdatePageMutation = { __typename?: 'Mutation', lubricantUpdate: { __typename?: 'LubricantUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Lubricant', id: number, model: string, viscosity?: string | null, productType?: Types.ProductType | null, brandEntity?: { __typename?: 'Brand', id: number, name: string } | null } | null } };
 
 export const LubricantUpdatePageFragmentDoc = gql`
     fragment LubricantUpdatePageFragment on Lubricant {

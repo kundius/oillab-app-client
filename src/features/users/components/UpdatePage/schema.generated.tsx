@@ -18,7 +18,7 @@ export type UsersUpdatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type UsersUpdatePageMutation = { __typename?: 'Mutation', userUpdate: { __typename?: 'UserUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, contactPerson?: string | null, role: Types.UserRole } | null } };
+export type UsersUpdatePageMutation = { __typename?: 'Mutation', userUpdate: { __typename?: 'UserUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'User', id: number, name: string, email: string, phone?: string | null, contactPerson?: string | null, role: Types.UserRole } | null } };
 
 export const UsersUpdatePageFragmentDoc = gql`
     fragment UsersUpdatePageFragment on User {

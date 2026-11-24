@@ -18,7 +18,7 @@ export type OilTypeUpdatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type OilTypeUpdatePageMutation = { __typename?: 'Mutation', oiltypeUpdate: { __typename?: 'OilTypeUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilType', id: number, name: string, standard: boolean } | null } };
+export type OilTypeUpdatePageMutation = { __typename?: 'Mutation', oiltypeUpdate: { __typename?: 'OilTypeUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilType', id: number, name: string, standard: boolean } | null } };
 
 export const OilTypeUpdatePageFragmentDoc = gql`
     fragment OilTypeUpdatePageFragment on OilType {

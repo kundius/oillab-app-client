@@ -18,7 +18,7 @@ export type Users_UserBrands_AddMutationVariables = Types.Exact<{
 }>;
 
 
-export type Users_UserBrands_AddMutation = { __typename?: 'Mutation', userAddBrand: { __typename?: 'UserAddBrandResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'User', id: number, brands: Array<{ __typename?: 'Brand', id: number, name: string }> } | null } };
+export type Users_UserBrands_AddMutation = { __typename?: 'Mutation', userAddBrand: { __typename?: 'UserAddBrandResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'User', id: number, brands: Array<{ __typename?: 'Brand', id: number, name: string }> } | null } };
 
 export type Users_UserBrands_RemoveMutationVariables = Types.Exact<{
   userId: Types.Scalars['Int']['input'];
@@ -26,7 +26,7 @@ export type Users_UserBrands_RemoveMutationVariables = Types.Exact<{
 }>;
 
 
-export type Users_UserBrands_RemoveMutation = { __typename?: 'Mutation', userRemoveBrand: { __typename?: 'UserRemoveBrandResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'User', id: number, brands: Array<{ __typename?: 'Brand', id: number, name: string }> } | null } };
+export type Users_UserBrands_RemoveMutation = { __typename?: 'Mutation', userRemoveBrand: { __typename?: 'UserRemoveBrandResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'User', id: number, brands: Array<{ __typename?: 'Brand', id: number, name: string }> } | null } };
 
 export const Users_UserBrands_FragmentDoc = gql`
     fragment Users_UserBrands_Fragment on User {

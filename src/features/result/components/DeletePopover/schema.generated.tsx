@@ -8,7 +8,7 @@ export type ResultDeletePopoverMutationVariables = Types.Exact<{
 }>;
 
 
-export type ResultDeletePopoverMutation = { __typename?: 'Mutation', resultDelete: { __typename?: 'DefaultMutationResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null } };
+export type ResultDeletePopoverMutation = { __typename?: 'Mutation', resultDelete: { __typename?: 'DefaultMutationResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null } };
 
 
 export const ResultDeletePopoverDocument = gql`

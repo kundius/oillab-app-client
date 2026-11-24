@@ -18,7 +18,7 @@ export type OilTypeResearchTableCreateMutationVariables = Types.Exact<{
 }>;
 
 
-export type OilTypeResearchTableCreateMutation = { __typename?: 'Mutation', oilTypeResearchCreate: { __typename?: 'OilTypeResearchCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilTypeResearch', id: number, name: string } | null } };
+export type OilTypeResearchTableCreateMutation = { __typename?: 'Mutation', oilTypeResearchCreate: { __typename?: 'OilTypeResearchCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilTypeResearch', id: number, name: string } | null } };
 
 export type OilTypeResearchTableUpdateMutationVariables = Types.Exact<{
   id: Types.Scalars['Int']['input'];
@@ -26,14 +26,14 @@ export type OilTypeResearchTableUpdateMutationVariables = Types.Exact<{
 }>;
 
 
-export type OilTypeResearchTableUpdateMutation = { __typename?: 'Mutation', oilTypeResearchUpdate: { __typename?: 'OilTypeResearchUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilTypeResearch', id: number, name: string } | null } };
+export type OilTypeResearchTableUpdateMutation = { __typename?: 'Mutation', oilTypeResearchUpdate: { __typename?: 'OilTypeResearchUpdateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'OilTypeResearch', id: number, name: string } | null } };
 
 export type OilTypeResearchTableDeleteMutationVariables = Types.Exact<{
   id: Types.Scalars['Int']['input'];
 }>;
 
 
-export type OilTypeResearchTableDeleteMutation = { __typename?: 'Mutation', oilTypeResearchDelete: { __typename?: 'DefaultMutationResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null } };
+export type OilTypeResearchTableDeleteMutation = { __typename?: 'Mutation', oilTypeResearchDelete: { __typename?: 'DefaultMutationResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null } };
 
 export const OilTypeResearchTableItemFragmentDoc = gql`
     fragment OilTypeResearchTableItem on OilTypeResearch {

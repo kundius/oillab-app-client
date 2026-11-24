@@ -8,7 +8,7 @@ export type Brand_CreatePage_MutationVariables = Types.Exact<{
 }>;
 
 
-export type Brand_CreatePage_Mutation = { __typename?: 'Mutation', brandCreate: { __typename?: 'BrandCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Brand', id: number } | null } };
+export type Brand_CreatePage_Mutation = { __typename?: 'Mutation', brandCreate: { __typename?: 'BrandCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Brand', id: number } | null } };
 
 
 export const Brand_CreatePage_MutationDocument = gql`

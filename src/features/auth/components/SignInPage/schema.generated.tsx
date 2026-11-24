@@ -8,7 +8,7 @@ export type AuthSignInPageMutationVariables = Types.Exact<{
 }>;
 
 
-export type AuthSignInPageMutation = { __typename?: 'Mutation', signIn: { __typename?: 'SignInResponse', success: boolean, token?: string | null, record?: { __typename?: 'User', id: number } | null, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', field: string, message: string } | null } };
+export type AuthSignInPageMutation = { __typename?: 'Mutation', signIn: { __typename?: 'SignInResponse', success: boolean, token?: string | null, record?: { __typename?: 'User', id: number } | null, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', field: string, message: string } | null } };
 
 
 export const AuthSignInPageDocument = gql`

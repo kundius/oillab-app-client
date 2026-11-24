@@ -8,7 +8,7 @@ export type VehicleCreatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type VehicleCreatePageMutation = { __typename?: 'Mutation', vehicleCreate: { __typename?: 'VehicleCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Vehicle', id: number } | null } };
+export type VehicleCreatePageMutation = { __typename?: 'Mutation', vehicleCreate: { __typename?: 'VehicleCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Vehicle', id: number } | null } };
 
 
 export const VehicleCreatePageDocument = gql`

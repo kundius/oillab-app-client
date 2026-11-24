@@ -8,7 +8,7 @@ export type ResultCreatePageMutationVariables = Types.Exact<{
 }>;
 
 
-export type ResultCreatePageMutation = { __typename?: 'Mutation', resultCreate: { __typename?: 'ResultCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Result', id: number } | null } };
+export type ResultCreatePageMutation = { __typename?: 'Mutation', resultCreate: { __typename?: 'ResultCreateResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null, record?: { __typename?: 'Result', id: number } | null } };
 
 
 export const ResultCreatePageDocument = gql`

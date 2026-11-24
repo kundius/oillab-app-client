@@ -121,6 +121,19 @@ export const Header = () => {
                   </Link>
                 </li>
               )}
+              {isAdministrator && (
+                <li>
+                  <Link
+                    href="/recovery"
+                    className={classNames(styles.link, {
+                      [styles.linkActive]:
+                        router.pathname.startsWith('/recovery')
+                    })}
+                  >
+                    Восстановление
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
           {currentUser && (

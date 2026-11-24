@@ -8,7 +8,7 @@ export type OilTypeDeletePopoverMutationVariables = Types.Exact<{
 }>;
 
 
-export type OilTypeDeletePopoverMutation = { __typename?: 'Mutation', oiltypeDelete: { __typename?: 'DefaultMutationResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ValidationError', message: string } | null } };
+export type OilTypeDeletePopoverMutation = { __typename?: 'Mutation', oiltypeDelete: { __typename?: 'DefaultMutationResponse', success: boolean, error?: { __typename?: 'AuthenticationError', message: string } | { __typename?: 'NotAllowedError', message: string } | { __typename?: 'NotFoundError', message: string } | { __typename?: 'ServerError', message: string } | { __typename?: 'ValidationError', message: string } | null } };
 
 
 export const OilTypeDeletePopoverDocument = gql`
