@@ -16,6 +16,7 @@ interface RecoveryItem {
   name: string
   path: string
   reason: string
+  usage: string
 }
 
 interface RecoveryError {
@@ -183,6 +184,7 @@ export function IndexPage({}: IndexPageProps) {
                       <div className="text-sm opacity-70">
                         {item.path} — {item.reason}
                       </div>
+                      <div className="text-sm">{item.usage}</div>
                     </div>
                   ))}
                 </div>
